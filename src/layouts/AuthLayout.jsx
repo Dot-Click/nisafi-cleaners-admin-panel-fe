@@ -5,10 +5,8 @@ import { Outlet } from "react-router-dom";
 const { Title, Text } = Typography;
 const AuthLayout = () => {
   return (
-    // <Space direction="vertical">
     <Row style={{ backgroundColor: "#fff" }}>
       <Col
-        // span={14}
         xs={{
           flex: "100%",
         }}
@@ -57,7 +55,6 @@ const AuthLayout = () => {
         </Space>
       </Col>
     </Row>
-    // </Space>
   );
 };
 
