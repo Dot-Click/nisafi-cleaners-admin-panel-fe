@@ -1,0 +1,30 @@
+$font-poppins: Poppins;
+$blue-colour: #00aeef;
+
+.sidebar {
+  width: 20vw;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: 6px -1px 22.9px 0px #00000008;
+  border: 1px solid #eff0f6;
+  .sidebar-link {
+    font-family: $font-poppins;
+    color: #363636;
+    font-weight: 400;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 10px 0;
+    &:hover {
+      transition: 0.5s;
+      background-color: $blue-colour;
+      .link-name {
+        color: #fff;
+      }
+      svg {
+        path {
+          fill: #fff;
+        }
+      }
+    }
+  }
+}

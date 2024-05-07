@@ -1,15 +1,20 @@
-import { Space, Typography } from "antd";
-import Title from "antd/es/typography/Title";
+import { Flex, Image, Row, Space, Typography } from "antd";
+
 import React from "react";
 import { Outlet } from "react-router-dom";
-
-const { Title } = Typography;
+import logo from "../assets/logo.png";
+import Sidebar from "../components/layout/Sidebar";
+import Navbar from "../components/layout/Navbar";
+const { Text } = Typography;
 const DashboardLayout = () => {
   return (
-    <Space direction="vertical">
-      <Title level={2}>Default Layout</Title>
-      <Outlet />
-    </Space>
+    <Flex>
+      <Sidebar />
+      <Flex vertical className="navbar-outlet">
+        <Navbar />
+        <Outlet />
+      </Flex>
+    </Flex>
   );
 };
 

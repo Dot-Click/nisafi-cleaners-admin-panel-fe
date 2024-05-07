@@ -9,28 +9,25 @@ import {
   Flex,
   Row,
 } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const { Text } = Typography;
 
-const VerifyEmail = () => {
-  const navigate = useNavigate();
+const NewPassword = () => {
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    navigate("/new-password");
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-  };
-  const onChange = (text) => {
-    console.log("onChange:", text);
   };
   return (
     <Row direction="vertical" className="p-3  d-block h-100">
       <Text className="brand-name">Nisafi cleaners</Text>
       <Flex vertical justify="center" align="center" className="h-100">
         <Form
+          form={form}
           name="basic"
           layout="vertical"
           labelCol={{
@@ -43,9 +40,9 @@ const VerifyEmail = () => {
             maxWidth: "500px",
             width: "100%",
           }}
-          initialValues={{
-            remember: true,
-          }}
+          //   initialValues={{
+          //     remember: true,
+          //   }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
@@ -69,28 +66,58 @@ const VerifyEmail = () => {
               </svg>{" "}
               Back
             </Link>
-            <Text className="welcome-heading d-block">Verify Email!</Text>
+            <Text className="welcome-heading d-block">Change Password!</Text>
             <Text className="welcome-text d-block">
-              Enter verification code here , that sent to your email
+              Enter new password here to change
             </Text>
           </Flex>
+          <Text className="login-lable">New Password</Text>
           <Form.Item
-            name="verification_code"
+            name="password"
             rules={[
               {
                 required: true,
-                message: " ",
+                validator: (rule, value) => {
+                  if (
+                    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(
+                      value
+                    )
+                  ) {
+                    return Promise.reject(
+                      "Password should contain atleast 8 characters,at least one uppercase letter, one lowercase letter, one number and one special character"
+                    );
+                  }
+                  return Promise.resolve(); // Validation successful
+                },
+                // message: "Please input your password!",
               },
             ]}
           >
-            <Flex justify="center">
-              <Input.OTP
-                typeof="number"
-                className="login-input w-100"
-                // {...onChange}
-                onChange={onChange}
-              />
-            </Flex>
+            <Input.Password
+              placeholder="Enter your new password"
+              className="login-input"
+            />
+          </Form.Item>
+
+          <Text className="login-lable">Confirm Password</Text>
+          <Form.Item
+            name="change_password"
+            rules={[
+              {
+                required: true,
+                validator: (rule, value) => {
+                  if (value !== form.getFieldValue("password")) {
+                    return Promise.reject("Passwords do not match!");
+                  }
+                  return Promise.resolve(); // Validation successful
+                },
+              },
+            ]}
+          >
+            <Input.Password
+              placeholder="Confirm your new password"
+              className="login-input"
+            />
           </Form.Item>
 
           <Form.Item
@@ -100,7 +127,7 @@ const VerifyEmail = () => {
             }}
           >
             <Button htmlType="submit" className="w-100 login-btn">
-              VERIFY EMAIL
+              CHANGE PASSWORD
             </Button>
           </Form.Item>
         </Form>
@@ -109,4 +136,4 @@ const VerifyEmail = () => {
   );
 };
 
-export default VerifyEmail;
+export default NewPassword;

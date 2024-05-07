@@ -6,7 +6,7 @@ const { Title, Text } = Typography;
 const AuthLayout = () => {
   return (
     // <Space direction="vertical">
-    <Row>
+    <Row style={{ backgroundColor: "#fff" }}>
       <Col
         // span={14}
         xs={{

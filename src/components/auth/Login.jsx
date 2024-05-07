@@ -1,30 +1,50 @@
-import React from "react";
-import {
-  Button,
-  Form,
-  Input,
-  Space,
-  Checkbox,
-  Typography,
-  Flex,
-  Row,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, Checkbox, Typography, Flex, Row } from "antd";
+import { Link } from "react-router-dom";
 
 const { Text } = Typography;
 
 const Login = () => {
+  const [form] = Form.useForm();
+  const [initialValues, setInitialValues] = useState({
+    email: "",
+    password: "",
+    remember: true,
+  });
+
+  useEffect(() => {
+    const rememberedEmail = localStorage.getItem("email");
+    const rememberedPassword = window.atob(localStorage.getItem("password"));
+    const rememberChecked = localStorage.getItem("remember") === "true";
+    if (rememberChecked && rememberedEmail && rememberedPassword) {
+      setInitialValues({
+        ...initialValues,
+        email: rememberedEmail,
+        password: rememberedPassword,
+        remember: true,
+      });
+    }
+  }, []);
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    if (values.remember) {
+      localStorage.setItem("email", values?.email);
+      localStorage.setItem("password", window.btoa(values.password));
+      localStorage.setItem("remember", values?.remember);
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [form, initialValues]);
   return (
     <Row direction="vertical" className="p-3  d-block h-100">
       <Text className="brand-name">Nisafi cleaners</Text>
       <Flex vertical justify="center" align="center" className="h-100">
         <Form
-          name="basic"
+          form={form}
           layout="vertical"
           labelCol={{
             span: 4,
@@ -36,9 +56,6 @@ const Login = () => {
             maxWidth: "500px",
             width: "100%",
           }}
-          initialValues={{
-            remember: true,
-          }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
@@ -49,50 +66,80 @@ const Login = () => {
               Login into your account
             </Text>
           </Flex>
+          <Text className="login-lable">Email here</Text>
           <Form.Item
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,
-                message: "Please input your username!",
+                validator: (rule, value) => {
+                  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                    return Promise.reject(
+                      "Please enter a valid email address!"
+                    );
+                  }
+                  return Promise.resolve(); // Validation successful
+                },
               },
             ]}
           >
-            <Text className="login-lable">Email here</Text>
-            <Input placeholder="Enter your email" className="login-input" />
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              className="login-input"
+            />
           </Form.Item>
 
+          <Text className="login-lable">Password</Text>
           <Form.Item
             name="password"
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                validator: (rule, value) => {
+                  if (
+                    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(
+                      value
+                    )
+                  ) {
+                    return Promise.reject(
+                      "Password should contain atleast 8 characters,at least one uppercase letter, one lowercase letter, one number and one special character"
+                    );
+                  }
+                  return Promise.resolve(); // Validation successful
+                },
+                // message: "Please input your password!",
               },
             ]}
           >
-            <Text className="login-lable">Password</Text>
             <Input.Password
+              type="password"
               placeholder="Enter your Password"
               className="login-input"
             />
           </Form.Item>
 
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            className="d-block justify-content-between"
-            wrapperCol={{
-              offset: 0,
-              span: 24,
-            }}
-            style={{ width: "100%", marginTop: "-20px" }}
-          >
-            <Flex align="center" justify="space-between">
+          <Flex align="center" justify="space-between">
+            <Form.Item
+              name="remember"
+              valuePropName="checked"
+              className="d-block justify-content-between"
+              wrapperCol={{
+                offset: 0,
+                span: 20,
+              }}
+              style={{ width: "100%" }}
+            >
               <Checkbox className="remember-me">Remember me</Checkbox>
-              <Text className="forgot-password">Forgot Password?</Text>
-            </Flex>
-          </Form.Item>
+            </Form.Item>
+            <Link
+              style={{ marginTop: "-20px" }}
+              to={"/forgot-password"}
+              className="forgot-password text-end d-block w-100"
+            >
+              Forgot Password?
+            </Link>
+          </Flex>
 
           <Form.Item
             wrapperCol={{

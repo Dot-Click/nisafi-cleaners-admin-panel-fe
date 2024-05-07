@@ -5,7 +5,7 @@ const { Text } = Typography;
 const Home = () => {
   return (
     <Space direction="vertical">
-      <Text>home page</Text>
+      <Text>98huih</Text>
     </Space>
   );
 };

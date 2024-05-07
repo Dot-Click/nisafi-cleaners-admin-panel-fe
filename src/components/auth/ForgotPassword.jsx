@@ -13,18 +13,15 @@ import { Link, useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
-const VerifyEmail = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    navigate("/new-password");
+    navigate("/verify-email");
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-  };
-  const onChange = (text) => {
-    console.log("onChange:", text);
   };
   return (
     <Row direction="vertical" className="p-3  d-block h-100">
@@ -69,28 +66,29 @@ const VerifyEmail = () => {
               </svg>{" "}
               Back
             </Link>
-            <Text className="welcome-heading d-block">Verify Email!</Text>
+            <Text className="welcome-heading d-block">Forgot Password!</Text>
             <Text className="welcome-text d-block">
-              Enter verification code here , that sent to your email
+              Enter email here , We send you the verification code
             </Text>
           </Flex>
+          <Text className="login-lable">Email here</Text>
           <Form.Item
-            name="verification_code"
+            name="email"
             rules={[
               {
                 required: true,
-                message: " ",
+                validator: (rule, value) => {
+                  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                    return Promise.reject(
+                      "Please enter a valid email address!"
+                    );
+                  }
+                  return Promise.resolve(); // Validation successful
+                },
               },
             ]}
           >
-            <Flex justify="center">
-              <Input.OTP
-                typeof="number"
-                className="login-input w-100"
-                // {...onChange}
-                onChange={onChange}
-              />
-            </Flex>
+            <Input placeholder="Enter your email" className="login-input" />
           </Form.Item>
 
           <Form.Item
@@ -100,7 +98,7 @@ const VerifyEmail = () => {
             }}
           >
             <Button htmlType="submit" className="w-100 login-btn">
-              VERIFY EMAIL
+              SEND CODE
             </Button>
           </Form.Item>
         </Form>
@@ -109,4 +107,4 @@ const VerifyEmail = () => {
   );
 };
 
-export default VerifyEmail;
+export default ForgotPassword;

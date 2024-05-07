@@ -1,0 +1,20 @@
+$font-poppins: Poppins;
+$blue-colour: #00aeef;
+.navbar {
+  background-color: #fff;
+  .proflie-box {
+    border-left: 1px solid #eff0f6;
+  }
+  .page-name {
+    font-weight: 600;
+    font-size: 20px;
+    color: #363636;
+    font-family: $font-poppins;
+  }
+  .user-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #363636;
+    font-family: $font-poppins;
+  }
+}

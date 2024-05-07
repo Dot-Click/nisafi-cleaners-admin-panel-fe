@@ -77,7 +77,7 @@ $font-poppins: Poppins;
   font-size: 14px;
 }
 .login-input {
-  background-color: #efefef;
+  background-color: #efefef !important;
   margin-top: 8px;
   padding: 14px;
   border-radius: 3px;
@@ -87,8 +87,25 @@ $font-poppins: Poppins;
     background-color: #efefef;
   }
   &:focus {
-    background-color: #efefef;
+    background-color: #efefef !important;
     outline: none;
+  }
+}
+.ant-otp {
+  input {
+    background-color: #efefef;
+    margin-top: 8px;
+    padding: 14px;
+    border-radius: 3px;
+    border: none;
+    font-family: $font-poppins;
+    &:hover {
+      background-color: #efefef;
+    }
+    &:focus {
+      background-color: #efefef;
+      outline: none;
+    }
   }
 }
 .forgot-password {
@@ -104,6 +121,21 @@ $font-poppins: Poppins;
 .ant-checkbox {
   border: 1px solid #b6b0b0;
   box-shadow: 0px 1px 5px 0px #cfcfcf inset;
+}
+.back-text {
+  width: fit-content;
+  transition: 0.5s;
+  color: #666666;
+  font-family: $font-poppins;
+  &:hover {
+    color: #666666;
+    transition: 0.5s;
+
+    svg {
+      transition: 0.5s;
+      transform: translateX(-5px);
+    }
+  }
 }
 
 @media only screen and (max-width: 767px) {
