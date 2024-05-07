@@ -13,13 +13,13 @@ const Router = () => {
   return (
     <Routes>
       {/* Default Layout routes */}
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="/" element={<Home />} />
+      <Route path="/dashoard" element={<DefaultLayout />}>
+        <Route path="/dashoard" element={<Home />} />
       </Route>
 
       {/* Auth routes */}
-      <Route path="/auth" element={<AuthLayout />}>
-        <Route path="/auth/login" element={<Login />} />
+      <Route path="/" element={<AuthLayout />}>
+        <Route path="/" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
       </Route>
 
