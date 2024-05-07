@@ -1,14 +1,63 @@
-import { Space, Typography } from "antd";
+import { Col, Row, Space, Typography } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const AuthLayout = () => {
   return (
-    <Space direction="vertical">
-      <Title level={2}>Default Layout</Title>
-      <Outlet />
-    </Space>
+    // <Space direction="vertical">
+    <Row>
+      <Col
+        // span={14}
+        xs={{
+          flex: "100%",
+        }}
+        sm={{
+          flex: "100%",
+        }}
+        md={{
+          flex: "50%",
+        }}
+        lg={{
+          flex: "50%",
+        }}
+        xl={{
+          flex: "60%",
+        }}
+        style={{ height: "100vh" }}
+      >
+        <Outlet />
+      </Col>
+      <Col
+        className="img-container d-flex justify-content-center align-items-end"
+        // span={10}
+        xs={{
+          flex: "100%",
+        }}
+        sm={{
+          flex: "100%",
+        }}
+        md={{
+          flex: "50%",
+        }}
+        lg={{
+          flex: "50%",
+        }}
+        xl={{
+          flex: "40%",
+        }}
+      >
+        <Space direction="vertical" className="login-glass-box p-1 py-2">
+          <Text className="heading-text">👍 Admin Pannel Login</Text>
+          <Text className="login-text my-1 d-block">
+            Sign in to access the admin panel and oversee all aspects of the
+            laundry service application, including user management, activity
+            monitoring, payment details, and settings configuration.
+          </Text>
+        </Space>
+      </Col>
+    </Row>
+    // </Space>
   );
 };
 
