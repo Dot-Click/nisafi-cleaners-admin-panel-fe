@@ -27,4 +27,15 @@ $blue-colour: #00aeef;
       }
     }
   }
+  .active-link {
+    background-color: $blue-colour;
+    .link-name {
+      color: #fff;
+    }
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
+  }
 }

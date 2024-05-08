@@ -119,3 +119,32 @@ body {
 .h-100 {
   height: 100%;
 }
+
+.primary-btn {
+  background: linear-gradient(93.71deg, #0ba8d8 0%, #008db8 116.94%);
+  box-shadow: 0px 8.95px 11.19px 0px #00000008;
+  font-family: Poppins;
+  color: #fff;
+  width: 120px;
+  border: none;
+}
+.primary-btn:hover {
+  transition: 0.5s;
+  color: #fff !important;
+  background: linear-gradient(93.71deg, #0a92bc 0%, #006b8c 116.94%) !important;
+  border: none;
+}
+.danger-btn {
+  background: #ff8a8a;
+  box-shadow: 0px 8.95px 11.19px 0px #00000008;
+  font-family: Poppins;
+  color: #fff;
+  width: 120px;
+  border: none;
+}
+.danger-btn:hover {
+  border: none;
+  transition: 0.5s;
+  background-color: #e07777 !important;
+  color: #fff !important;
+}

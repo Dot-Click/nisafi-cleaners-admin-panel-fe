@@ -21,7 +21,7 @@ export const sidebar = [
   {
     id: 2,
     name: "User Management",
-    link: "/user-management",
+    link: "/dashboard/user-managment",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

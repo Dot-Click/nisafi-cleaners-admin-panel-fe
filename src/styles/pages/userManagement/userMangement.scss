@@ -1,0 +1,99 @@
+$font-poppins: Poppins;
+$blue-colour: #00aeef;
+
+.user-container {
+  height: 100%;
+  background-color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  .search-box {
+    background-color: #00aeef;
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px 4px 4px 0px #0000000d;
+    .search-input {
+      background: #83d4e9ab;
+      border: none;
+      outline: none;
+      color: #fff;
+      width: 40%;
+      box-shadow: 0px 4px 11px 0px #00000012;
+
+      &::placeholder {
+        color: #fff !important;
+      }
+      input {
+        &::placeholder {
+          font-family: $font-poppins;
+          color: #fff !important;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+}
+.ant-table-content {
+  table {
+    thead {
+      tr {
+        th {
+          border-top: 7px solid #ffffff !important;
+          font-family: $font-poppins;
+          color: #363636;
+          &:first-child {
+            border-radius: 0 !important;
+          }
+          &:last-child {
+            border-radius: 0 !important;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: #fafafa;
+        }
+      }
+    }
+  }
+}
+.ant-pagination-item {
+  border-radius: 50% !important;
+  border: 1px solid #363636;
+  color: #363636;
+}
+.ant-pagination-item-active {
+  background-color: #00aeef !important;
+  border: none;
+  a {
+    color: #fff !important;
+  }
+}
+.ant-pagination-prev {
+  position: relative !important;
+  &::before {
+    font-family: $font-poppins;
+    content: "Prev" !important;
+    position: absolute !important;
+    width: 50px;
+    left: -15px;
+    color: #363636;
+    font-weight: 600;
+    background-color: #fff;
+  }
+}
+.ant-pagination-next {
+  position: relative !important;
+  &::before {
+    font-family: $font-poppins;
+    content: "Next" !important;
+    position: absolute !important;
+    width: 50px;
+    right: -15px;
+    color: #363636;
+    font-weight: 600;
+    background-color: #fff;
+  }
+}

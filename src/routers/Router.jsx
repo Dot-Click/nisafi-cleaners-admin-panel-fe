@@ -10,6 +10,7 @@ import ForgotPassword from "../components/auth/ForgotPassword";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import NewPassword from "../components/auth/NewPassword";
 import DashboardLayout from "../layouts/DashboardLayout";
+import UserManagement from "../pages/UserManagement";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -17,8 +18,9 @@ const Router = () => {
   return (
     <Routes>
       {/* Default Layout routes */}
-      <Route path="/dashoardwer" element={<DashboardLayout />}>
+      <Route path="/dashboard" element={<DashboardLayout />}>
         {/* <Route path="/dashoard" element={<Home />} /> */}
+        <Route path="/dashboard/user-managment" element={<UserManagement />} />
       </Route>
 
       {/* Auth routes */}

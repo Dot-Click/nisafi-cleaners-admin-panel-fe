@@ -22,4 +22,13 @@
 }
 .sidebar .sidebar-link:hover svg path {
   fill: #fff;
+}
+.sidebar .active-link {
+  background-color: #00aeef;
+}
+.sidebar .active-link .link-name {
+  color: #fff;
+}
+.sidebar .active-link svg path {
+  fill: #fff;
 }/*# sourceMappingURL=sidebar.css.map */

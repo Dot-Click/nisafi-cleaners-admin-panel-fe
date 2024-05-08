@@ -2,10 +2,11 @@ import { Flex, Image, Row, Space, Typography } from "antd";
 import React from "react";
 import logo from "../../assets/logo.png";
 import { sidebar } from "../../data/data";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const { Text } = Typography;
 const Sidebar = () => {
+  const location = useLocation();
   return (
     <Row className="sidebar">
       <Flex justify="center" className="my-3 w-100">
@@ -25,7 +26,13 @@ const Sidebar = () => {
         <Flex vertical>
           {sidebar?.map((val, i) => {
             return (
-              <Link to={val?.link} key={i} className=" px-3 sidebar-link">
+              <Link
+                to={val?.link}
+                key={i}
+                className={`px-3 sidebar-link ${
+                  val.link === location?.pathname && "active-link"
+                }`}
+              >
                 <Flex align="center">
                   {val?.icon}
                   <Text className="mx-1 link-name">{val?.name}</Text>
@@ -34,7 +41,7 @@ const Sidebar = () => {
             );
           })}
         </Flex>
-        <Link className=" px-3  sidebar-link">
+        <Link className=" px-3  sidebar-link" to={"/"}>
           <Flex align="center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
