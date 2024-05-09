@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Checkbox, Typography, Flex, Row } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
 const Login = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+
   const [initialValues, setInitialValues] = useState({
     email: "",
     password: "",
@@ -16,6 +18,7 @@ const Login = () => {
     const rememberedEmail = localStorage.getItem("email");
     const rememberedPassword = window.atob(localStorage.getItem("password"));
     const rememberChecked = localStorage.getItem("remember") === "true";
+
     if (rememberChecked && rememberedEmail && rememberedPassword) {
       setInitialValues({
         ...initialValues,
@@ -32,13 +35,20 @@ const Login = () => {
       localStorage.setItem("password", window.btoa(values.password));
       localStorage.setItem("remember", values?.remember);
     }
+
+    // ? for development's sake only:
+    navigate("/dashboard");
   };
+
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    // console.log("Failed:", errorInfo);
+    return false;
   };
+
   useEffect(() => {
     form.setFieldsValue(initialValues);
   }, [form, initialValues]);
+
   return (
     <Row direction="vertical" className="p-3  d-block h-100">
       <Text className="brand-name">Nisafi cleaners</Text>

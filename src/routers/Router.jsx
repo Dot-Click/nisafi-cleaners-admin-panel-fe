@@ -1,9 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import DefaultLayout from "../layouts/DefaultLayout";
-import Home from "../pages/Home";
 import AuthLayout from "../layouts/AuthLayout";
-import Register from "../components/auth/Register";
 import Login from "../components/auth/Login";
 import NotFound from "../pages/NotFound";
 import ForgotPassword from "../components/auth/ForgotPassword";
@@ -11,6 +8,7 @@ import VerifyEmail from "../components/auth/VerifyEmail";
 import NewPassword from "../components/auth/NewPassword";
 import DashboardLayout from "../layouts/DashboardLayout";
 import UserManagement from "../pages/UserManagement";
+import Dashboard from "../pages/Dashboard";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -19,7 +17,7 @@ const Router = () => {
     <Routes>
       {/* Default Layout routes */}
       <Route path="/dashboard" element={<DashboardLayout />}>
-        {/* <Route path="/dashoard" element={<Home />} /> */}
+        <Route index element={<Dashboard />} />
         <Route path="/dashboard/user-managment" element={<UserManagement />} />
       </Route>
 

@@ -1,13 +1,24 @@
 import React from "react";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Col, Divider, Flex, Row, Space, Typography } from "antd";
+import { Avatar, Flex, Typography } from "antd";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const { Text } = Typography;
 
 const Navbar = () => {
   return (
     <Flex justify="space-between" align="center" className="w-100 navbar">
-      <Text className="px-2 py-1 page-name">Dashboard</Text>
+      <Flex
+        align="center"
+        justify="start"
+        gap={16}
+        style={{
+          padding: "16px",
+        }}
+      >
+        <RxHamburgerMenu />
+        <Text className="page-name">Dashboard</Text>
+      </Flex>
       <Flex
         justify="space-between"
         align="center"
