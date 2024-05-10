@@ -1,9 +1,10 @@
 $font-poppins: Poppins;
 
 .dashboard-right-aside {
-  padding: 40px 10px;
+  padding: 40px 32px;
   background: white;
   display: flex;
+  gap: 40px;
   flex-direction: column;
   align-items: center;
 
@@ -24,6 +25,45 @@ $font-poppins: Poppins;
       font-family: $font-poppins;
       font-size: 1rem;
       font-weight: 800;
+    }
+  }
+
+  .orders-performance-progress {
+    background-color: #0ba8d80d;
+    width: 100%;
+    padding: 22px 18px;
+
+    .ant-progress-circle-trail {
+      stroke: #0ba8d8;
+      stroke-width: 20;
+    }
+
+    .ant-progress-circle-path {
+      stroke: black !important;
+      stroke-width: 3;
+      r: 44;
+    }
+
+    .progress-span-1,
+    h2 {
+      font-family: $font-poppins;
+      font-weight: 800;
+    }
+
+    h2 {
+      width: auto;
+      font-size: 1rem;
+    }
+
+    .progress-span-2 {
+      color: #757575;
+    }
+
+    .shopping-bags {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 170px;
     }
   }
 }

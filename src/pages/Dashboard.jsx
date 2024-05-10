@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Row, Col, Flex, Select } from "antd";
+import { Typography, Row, Col, Flex, Select, Progress, Image } from "antd";
 import ReactApexChart from "react-apexcharts";
 const { Text, Title } = Typography;
 
@@ -92,6 +92,21 @@ const Dashboard = () => {
             series={chartOptions.series}
             type="bar"
             height={300}
+          />
+        </Flex>
+
+        <Flex vertical className="orders-performance-progress" gap={20}>
+          <Title level={2}>Orders Performance</Title>
+          <Flex vertical gap={15}>
+            <Progress type="circle" percent={79} />
+            <Flex vertical>
+              <Text className="progress-span-1">79 orders Finished</Text>
+              <Text className="progress-span-2">21 orders remaining</Text>
+            </Flex>
+          </Flex>
+          <Image
+            className="shopping-bags"
+            src="/images/dashboard/shopping-bags.png"
           />
         </Flex>
       </Col>

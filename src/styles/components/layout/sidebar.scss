@@ -7,6 +7,10 @@ $blue-colour: #00aeef;
   background-color: #fff;
   box-shadow: 6px -1px 22.9px 0px #00000008;
   border: 1px solid #eff0f6;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
   .sidebar-link {
     font-family: $font-poppins;
     color: #363636;

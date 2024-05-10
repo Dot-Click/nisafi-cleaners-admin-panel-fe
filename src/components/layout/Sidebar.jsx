@@ -41,7 +41,7 @@ const Sidebar = () => {
             );
           })}
         </Flex>
-        <Link className=" px-3  sidebar-link" to={"/"}>
+        <Link className="px-3  sidebar-link" to={"/"}>
           <Flex align="center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
