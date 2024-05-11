@@ -2,5 +2,6 @@ $font-poppins: Poppins;
 $blue-colour: #00aeef;
 
 .navbar-outlet {
-  width: 80vw;
+  width: calc(100vw - 330px);
+  padding-bottom: 25px;
 }

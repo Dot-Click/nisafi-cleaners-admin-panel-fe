@@ -2,7 +2,8 @@ $font-poppins: Poppins;
 $blue-colour: #00aeef;
 
 .sidebar {
-  width: 20vw;
+  width: 100%;
+  max-width: 330px;
   height: 100vh;
   background-color: #fff;
   box-shadow: 6px -1px 22.9px 0px #00000008;

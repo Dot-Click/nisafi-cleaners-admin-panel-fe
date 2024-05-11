@@ -19,12 +19,7 @@ const Navbar = () => {
         <RxHamburgerMenu />
         <Text className="page-name">Dashboard</Text>
       </Flex>
-      <Flex
-        justify="space-between"
-        align="center"
-        className="proflie-box py-1"
-        style={{ width: 370 }}
-      >
+      <Flex justify="space-between" align="center" className="proflie-box py-1">
         <Flex align="center">
           <Avatar size={56} icon={<UserOutlined />} className="mx-1" />
           <Text className="user-name">Zubair Arif</Text>

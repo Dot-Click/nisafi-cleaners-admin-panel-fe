@@ -1,3 +1,7 @@
+import BriefCase from "../assets/icons/BriefCase";
+import Worker from "../assets/icons/Worker";
+import DollarSign from "../assets/icons/DollarSign";
+
 export const sidebar = [
   {
     id: 1,
@@ -76,5 +80,32 @@ export const sidebar = [
         ></path>
       </svg>
     ),
+  },
+];
+
+export const dashboardStats = [
+  {
+    data: 300,
+    title: "Total Job Posts",
+    type: "jobs",
+    icon: BriefCase,
+    previousData: 250,
+    chartData: [10, 15, 22, 19, 25, 28, 32],
+  },
+  {
+    data: 200,
+    title: "Total Workers",
+    type: "workers",
+    icon: Worker,
+    previousData: 180,
+    chartData: [9, 16, 20, 23, 19, 26, 35],
+  },
+  {
+    data: 5879,
+    title: "Total Revenue",
+    type: "revenue",
+    icon: DollarSign,
+    previousData: 6000,
+    chartData: [35, 29, 32, 28, 26, 21, 27],
   },
 ];
