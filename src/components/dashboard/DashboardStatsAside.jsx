@@ -4,6 +4,7 @@ import ReactApexChart from "react-apexcharts";
 const { Text, Title } = Typography;
 
 const DashboardStatsAside = () => {
+  // ? chart configuration and data
   const [chartOptions] = useState({
     series: [
       {
@@ -57,13 +58,15 @@ const DashboardStatsAside = () => {
     <>
       <Flex vertical className="total-customers-chart">
         <Flex justify="space-between" style={{ width: "100%" }} gap={10}>
+          {/* // ? chart title */}
           <Title level={2}>Total Customer</Title>
+
+          {/* // ? how many days data filter */}
           <Select
             defaultValue="7"
             style={{
               width: 100,
             }}
-            // onChange={handleChange}
             options={[
               {
                 value: "3",
@@ -85,6 +88,7 @@ const DashboardStatsAside = () => {
           />
         </Flex>
 
+        {/* // ? chart */}
         <ReactApexChart
           options={chartOptions.options}
           series={chartOptions.series}

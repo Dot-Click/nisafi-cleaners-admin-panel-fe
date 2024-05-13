@@ -1,4 +1,4 @@
-import { Col, Flex, Row, Typography } from "antd";
+import { Col, Flex, Row, Select, Typography } from "antd";
 import React, { useState } from "react";
 import { dashboardStats } from "../../data/data";
 import ReactApexChart from "react-apexcharts";
@@ -7,70 +7,6 @@ import ArrowTiltDown from "../../assets/icons/ArrowTiltDown";
 const { Text, Title } = Typography;
 
 const DashboardStats = () => {
-  const [chartConfig] = useState({
-    series: [
-      {
-        name: "Outlet Balance",
-        data: [22, 13, 20, 23, 19, 26, 16],
-      },
-    ],
-    options: {
-      colors: ["#DC447F"],
-      chart: {
-        type: "line",
-        toolbar: {
-          show: false,
-        },
-      },
-      tooltip: {
-        fixed: {
-          enabled: false,
-        },
-        marker: {
-          show: false,
-        },
-      },
-      grid: {
-        padding: {
-          left: 0,
-          right: 0,
-        },
-        show: true,
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      xaxis: {
-        show: false,
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        labels: {
-          show: false,
-        },
-      },
-      stroke: {
-        width: 2,
-        curve: "smooth",
-      },
-    },
-  });
-
   return (
     <Flex vertical className="dashboard-stats">
       {/* // ? stats ccards */}
@@ -83,37 +19,11 @@ const DashboardStats = () => {
       {/* // ? sales and balance stats */}
       <Row className="sales-and-balance">
         <Col span={8} className="balance-stats">
-          <Flex
-            vertical
-            className="upper-container"
-            justify="center"
-            align="center"
-          >
-            <Title level={4}>Outlet Balance</Title>
-            <ReactApexChart
-              options={chartConfig?.options}
-              series={chartConfig?.series}
-              type="line"
-              height={130}
-              width={150}
-            />
-            <Title level={5}>$3219,37</Title>
-            <Flex gap={10}>
-              <Flex
-                justify="center"
-                align="center"
-                className="profit-loss-icon"
-              >
-                <ArrowTiltDown />
-              </Flex>{" "}
-              <Text>-7% from yesterday</Text>
-            </Flex>
-          </Flex>
-          <Flex className="lower-container" justify="center" align="center">
-            <Title level={3}>Withdraw</Title>
-          </Flex>
+          <SalesAndBalance />
         </Col>
-        <Col span={15}></Col>
+        <Col flex={1}>
+          <DailySales />
+        </Col>
       </Row>
     </Flex>
   );
@@ -244,6 +154,180 @@ const StatCard = ({ stat }) => {
         width={80}
       />
     </Col>
+  );
+};
+
+const SalesAndBalance = () => {
+  const [chartConfig] = useState({
+    series: [
+      {
+        name: "Outlet Balance",
+        data: [22, 13, 20, 23, 19, 26, 16],
+      },
+    ],
+    options: {
+      colors: ["#DC447F"],
+      chart: {
+        type: "line",
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        fixed: {
+          enabled: false,
+        },
+        marker: {
+          show: false,
+        },
+      },
+      grid: {
+        padding: {
+          left: 0,
+          right: 0,
+        },
+        show: true,
+        xaxis: {
+          lines: {
+            show: false,
+          },
+        },
+        yaxis: {
+          lines: {
+            show: false,
+          },
+        },
+      },
+      xaxis: {
+        show: false,
+        labels: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        labels: {
+          show: false,
+        },
+      },
+      stroke: {
+        width: 2,
+        curve: "smooth",
+      },
+    },
+  });
+
+  return (
+    <>
+      <Flex
+        vertical
+        className="upper-container"
+        justify="center"
+        align="center"
+      >
+        <Title level={4}>Outlet Balance</Title>
+        <ReactApexChart
+          options={chartConfig?.options}
+          series={chartConfig?.series}
+          type="line"
+          height={130}
+          width={150}
+        />
+        <Title level={5}>$3219,37</Title>
+        <Flex gap={10}>
+          <Flex justify="center" align="center" className="profit-loss-icon">
+            <ArrowTiltDown />
+          </Flex>{" "}
+          <Text>-7% from yesterday</Text>
+        </Flex>
+      </Flex>
+      <Flex className="lower-container" justify="center" align="center">
+        <Title level={3}>Withdraw</Title>
+      </Flex>
+    </>
+  );
+};
+
+const DailySales = () => {
+  // ? chart configuration and data
+  const [chartConfig] = useState({
+    series: [
+      {
+        name: "Daily Sales",
+        data: [166, 174, 156, 204, 156, 180, 161, 145],
+      },
+    ],
+    grid: {
+      padding: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      },
+    },
+    options: {
+      colors: ["#0BA8D8"],
+      chart: {
+        type: "line",
+      },
+      stroke: {
+        width: 2,
+        curve: "smooth",
+      },
+    },
+  });
+
+  return (
+    <Flex vertical className="daily-sales-stats">
+      <Flex
+        justify="space-between"
+        gap={50}
+        align="flex-start"
+        className="daily-sales-chart-container"
+      >
+        {/* // ? Chart title and sales period date range */}
+        <Flex vertical className="daily-sales-chart-header">
+          <Title level={3}>Daily Sales</Title>
+          <Text className="sales-period">July 25th - 31st</Text>
+        </Flex>
+
+        {/* // ? how many days data filter */}
+        <Select
+          defaultValue="7"
+          options={[
+            {
+              value: "3",
+              label: "Last 3 days",
+            },
+            {
+              value: "7",
+              label: "Last 7 days",
+            },
+            {
+              value: "14",
+              label: "Last 14 days",
+            },
+            {
+              value: "30",
+              label: "Last 30 days",
+            },
+          ]}
+        />
+      </Flex>
+
+      {/* // ? the chart */}
+      <ReactApexChart
+        options={chartConfig.options}
+        series={chartConfig.series}
+        type="line"
+        height={340}
+      />
+    </Flex>
   );
 };
 

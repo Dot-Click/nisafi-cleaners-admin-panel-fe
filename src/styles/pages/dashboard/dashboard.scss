@@ -5,7 +5,7 @@ $blue: #0ba8d8;
 
 .dashboard-stats-container {
   width: 100%;
-  max-width: calc(100vw - 370px - 370px);
+  max-width: calc(100vw - 370px - 354px);
 
   .dashboard-stats {
     padding: 30px 15px;
@@ -71,6 +71,7 @@ $blue: #0ba8d8;
 
   .sales-and-balance {
     margin-top: 30px;
+    gap: 25px;
 
     .balance-stats {
       border-radius: 1rem;
@@ -120,6 +121,47 @@ $blue: #0ba8d8;
         h3 {
           color: #757575;
           font-family: $font-poppins;
+        }
+      }
+    }
+  }
+
+  .daily-sales-stats {
+    background-color: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    // height: 91%;
+    padding: 15px;
+
+    .daily-sales-chart-container {
+      width: 100%;
+
+      .daily-sales-chart-header {
+        width: 100%;
+
+        .sales-period,
+        h3 {
+          font-family: $font-poppins;
+        }
+
+        h3 {
+          margin: 0;
+        }
+
+        .sales-period {
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: #757575;
+        }
+      }
+
+      .ant-select {
+        border: none;
+
+        span {
+          color: #757575;
+          font-family: $font-poppins;
+          font-size: 1.1rem;
         }
       }
     }
