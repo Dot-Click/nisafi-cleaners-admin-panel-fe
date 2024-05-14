@@ -17,14 +17,14 @@ const DashboardStats = () => {
       </Row>
 
       {/* // ? sales and balance stats */}
-      <Row className="sales-and-balance">
-        <Col span={8} className="balance-stats">
+      <Flex className="sales-and-balance">
+        <Col xxl={6} xl={9} lg={12} md={24} className="balance-stats">
           <SalesAndBalance />
         </Col>
         <Col flex={1}>
           <DailySales />
         </Col>
-      </Row>
+      </Flex>
     </Flex>
   );
 };

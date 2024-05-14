@@ -5,18 +5,53 @@ $blue-colour: #00aeef;
   background-color: #fff;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 99;
+
+  .menu-icon {
+    display: none;
+    cursor: pointer;
+
+    @media screen and (max-width: 1199px) {
+      display: unset;
+    }
+  }
 
   .proflie-box {
     border-left: 1px solid #eff0f6;
-    min-width: 370px;
+    width: 100%;
+    max-width: 370px;
+
+    @media screen and (max-width: 1500px) {
+      max-width: 330px;
+    }
+
+    @media screen and (max-width: 576px) {
+      max-width: 200px;
+    }
   }
 
   .page-name {
+    text-transform: capitalize;
     font-weight: 600;
     font-size: 20px;
     color: #363636;
     font-family: $font-poppins;
+
+    @media screen and (max-width: 576px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+    margin: 0 1rem;
+
+    @media screen and (max-width: 576px) {
+      width: 42px;
+      height: 42px;
+      margin: 0 0.5rem;
+    }
   }
 
   .user-name {
@@ -24,5 +59,16 @@ $blue-colour: #00aeef;
     font-size: 14px;
     color: #363636;
     font-family: $font-poppins;
+
+    @media screen and (max-width: 576px) {
+      width: 50px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .notifications-and-settings {
+    padding: 0 12px;
   }
 }

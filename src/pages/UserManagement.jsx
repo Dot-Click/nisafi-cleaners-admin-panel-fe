@@ -23,6 +23,7 @@ const UserManagement = () => {
       label: <Button className="danger-btn">Reject</Button>,
     },
   ];
+
   const columns = [
     {
       title: "Sr",
@@ -30,7 +31,7 @@ const UserManagement = () => {
       key: "key",
     },
     {
-      title: "User Name",
+      title: "Username",
       dataIndex: "name",
       key: "name",
     },
@@ -84,6 +85,7 @@ const UserManagement = () => {
       ),
     },
   ];
+
   const data = [
     {
       key: "1",
@@ -113,7 +115,6 @@ const UserManagement = () => {
       register: "3rd jan 2005",
       role: "worker",
     },
-
     {
       key: "5",
       name: "John Brown",
@@ -129,17 +130,18 @@ const UserManagement = () => {
       role: "worker",
     },
   ];
+
   return (
-    <Row className=" d-block m-2 user-container">
+    <Row className=" d-block user-management-container">
       <Row className="search-box">
-        {" "}
         <Input
           className="search-input"
           size="large"
-          placeholder="Search"
+          placeholder="Search..."
           prefix={<SearchOutlined />}
         />
       </Row>
+
       <GeneralTable columns={columns} data={data} />
     </Row>
   );

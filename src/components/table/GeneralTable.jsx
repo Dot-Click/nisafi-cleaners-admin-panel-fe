@@ -6,6 +6,7 @@ const GeneralTable = ({ columns, data }) => {
     <Table
       columns={columns}
       dataSource={data}
+      className="datatable"
       pagination={{
         position: ["bottomCenter"],
       }}

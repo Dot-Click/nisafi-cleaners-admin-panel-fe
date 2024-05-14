@@ -106,10 +106,6 @@ const DashboardStatsAside = () => {
             <Text className="progress-span-2">21 orders remaining</Text>
           </Flex>
         </Flex>
-        <Image
-          className="shopping-bags"
-          src="/images/dashboard/shopping-bags.png"
-        />
       </Flex>
     </>
   );
