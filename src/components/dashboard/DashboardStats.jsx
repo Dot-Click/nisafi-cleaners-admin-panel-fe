@@ -1,14 +1,16 @@
 import { Col, Flex, Row, Select, Typography } from "antd";
 import React, { useState } from "react";
-import { dashboardStats } from "../../data/data";
+import { dashboardStats, recentOrders } from "../../data/data";
 import ReactApexChart from "react-apexcharts";
 import ArrowTiltDown from "../../assets/icons/ArrowTiltDown";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
 const { Text, Title } = Typography;
 
 const DashboardStats = () => {
   return (
-    <Flex vertical className="dashboard-stats">
+    <Flex vertical className="dashboard-stats" gap={45}>
       {/* // ? stats ccards */}
       <Row className="stats-cards">
         {dashboardStats?.map((stat, i) => {
@@ -24,6 +26,47 @@ const DashboardStats = () => {
         <Col flex={1}>
           <DailySales />
         </Col>
+      </Flex>
+
+      {/* // ? recent orders */}
+      <Flex vertical className="recent-orders-section" gap={15}>
+        <Flex justify="space-between" gap={20}>
+          <Title level={3}>Recent Orders</Title>
+          <Link to="" className="see-all">
+            See all
+          </Link>
+        </Flex>
+        <Row className="order-cards">
+          {recentOrders.length > 0 &&
+            recentOrders.slice(0, 4).map((item, index) => {
+              return (
+                <Col xxl={6} sm={12} xs={24} className="order-card" key={index}>
+                  <Flex className="inner-card" vertical gap={12}>
+                    <Flex
+                      justify="space-between"
+                      gap={10}
+                      className="order-status-and-number"
+                    >
+                      <Text className="order-number">{item?.orderNumber}</Text>
+                      <Text className="order-status">{item?.orderStatus}</Text>
+                    </Flex>
+                    <Text className="customer-name">{`${item?.customer?.firstName} ${item?.customer?.lastName}`}</Text>
+                    <Flex
+                      justify="space-between"
+                      gap={10}
+                      className="order-date-and-fee"
+                    >
+                      <Text className="order-date">
+                        {moment(item?.orderDate).format("MMMM, Do YYYY")}
+                      </Text>
+                      <Text className="order-fee">${item?.orderFee}</Text>
+                    </Flex>
+                    <Text className="order-type">{item?.orderType}</Text>
+                  </Flex>
+                </Col>
+              );
+            })}
+        </Row>
       </Flex>
     </Flex>
   );
@@ -286,7 +329,7 @@ const DailySales = () => {
     <Flex vertical className="daily-sales-stats">
       <Flex
         justify="space-between"
-        gap={50}
+        gap={25}
         align="flex-start"
         className="daily-sales-chart-container"
       >

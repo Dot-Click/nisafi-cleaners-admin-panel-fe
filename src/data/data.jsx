@@ -4,7 +4,6 @@ import DollarSign from "../assets/icons/DollarSign";
 import Grid from "../assets/icons/Grid";
 import UserGear from "../assets/icons/UserGear";
 import CreditCard from "../assets/icons/CreditCard";
-import Gear from "../assets/icons/Gear";
 import GearFilled from "../assets/icons/GearFilled";
 
 export const sidebar = [
@@ -58,5 +57,72 @@ export const dashboardStats = [
     icon: DollarSign,
     previousData: 6000,
     chartData: [35, 29, 32, 28, 26, 21, 27],
+  },
+];
+
+export const recentOrders = [
+  {
+    orderNumber: "#1232321",
+    orderStatus: "Processing",
+    customer: { firstName: "Customer", lastName: "01" },
+    orderDate: new Date(),
+    orderFee: 100,
+    orderType: "Wash Only Packeges",
+  },
+  {
+    orderNumber: "#1232322",
+    orderStatus: "completed",
+    customer: { firstName: "Customer", lastName: "02" },
+    orderDate: new Date(),
+    orderFee: 95,
+    orderType: "Dry Clean Packeges",
+  },
+  {
+    orderNumber: "#1232323",
+    orderStatus: "completed",
+    customer: { firstName: "Customer", lastName: "03" },
+    orderDate: new Date(),
+    orderFee: 90,
+    orderType: "Wash Only Packeges",
+  },
+  {
+    orderNumber: "#1232324",
+    orderStatus: "processing",
+    customer: { firstName: "Customer", lastName: "04" },
+    orderDate: new Date(),
+    orderFee: 115,
+    orderType: "Dry Clean Packeges",
+  },
+  {
+    orderNumber: "#1232325",
+    orderStatus: "processing",
+    customer: { firstName: "Customer", lastName: "05" },
+    orderDate: new Date(),
+    orderFee: 125,
+    orderType: "Dry Clean Packeges",
+  },
+  {
+    orderNumber: "#1232326",
+    orderStatus: "completed",
+    customer: { firstName: "Customer", lastName: "06" },
+    orderDate: new Date(),
+    orderFee: 100,
+    orderType: "Dry Clean Packeges",
+  },
+  {
+    orderNumber: "#1232327",
+    orderStatus: "processing",
+    customer: { firstName: "Customer", lastName: "07" },
+    orderDate: new Date(),
+    orderFee: 100,
+    orderType: "Wash Only Packeges",
+  },
+  {
+    orderNumber: "#1232328",
+    orderStatus: "complete",
+    customer: { firstName: "Customer", lastName: "08" },
+    orderDate: new Date(),
+    orderFee: 100,
+    orderType: "Dry Clean Packeges",
   },
 ];

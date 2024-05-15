@@ -1,9 +1,9 @@
 $font-poppins: Poppins;
-$blue-colour: #00aeef;
+$blue-colour: #1fb1de;
 
 .sidebar {
   width: 100%;
-  max-width: 330px;
+  max-width: 280px;
   height: 100vh;
   background-color: #fff;
   box-shadow: 6px -1px 22px 0px #00000008;
@@ -12,10 +12,6 @@ $blue-colour: #00aeef;
   top: 0;
   z-index: 100;
   transition: ease-in-out 0.6s;
-
-  @media screen and (max-width: 1500px) {
-    max-width: 290px;
-  }
 
   @media screen and (max-width: 1199px) {
     position: fixed;

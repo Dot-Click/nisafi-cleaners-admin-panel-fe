@@ -9,7 +9,10 @@ const UserManagement = () => {
     {
       key: "1",
       label: (
-        <Link to={""} className="d-flex justify-content-center text-center">
+        <Link
+          to={""}
+          className="d-flex justify-content-center text-center view-details-btn"
+        >
           View Detail
         </Link>
       ),

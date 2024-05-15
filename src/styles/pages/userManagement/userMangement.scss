@@ -13,14 +13,14 @@ $blue-colour: #00aeef;
   }
 
   .search-box {
-    background-color: #00aeef;
+    background-color: #24b4dfcc;
     padding: 20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     box-shadow: 0px 4px 4px 0px #0000000d;
 
     .search-input {
-      background: #83d4e9ab;
+      background-color: #83d4e9ab;
       border: none;
       outline: none;
       color: #fff;
@@ -90,7 +90,7 @@ $blue-colour: #00aeef;
 }
 
 .ant-pagination-item-active {
-  background-color: #00aeef !important;
+  background-color: #16afde !important;
   border: none;
 
   a {
@@ -127,5 +127,15 @@ $blue-colour: #00aeef;
     color: #363636;
     font-weight: 600;
     background-color: #fff;
+  }
+}
+
+.view-details-btn {
+  transition: all 0.5s;
+  color: #1064e2 !important;
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
   }
 }
