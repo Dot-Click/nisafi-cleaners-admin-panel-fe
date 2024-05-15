@@ -22,13 +22,13 @@ export const sidebar = [
   {
     id: 3,
     name: "Payment Details",
-    link: "/payment-details",
+    link: "/dashboard/payment-details",
     icon: CreditCard,
   },
   {
     id: 4,
     name: "Settings",
-    link: "/settings",
+    link: "/dashboard/settings",
     icon: GearFilled,
   },
 ];

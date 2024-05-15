@@ -1,8 +1,19 @@
 import React from "react";
 import GeneralTable from "../components/table/GeneralTable";
-import { Button, Dropdown, Flex, Input, Row, Tag } from "antd";
+import {
+  Button,
+  Dropdown,
+  Flex,
+  Input,
+  Row,
+  Select,
+  Tag,
+  Typography,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+
+const { Text } = Typography;
 
 const UserManagement = () => {
   const items = [
@@ -53,7 +64,11 @@ const UserManagement = () => {
       dataIndex: "role",
       key: "role",
       render: (_, { role }) => (
-        <Tag color={role === "worker" ? "magenta" : "gold"} key={role}>
+        <Tag
+          color={role === "worker" ? "magenta" : "gold"}
+          className="role"
+          key={role}
+        >
           {role?.toUpperCase()}
         </Tag>
       ),
@@ -61,7 +76,6 @@ const UserManagement = () => {
     {
       title: "Action",
       key: "action",
-
       render: (_, record) => (
         <Flex className="mx-1">
           <Dropdown
@@ -136,13 +150,56 @@ const UserManagement = () => {
 
   return (
     <Row className=" d-block user-management-container">
-      <Row className="search-box">
+      <Row className="search-box" justify="space-between">
         <Input
           className="search-input"
           size="large"
           placeholder="Search..."
           prefix={<SearchOutlined />}
         />
+
+        {/* // ? filters */}
+        <Flex align="center" className="filters" gap={10}>
+          {/* // ? sort by filter */}
+          <Flex className="filter" align="center">
+            <Text className="lebal">Sort By:</Text>
+            <Select
+              defaultValue="newest"
+              options={[
+                {
+                  value: "newest",
+                  label: "Newest",
+                },
+                {
+                  value: "oldest",
+                  label: "Oldest",
+                },
+              ]}
+            />
+          </Flex>
+
+          {/* // ? sort by filter */}
+          <Flex className="filter" align="center">
+            <Text className="lebal">Role:</Text>
+            <Select
+              defaultValue="all"
+              options={[
+                {
+                  value: "all",
+                  label: "All",
+                },
+                {
+                  value: "customer",
+                  label: "Customer",
+                },
+                {
+                  value: "worker",
+                  label: "Worker",
+                },
+              ]}
+            />
+          </Flex>
+        </Flex>
       </Row>
 
       <GeneralTable columns={columns} data={data} />
