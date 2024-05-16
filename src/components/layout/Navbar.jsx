@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Flex, Tooltip, Typography } from "antd";
+import {
+  Avatar,
+  Flex,
+  Tooltip,
+  Typography,
+  Popover,
+  Tabs,
+  Badge,
+  Button,
+} from "antd";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Gear from "../../assets/icons/Gear";
 import Bell from "../../assets/icons/Bell";
 import { trimString } from "../../services/helpers";
@@ -47,7 +55,10 @@ const Navbar = ({ isOpened, setOpened }) => {
       >
         {/* // ? avatar and username */}
         <Flex align="center">
-          <Avatar icon={<UserOutlined />} className="avatar" />
+          <Avatar
+            src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
+            className="avatar"
+          />
           <Tooltip title="Zubair Arif" className="username-tooltip">
             <Text className="user-name">{trimString("Zubair Arif")}</Text>
           </Tooltip>
@@ -55,12 +66,139 @@ const Navbar = ({ isOpened, setOpened }) => {
         <Flex>
           {/* // ? notifications and settings */}
           <Flex gap={16} className="notifications-and-settings">
-            <Bell />
+            <Popover
+              content={NotificationsPopover}
+              trigger="click"
+              placement="bottom"
+            >
+              <Flex className="cursor-pointer">
+                <Bell />
+              </Flex>
+            </Popover>
             <Gear />
           </Flex>
         </Flex>
       </Flex>
     </Flex>
+  );
+};
+
+const NotificationsPopover = () => {
+  const onChange = (key) => {
+    // console.log(key);
+  };
+
+  const RequestNotification = () => {
+    return (
+      <Flex vertical className="request-notifications" gap={10}>
+        <Text className="notifications-time">Today</Text>
+        <Flex
+          className="request-notification unread"
+          gap={8}
+          align="flex-start"
+        >
+          <Avatar
+            size={56}
+            src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
+          />
+
+          <Flex vertical gap={10} className="notification-content">
+            <Flex vertical>
+              <Flex className="username-and-timestamp" gap={6}>
+                <Text className="username">John Doe</Text>
+                <Text className="notification-timestamp">9:30 am</Text>
+              </Flex>
+              <Text className="notification-description">
+                John Doe requested to register account.
+              </Text>
+            </Flex>
+            <Flex justify="space-between" gap={8} className="link-and-btns">
+              <Flex className="btns" gap={6}>
+                <Button className="primary-btn">Accept</Button>
+                <Button className="danger-btn">Reject</Button>
+              </Flex>
+              <Link
+                to={""}
+                className="d-flex justify-content-center text-center view-details-btn"
+              >
+                View Detail
+              </Link>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
+    );
+  };
+
+  const GeneralNotification = () => {
+    return (
+      <Flex vertical className="request-notifications" gap={10}>
+        <Text className="notifications-time">Today</Text>
+        {[1, 2, 3]?.map((item) => (
+          <Flex
+            className={`request-notification${item !== 3 ? " unread" : ""}`}
+            gap={8}
+            key={item}
+            align="flex-start"
+          >
+            <Avatar
+              size={56}
+              src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
+            />
+
+            <Flex vertical gap={10} className="notification-content">
+              <Flex vertical>
+                <Flex className="username-and-timestamp" gap={6}>
+                  <Text className="username">Transaction Update</Text>
+                  <Text className="notification-timestamp">9:30 am</Text>
+                </Flex>
+                <Text className="notification-description">
+                  John Doe has made a transaction.
+                </Text>
+              </Flex>
+              <Flex justify="flex-end" className="link-and-btns">
+                <Link
+                  to={""}
+                  className="d-flex justify-content-center text-center view-details-btn"
+                >
+                  View Detail
+                </Link>
+              </Flex>
+            </Flex>
+          </Flex>
+        ))}
+      </Flex>
+    );
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: (
+        <Badge count={2} offset={[15, 8]}>
+          General{" "}
+        </Badge>
+      ),
+      children: <GeneralNotification />,
+    },
+    {
+      key: "2",
+      label: (
+        <Badge count={1} offset={[15, 8]}>
+          Reqyest{" "}
+        </Badge>
+      ),
+      children: <RequestNotification />,
+    },
+  ];
+
+  return (
+    <Tabs
+      defaultActiveKey="2"
+      items={items}
+      onChange={onChange}
+      className="notification-tabs"
+    />
   );
 };
 

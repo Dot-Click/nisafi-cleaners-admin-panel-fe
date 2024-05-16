@@ -72,3 +72,66 @@ $blue-colour: #00aeef;
     padding: 0 12px;
   }
 }
+
+.notification-tabs {
+  min-width: 380px;
+
+  @media screen and (max-width: 576px) {
+    min-width: unset;
+  }
+
+  .request-notifications {
+    .request-notification {
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: $font-poppins;
+      min-width: 380px;
+
+      @media screen and (max-width: 576px) {
+        min-width: unset;
+      }
+
+      .notification-content {
+        flex: 1;
+      }
+
+      &.unread {
+        background-color: #fafafa;
+      }
+
+      .username-and-timestamp {
+        @media screen and (max-width: 576px) {
+          flex-wrap: wrap;
+        }
+
+        .username {
+          font-weight: 800;
+          font-size: 14px;
+          font-family: $font-poppins;
+        }
+
+        .notification-timestamp {
+          color: #8894a6;
+        }
+      }
+
+      .notification-description {
+        color: #8894a6;
+      }
+
+      .link-and-btns {
+        @media screen and (max-width: 576px) {
+          flex-wrap: wrap;
+        }
+
+        .btns {
+          .primary-btn,
+          .danger-btn {
+            padding: 4px 7px;
+            width: 65px;
+          }
+        }
+      }
+    }
+  }
+}
