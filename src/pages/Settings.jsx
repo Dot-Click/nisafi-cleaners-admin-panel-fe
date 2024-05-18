@@ -11,6 +11,7 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import Camera from "../assets/icons/Camera";
+import countries from "../data/countries.json";
 
 const { Title, Text } = Typography;
 
@@ -20,7 +21,7 @@ const Settings = () => {
     email: "zubarif234@gmail.com",
     phone: 12340000,
     password: "",
-    country: "USA",
+    country: "United States",
   });
 
   const handleChange = (e) => {
@@ -194,6 +195,7 @@ const PasswordField = () => {
         onCancel={() => setModalOpen(false)}
         destroyOnClose
         className="change-password-modal"
+        centered
       >
         <Row className="field-row">
           <Col md={24} className="field">
@@ -234,6 +236,12 @@ const PasswordField = () => {
 const CountryField = ({ fieldValue, handleChange }) => {
   const [isEditable, setEditable] = useState(false);
 
+  const countriesList = countries?.map((country) => ({
+    image: country?.flag,
+    label: country?.name,
+    value: country?.name,
+  }));
+
   return (
     <Row className="field-row">
       <Col lg={16} xs={24} className="field">
@@ -241,7 +249,7 @@ const CountryField = ({ fieldValue, handleChange }) => {
         {isEditable ? (
           <Select
             defaultValue={fieldValue}
-            options={[]}
+            options={countriesList}
             onChange={handleChange}
           />
         ) : (

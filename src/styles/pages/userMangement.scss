@@ -55,6 +55,18 @@ $blue-colour: #00aeef;
       max-width: 700px;
       overflow-x: auto;
     }
+
+    table {
+      tr {
+        font-family: $font-poppins;
+
+        .role,
+        .status {
+          border: none;
+          padding: 8px 12px;
+        }
+      }
+    }
   }
 }
 
@@ -168,17 +180,20 @@ $blue-colour: #00aeef;
   }
 }
 
-.user-management-container {
-  .datatable {
-    table {
-      tr {
-        font-family: $font-poppins;
+.user-details-modal {
+  padding: 50px 100px;
 
-        .role,
-        .status {
-          border: none;
-          padding: 8px 12px;
-        }
+  @media screen and (max-width: 1200px) {
+    padding: 50px 25px;
+  }
+
+  .modal-container {
+    .modal-card {
+      padding: 10px;
+
+      .modal-card-inner {
+        border: 1px solid #eeeeee;
+        box-shadow: 0px 8px 12.1px 0px #00000012;
       }
     }
   }

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
 import {
   Button,
+  Col,
   Dropdown,
   Flex,
   Input,
+  Modal,
   Row,
   Select,
   Tag,
@@ -16,27 +18,26 @@ import { Link } from "react-router-dom";
 const { Text } = Typography;
 
 const UserManagement = () => {
-  const items = [
-    {
-      key: "1",
-      label: (
-        <Link
-          to={""}
-          className="d-flex justify-content-center text-center view-details-btn"
-        >
-          View Detail
-        </Link>
-      ),
-    },
-    {
-      key: "2",
-      label: <Button className="primary-btn">Accept</Button>,
-    },
-    {
-      key: "3",
-      label: <Button className="danger-btn">Reject</Button>,
-    },
-  ];
+  const [isModalOpened, setModalOpen] = useState(false);
+  const [record, setRecord] = useState(null);
+
+  const hanldeViewDetails = (data) => {
+    try {
+      setRecord(data);
+      setModalOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const hanldeCloseModal = () => {
+    try {
+      setModalOpen(false);
+      setRecord(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const columns = [
     {
@@ -80,7 +81,27 @@ const UserManagement = () => {
         <Flex className="mx-1">
           <Dropdown
             menu={{
-              items,
+              items: [
+                {
+                  key: "1",
+                  label: (
+                    <Text
+                      onClick={() => hanldeViewDetails(record)}
+                      className="d-flex justify-content-center text-center view-details-btn"
+                    >
+                      View Detail
+                    </Text>
+                  ),
+                },
+                {
+                  key: "2",
+                  label: <Button className="primary-btn">Accept</Button>,
+                },
+                {
+                  key: "3",
+                  label: <Button className="danger-btn">Reject</Button>,
+                },
+              ],
             }}
           >
             <svg
@@ -202,7 +223,28 @@ const UserManagement = () => {
         </Flex>
       </Row>
 
+      {/* // ? table component */}
       <GeneralTable columns={columns} data={data} />
+
+      {/* // ? user details modal */}
+      <Modal
+        open={isModalOpened}
+        footer={null}
+        onCancel={hanldeCloseModal}
+        destroyOnClose
+        className="user-details-modal"
+        centered
+        width={1200}
+      >
+        <Row className="modal-container">
+          <Col xl={8} lg={12} xs={24} className="modal-card">
+            <Flex vertical gap={10} align="flex">
+              <Text>Profile Image</Text>
+              <Flex className="modal-card-inner"></Flex>
+            </Flex>
+          </Col>
+        </Row>
+      </Modal>
     </Row>
   );
 };
