@@ -188,12 +188,67 @@ $blue-colour: #00aeef;
   }
 
   .modal-container {
+    max-width: 1080px;
+
     .modal-card {
-      padding: 10px;
+      padding: 12px;
+      min-height: 280px;
+
+      .field-label {
+        font-size: 1rem;
+        font-weight: 600;
+        font-family: $font-poppins;
+      }
 
       .modal-card-inner {
-        border: 1px solid #eeeeee;
-        box-shadow: 0px 8px 12.1px 0px #00000012;
+        border-radius: 12px;
+        padding: 14px;
+
+        &,
+        img {
+          border: 1px solid #eeeeee;
+          box-shadow: 0px 8px 12.1px 0px #00000012;
+        }
+
+        img {
+          border-radius: 12px;
+        }
+
+        .name-and-size {
+          font-family: $font-poppins;
+
+          .file-name {
+            font-size: 1rem;
+          }
+
+          .file-size {
+            font-size: 12px;
+            color: #838383;
+          }
+        }
+
+        &.fields-card {
+          padding: 0;
+          color: #6d6868;
+        }
+
+        .card-fields {
+          border-top: 1px solid #eeeeee;
+
+          .field-name {
+            font-size: 12px;
+          }
+
+          .field-value {
+            font-size: 1rem;
+            font-weight: 600;
+          }
+        }
+
+        .field-label,
+        .card-fields {
+          padding: 20px;
+        }
       }
     }
   }

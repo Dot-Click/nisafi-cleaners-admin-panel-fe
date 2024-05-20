@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
 import {
   Button,
-  Col,
   Dropdown,
   Flex,
   Input,
-  Modal,
   Row,
   Select,
   Tag,
   Typography,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import UserDetailsModal from "../components/layout/UserDetailsModal";
 
 const { Text } = Typography;
 
@@ -30,7 +28,7 @@ const UserManagement = () => {
     }
   };
 
-  const hanldeCloseModal = () => {
+  const handleCloseModal = () => {
     try {
       setModalOpen(false);
       setRecord(null);
@@ -227,24 +225,11 @@ const UserManagement = () => {
       <GeneralTable columns={columns} data={data} />
 
       {/* // ? user details modal */}
-      <Modal
-        open={isModalOpened}
-        footer={null}
-        onCancel={hanldeCloseModal}
-        destroyOnClose
-        className="user-details-modal"
-        centered
-        width={1200}
-      >
-        <Row className="modal-container">
-          <Col xl={8} lg={12} xs={24} className="modal-card">
-            <Flex vertical gap={10} align="flex">
-              <Text>Profile Image</Text>
-              <Flex className="modal-card-inner"></Flex>
-            </Flex>
-          </Col>
-        </Row>
-      </Modal>
+      <UserDetailsModal
+        isOpened={isModalOpened}
+        record={record}
+        handleCloseModal={handleCloseModal}
+      />
     </Row>
   );
 };
