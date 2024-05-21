@@ -8,10 +8,12 @@ import {
   Row,
   Select,
   Typography,
+  Upload,
 } from "antd";
 import React, { useState } from "react";
 import Camera from "../assets/icons/Camera";
 import countries from "../data/countries.json";
+import ImgCrop from "antd-img-crop";
 
 const { Title, Text } = Typography;
 
@@ -243,7 +245,7 @@ const CountryField = ({ fieldValue, handleChange }) => {
   }));
 
   return (
-    <Row className="field-row">
+    <Row className="field-row country-field">
       <Col lg={16} xs={24} className="field">
         <Text className="field-name">Country</Text>
         {isEditable ? (
@@ -281,30 +283,49 @@ const UpdateProfileImage = () => {
     "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
   );
 
-  const handleImagePreviewer = (e) => {
-    var reader = new FileReader();
+  const [fileList, setFileList] = useState([
+    {
+      uid: "-1",
+      name: "user-avatar.png",
+      status: "done",
+      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+    },
+  ]);
 
-    reader.onload = function () {
-      setImageSrc(reader.result);
-    };
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
-    reader.readAsDataURL(e.target.files[0]);
+  const onChange = async ({ fileList: newFileList }) => {
+    setFileList(newFileList);
 
-    setImageSrc(e.target.files[0]);
+    // if (newFileList.length > 0 && newFileList[0].originFileObj) {
+    const base64 = await getBase64(newFileList[0]?.originFileObj);
+    setImageSrc(base64);
+    // }
+    // else {
+    //   setImageSrc("");
+    // }
   };
 
   return (
-    // ? wrapping the avatar in a label tag was the only option to trigger the file type input... useRef and other stuff wasn't working
     <label className="display-picture-container">
+      <ImgCrop rotationSlider>
+        <Upload
+          accept="image/*"
+          listType="picture-circle"
+          multiple={false}
+          fileList={fileList}
+          maxCount={1}
+          onChange={onChange}
+        ></Upload>
+      </ImgCrop>
+
       <Avatar src={imageSrc} className="display-picture" />
-      <Input
-        type="file"
-        onChange={handleImagePreviewer}
-        id="profileImage"
-        name="profileImage"
-        className="d-none"
-        accept="image/*"
-      />
       <Text className="camera-icon" justify="flex-end">
         <Camera />
       </Text>

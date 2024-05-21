@@ -6,6 +6,7 @@
     "@emotion/react": "^11.11.3",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "antd": "^5.16.5",
+    "antd-img-crop": "^4.22.0",
     "apexcharts": "^3.49.0",
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
