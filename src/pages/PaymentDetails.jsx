@@ -86,7 +86,7 @@ const PaymentDetails = () => {
       render: (_, record) => (
         <Text
           onClick={() => handleViewDetails(record)}
-          className="cursor-pointer d-flex justify-content-center text-center view-details-btn"
+          className="cursor-pointer d-flex text-center view-details-btn"
         >
           View Detail
         </Text>
