@@ -186,6 +186,13 @@ body {
 }
 
 /* ? pdf styling */
+.pdf,
+.pdf a,
+.pdf-document,
+.pdf-document iframe {
+  height: 100%;
+  width: 100%;
+}
 
 .pdf-document iframe {
   overflow: hidden;
@@ -200,8 +207,6 @@ body {
   border: 1px solid #eaeaea;
   border-radius: 14px;
   min-height: 200px;
-  height: 100%;
-  max-height: 225px;
   border-radius: 12px;
   position: relative;
   overflow: hidden;
@@ -216,4 +221,8 @@ body {
   margin-inline-end: 6px;
   position: relative;
   z-index: 10;
+}
+
+.ant-modal-wrap {
+  padding: 1rem 0;
 }

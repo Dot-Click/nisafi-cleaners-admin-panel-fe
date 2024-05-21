@@ -12,6 +12,7 @@ import {
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
+import { userData } from "../data/data";
 
 const { Text } = Typography;
 
@@ -122,51 +123,6 @@ const UserManagement = () => {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      email: "johnali@gmail.com",
-      register: "3rd jan 2005",
-      role: "customer",
-    },
-    {
-      key: "2",
-      name: "John Brown",
-      email: "johnali@gmail.com",
-      register: "3rd jan 2005",
-      role: "customer",
-    },
-    {
-      key: "3",
-      name: "John Brown",
-      email: "johnali@gmail.com",
-      register: "3rd jan 2005",
-      role: "worker",
-    },
-    {
-      key: "4",
-      name: "John Brown",
-      email: "johnali@gmail.com",
-      register: "3rd jan 2005",
-      role: "worker",
-    },
-    {
-      key: "5",
-      name: "John Brown",
-      email: "johnali@gmail.com",
-      register: "3rd jan 2005",
-      role: "customer",
-    },
-    {
-      key: "6",
-      name: "John Brown",
-      email: "johnali@gmail.com",
-      register: "3rd jan 2005",
-      role: "worker",
-    },
-  ];
-
   return (
     <Row className=" d-block user-management-container">
       <Row className="search-box" justify="space-between">
@@ -222,12 +178,12 @@ const UserManagement = () => {
       </Row>
 
       {/* // ? table component */}
-      <GeneralTable columns={columns} data={data} />
+      <GeneralTable columns={columns} data={userData} />
 
       {/* // ? user details modal */}
       <UserDetailsModal
         isOpened={isModalOpened}
-        record={record}
+        data={record}
         handleCloseModal={handleCloseModal}
       />
     </Row>

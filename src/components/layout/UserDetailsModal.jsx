@@ -1,13 +1,12 @@
-import { Col, Flex, Image, Modal, Row, Typography } from "antd";
+import { Button, Col, Flex, Image, Modal, Row, Typography } from "antd";
 import React from "react";
-import { FaCloudDownloadAlt, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import pdfImage from "/images/icons/pdf.png";
 import Download from "../../assets/icons/Download";
 
 const { Text } = Typography;
 
-const UserDetailsModal = ({ isOpened, handleCloseModal }) => {
+const UserDetailsModal = ({ isOpened, handleCloseModal, data }) => {
   return (
     <>
       {/* // ? user details modal */}
@@ -21,88 +20,91 @@ const UserDetailsModal = ({ isOpened, handleCloseModal }) => {
         width={1200}
       >
         <Row className="modal-container">
-          <Col xl={8} lg={12} xs={24} className="modal-card">
+          <Col lg={8} md={12} xs={24} className="modal-card">
             <Flex vertical gap={10} align="flex" className="h-100">
               <Text className="field-label">Profile Image</Text>
               <Flex className="modal-card-inner">
-                <Image src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs" />
+                <Image
+                  src={data?.image}
+                  fallback="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.webp"
+                />
               </Flex>
             </Flex>
           </Col>
 
           {/* // ? document component */}
-          <Document
-            title={"ID document (Front)"}
-            documentName={"id-card-front-side.pdf"}
-            documentURL={
-              "https://www.arvindguptatoys.com/arvindgupta/orwellanimalfarm.pdf"
-            }
-            fileSize={"2 MB"}
-          />
-
-          {/* // ? document component */}
-          <Document
-            title={"ID document (Back)"}
-            documentName={"id-card-back-side.pdf"}
-            documentURL={
-              "https://www.ibiblio.org/ebooks/Conrad/Heart_Darkness.pdf"
-            }
-            fileSize={"1.5 MB"}
-          />
+          {data?.documents?.map((doc, index) => {
+            return (
+              <Document
+                key={index}
+                title={doc?.documentTitle}
+                documentName={doc?.filename}
+                documentURL={doc?.url}
+                fileSize={doc?.size}
+              />
+            );
+          })}
 
           {/* // ? personal information */}
-          <Col xl={8} lg={12} xs={24} className="modal-card">
+          <Col lg={8} md={12} xs={24} className="modal-card">
             <Flex className="modal-card-inner fields-card" vertical>
               <Text className="field-label">Personal Information</Text>
 
               <Flex vertical className="card-fields">
                 <Text className="field-name">Full Name:</Text>
-                <Text className="field-value">Johnson Willy</Text>
+                <Text className="field-value">{data?.name}</Text>
               </Flex>
 
               <Flex vertical className="card-fields">
                 <Text className="field-name">Email Address:</Text>
-                <Text className="field-value">johonsonwilly@gmail.com</Text>
+                <Text className="field-value">{data?.email}</Text>
               </Flex>
 
               <Flex vertical className="card-fields">
                 <Text className="field-name">Phone Number:</Text>
-                <Text className="field-value">+122333 444 000</Text>
+                <Text className="field-value">{data?.phone}</Text>
               </Flex>
             </Flex>
           </Col>
 
           {/* // ? additional information */}
-          <Col xl={8} lg={12} xs={24} className="modal-card">
+          <Col lg={8} md={12} xs={24} className="modal-card">
             <Flex className="modal-card-inner fields-card" vertical>
               <Text className="field-label">Additional Information</Text>
 
               <Flex vertical className="card-fields">
                 <Text className="field-name">Profession:</Text>
-                <Text className="field-value">Professional Cleaner</Text>
+                <Text className="field-value">{data?.profession}</Text>
               </Flex>
 
               <Flex vertical className="card-fields">
                 <Text className="field-name">ID Number:</Text>
-                <Text className="field-value">121293203-12810</Text>
+                <Text className="field-value">{data?.idNumber}</Text>
               </Flex>
 
               <Flex vertical className="card-fields">
                 <Text className="field-name">Certificate:</Text>
-                <Text className="field-value">Cleaner</Text>
+                <Text className="field-value">{data?.certificate}</Text>
               </Flex>
             </Flex>
           </Col>
 
           {/* // ? address information */}
-          <Col xl={8} lg={12} xs={24} className="modal-card">
-            <Flex className="modal-card-inner fields-card" vertical>
+          <Col lg={8} md={12} xs={24} className="modal-card last-card">
+            <Flex className="modal-card-inner fields-card">
               <Flex vertical className="card-fields">
                 <Text className="field-name">Address:</Text>
-                <Text className="field-value">
-                  Uherová 4, Poprad, Slovakia, 05801
-                </Text>
+                <Text className="field-value">{data?.address}</Text>
               </Flex>
+            </Flex>
+
+            <Flex className="btns" gap={10}>
+              <Button className="primary-btn" onClick={handleCloseModal}>
+                Accept
+              </Button>
+              <Button className="danger-btn" onClick={handleCloseModal}>
+                Reject
+              </Button>
             </Flex>
           </Col>
         </Row>
@@ -120,8 +122,8 @@ const Document = ({ title, documentURL, documentName, fileSize }) => {
   };
 
   return (
-    <Col xl={8} lg={12} xs={24} className="modal-card">
-      <Flex vertical gap={10} align="flex">
+    <Col lg={8} md={12} xs={24} className="modal-card document-card">
+      <Flex vertical gap={10} align="flex" className="h-100">
         <Text className="field-label">{title}</Text>
         <Flex className="modal-card-inner" gap={16} vertical>
           <Flex className="pdf">
@@ -145,7 +147,7 @@ const Document = ({ title, documentURL, documentName, fileSize }) => {
           <Flex justify="space-between" gap={16} className="pdf-title">
             <Flex vertical className="name-and-size">
               <Text className="file-name">
-                {documentName.length > 11 ? trimDocumentName() : documentName}
+                {documentName?.length > 11 ? trimDocumentName() : documentName}
               </Text>
               <Text className="file-size">{fileSize}</Text>
             </Flex>
