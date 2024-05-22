@@ -1,6 +1,6 @@
 import { Flex, Image, Row, Typography } from "antd";
 import React from "react";
-import logo from "../../assets/logo.png";
+import logo from "/images/logos/logo.png";
 import { sidebar } from "../../data/data";
 import { Link, useLocation } from "react-router-dom";
 import { GrClose } from "react-icons/gr";

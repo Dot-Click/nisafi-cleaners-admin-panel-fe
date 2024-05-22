@@ -244,13 +244,20 @@ const CountryField = ({ fieldValue, handleChange }) => {
     value: country?.name,
   }));
 
+  const filterOption = (input, option) =>
+    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
   return (
     <Row className="field-row country-field">
       <Col lg={16} xs={24} className="field">
         <Text className="field-name">Country</Text>
         {isEditable ? (
           <Select
+            showSearch
+            placeholder="Select Country"
             defaultValue={fieldValue}
+            optionFilterProp="children"
+            filterOption={filterOption}
             options={countriesList}
             onChange={handleChange}
           />
