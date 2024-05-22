@@ -303,25 +303,36 @@ const UpdateProfileImage = () => {
   const onChange = async ({ fileList: newFileList }) => {
     setFileList(newFileList);
 
-    // if (newFileList.length > 0 && newFileList[0].originFileObj) {
-    const base64 = await getBase64(newFileList[0]?.originFileObj);
-    setImageSrc(base64);
-    // }
-    // else {
-    //   setImageSrc("");
-    // }
+    if (newFileList.length > 0 && newFileList[0].originFileObj) {
+      const base64 = await getBase64(newFileList[0]?.originFileObj);
+      setImageSrc(base64);
+    } else {
+      setImageSrc("");
+    }
+  };
+
+  let uploadRef = null;
+
+  const handleTriggerUpload = () => {
+    if (uploadRef) {
+      uploadRef.click();
+    }
   };
 
   return (
-    <label className="display-picture-container">
+    <label className="display-picture-container" onClick={handleTriggerUpload}>
       <ImgCrop rotationSlider>
         <Upload
+          ref={(node) => {
+            uploadRef = node ? node.input : null;
+          }}
           accept="image/*"
           listType="picture-circle"
           multiple={false}
           fileList={fileList}
           maxCount={1}
           onChange={onChange}
+          showUploadList={false}
         ></Upload>
       </ImgCrop>
 
