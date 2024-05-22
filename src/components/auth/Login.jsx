@@ -8,9 +8,10 @@ const Login = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
+  // ? keep these hard code initial values untill the things are dynamic and we integrate APIs.
   const [initialValues, setInitialValues] = useState({
-    email: "",
-    password: "",
+    email: "random_email@development.env",
+    password: "Password@123",
     remember: true,
   });
 
