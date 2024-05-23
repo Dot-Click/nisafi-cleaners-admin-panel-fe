@@ -13,6 +13,7 @@ import {
 import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
 import { userData } from "../data/data";
+import ChevronDown from "../assets/icons/ChevronDown";
 
 const { Text } = Typography;
 
@@ -140,6 +141,7 @@ const UserManagement = () => {
             <Text className="lebal">Sort By:</Text>
             <Select
               defaultValue="newest"
+              suffixIcon={<ChevronDown />}
               options={[
                 {
                   value: "newest",
@@ -158,6 +160,7 @@ const UserManagement = () => {
             <Text className="lebal">Role:</Text>
             <Select
               defaultValue="all"
+              suffixIcon={<ChevronDown />}
               options={[
                 {
                   value: "all",
