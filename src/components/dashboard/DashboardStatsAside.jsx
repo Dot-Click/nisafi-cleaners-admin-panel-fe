@@ -57,7 +57,12 @@ const DashboardStatsAside = () => {
   return (
     <>
       <Flex vertical className="total-customers-chart">
-        <Flex justify="space-between" style={{ width: "100%" }} gap={10}>
+        <Flex
+          justify="space-between"
+          align="center"
+          style={{ width: "100%" }}
+          gap={10}
+        >
           {/* // ? chart title */}
           <Title level={2}>Total Customer</Title>
 

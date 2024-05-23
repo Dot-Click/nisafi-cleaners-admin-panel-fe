@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Checkbox, Typography, Flex, Row } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Checkbox,
+  Typography,
+  Flex,
+  Row,
+  Image,
+} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
@@ -51,9 +60,13 @@ const Login = () => {
   }, [form, initialValues]);
 
   return (
-    <Row direction="vertical" className="p-3  d-block h-100">
-      <Text className="brand-name">Nisafi cleaners</Text>
-      <Flex vertical justify="center" align="center" className="h-100">
+    <Row direction="vertical" className="login-form d-block h-100">
+      <Image
+        src="/images/logos/logo-text.png"
+        preview={false}
+        className="brand-name"
+      />
+      <Flex vertical justify="center" align="center" className="form-container">
         <Form
           form={form}
           layout="vertical"

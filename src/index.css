@@ -8,6 +8,7 @@
 @import "./styles/components/layout/navbar.scss";
 
 /* ? pages */
+@import "./styles/pages/auth.scss";
 @import "./styles/pages/dashboard.scss";
 @import "./styles/pages/userMangement.scss";
 @import "./styles/pages/paymentDetails.scss";

@@ -76,6 +76,20 @@ $blue-colour: #00aeef;
 .notification-tabs {
   min-width: 380px;
 
+  .ant-tabs-nav-list {
+    gap: 20px;
+
+    .ant-scroll-number {
+      background-color: #9db2ce;
+    }
+
+    .ant-tabs-tab-active {
+      .ant-scroll-number.ant-badge-count {
+        background-color: #ff4d4f;
+      }
+    }
+  }
+
   @media screen and (max-width: 576px) {
     min-width: unset;
   }

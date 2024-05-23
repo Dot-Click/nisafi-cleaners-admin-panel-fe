@@ -225,6 +225,10 @@ $blue: #0ba8d8;
       min-width: 45%;
     }
 
+    .ant-select {
+      margin-top: 10px;
+    }
+
     .ant-select-selector {
       border: none;
       color: #757575;
@@ -301,13 +305,26 @@ $blue: #0ba8d8;
   }
 
   .order-cards {
-    // gap: 10px;
-
     .order-card {
-      padding: 0 10px 10px 0;
+      padding: 0 0 10px 0;
 
-      // &:n
-      // padding: 0 10px 0 0;
+      @media screen and (min-width: 1600px) {
+        &:nth-child(4) {
+          padding: 0 0 10px 0;
+        }
+      }
+
+      @media screen and (min-width: 576px) {
+        padding: 0 10px 10px 0;
+
+        &:nth-child(2) {
+          padding: 0 0 10px 0;
+        }
+
+        &:nth-child(4) {
+          padding: 0 0 10px 0;
+        }
+      }
 
       .inner-card {
         border-radius: 12px;

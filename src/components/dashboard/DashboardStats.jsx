@@ -36,39 +36,41 @@ const DashboardStats = () => {
             See all
           </Link>
         </Flex>
+
+        {/* // ? recent orders cards */}
         <Row className="order-cards">
           {recentOrders.length > 0 &&
-            recentOrders.slice(0, 4).map((item, index) => {
-              return (
-                <Col xxl={6} sm={12} xs={24} className="order-card" key={index}>
-                  <Flex className="inner-card" vertical gap={12}>
-                    <Flex
-                      justify="space-between"
-                      gap={10}
-                      className="order-status-and-number"
-                    >
-                      <Text className="order-number">{item?.orderNumber}</Text>
-                      <Text className="order-status">{item?.orderStatus}</Text>
-                    </Flex>
-                    <Text className="customer-name">{`${item?.customer?.firstName} ${item?.customer?.lastName}`}</Text>
-                    <Flex
-                      justify="space-between"
-                      gap={10}
-                      className="order-date-and-fee"
-                    >
-                      <Text className="order-date">
-                        {moment(item?.orderDate).format("MMMM, Do YYYY")}
-                      </Text>
-                      <Text className="order-fee">${item?.orderFee}</Text>
-                    </Flex>
-                    <Text className="order-type">{item?.orderType}</Text>
-                  </Flex>
-                </Col>
-              );
+            recentOrders.slice(0, 4).map((order, index) => {
+              return <OrderCard key={index} order={order} />;
             })}
         </Row>
       </Flex>
     </Flex>
+  );
+};
+
+const OrderCard = ({ order }) => {
+  return (
+    <Col xxl={6} sm={12} xs={24} className="order-card">
+      <Flex className="inner-card" vertical gap={12}>
+        <Flex
+          justify="space-between"
+          gap={10}
+          className="order-status-and-number"
+        >
+          <Text className="order-number">{order?.orderNumber}</Text>
+          <Text className="order-status">{order?.orderStatus}</Text>
+        </Flex>
+        <Text className="customer-name">{`${order?.customer?.firstName} ${order?.customer?.lastName}`}</Text>
+        <Flex justify="space-between" gap={10} className="order-date-and-fee">
+          <Text className="order-date">
+            {moment(order?.orderDate).format("MMMM, Do YYYY")}
+          </Text>
+          <Text className="order-fee">${order?.orderFee}</Text>
+        </Flex>
+        <Text className="order-type">{order?.orderType}</Text>
+      </Flex>
+    </Col>
   );
 };
 

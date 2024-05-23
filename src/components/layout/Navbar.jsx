@@ -185,7 +185,7 @@ const NotificationsPopover = () => {
       key: "2",
       label: (
         <Badge count={1} offset={[15, 8]}>
-          Reqyest{" "}
+          Request{" "}
         </Badge>
       ),
       children: <RequestNotification />,
