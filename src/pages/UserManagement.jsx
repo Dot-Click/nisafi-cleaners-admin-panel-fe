@@ -56,7 +56,7 @@ const UserManagement = () => {
       key: "email",
     },
     {
-      title: "Registeration Date",
+      title: "Registration Date",
       dataIndex: "register",
       key: "register",
     },

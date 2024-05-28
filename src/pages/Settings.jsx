@@ -130,7 +130,7 @@ const UpdateFields = ({ fieldTitle, fieldName, fieldValue, handleChange }) => {
           </>
         ) : (
           <Button className="grey-btn" onClick={() => setEditable(true)}>
-            Eidit
+            Edit
           </Button>
         )}
       </Col>
@@ -184,7 +184,7 @@ const PasswordField = () => {
       </Col>
       <Col xs={24} lg={8} className="btns">
         <Button className="grey-btn" onClick={() => setModalOpen(true)}>
-          Eidit
+          Edit
         </Button>
       </Col>
 
@@ -277,7 +277,7 @@ const CountryField = ({ fieldValue, handleChange }) => {
           </>
         ) : (
           <Button className="grey-btn" onClick={() => setEditable(true)}>
-            Eidit
+            Edit
           </Button>
         )}
       </Col>
