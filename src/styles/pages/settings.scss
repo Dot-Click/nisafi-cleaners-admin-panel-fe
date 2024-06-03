@@ -235,3 +235,15 @@ $poppins: Poppins;
     }
   }
 }
+
+.display-avatar {
+  width: 180px;
+  height: 180px;
+  border: 3px solid #0ba8d8;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

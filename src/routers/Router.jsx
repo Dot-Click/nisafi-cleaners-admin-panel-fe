@@ -11,6 +11,7 @@ import UserManagement from "../pages/UserManagement";
 import Dashboard from "../pages/Dashboard";
 import PaymentDetails from "../pages/PaymentDetails";
 import Settings from "../pages/Settings";
+import WorkerInfo from "../pages/WorkerInfo";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -21,6 +22,7 @@ const Router = () => {
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="/dashboard/user-managment" element={<UserManagement />} />
+        <Route path="/dashboard/user/worker-info" element={<WorkerInfo />} />
         <Route path="/dashboard/payment-details" element={<PaymentDetails />} />
         <Route path="/dashboard/settings" element={<Settings />} />
       </Route>

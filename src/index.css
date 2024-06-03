@@ -13,3 +13,7 @@
 @import "./styles/pages/userMangement.scss";
 @import "./styles/pages/paymentDetails.scss";
 @import "./styles/pages/settings.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
