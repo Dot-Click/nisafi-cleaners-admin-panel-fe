@@ -19,16 +19,19 @@ import pdfImage from "../../public/images/icons/pdf.png";
 import Download from "../assets/icons/Download";
 import { useMobile, useTablet } from "../services/hooks/mediaquery";
 import { Copy } from "lucide-react";
+import { successMessage, showInfo } from "../services/helpers";
 
 const WorkerInfo = () => {
   const tablet = useTablet();
   const mobile = useMobile();
 
   const copyTextToClipboard = (text) => {
+    // successMessage("Copied!🎉");
+    showInfo("Copied");
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        alert(text);
+        // alert(text);
       })
       .catch((err) => console.error("Error copying text: ", err));
   };
@@ -149,6 +152,14 @@ const WorkerInfo = () => {
                       onClick={() => copyTextToClipboard(workerInfo.email)}
                     />
                   </Flex>
+                </Flex>
+
+                {/* Phone */}
+                <Flex className="bg-[#f9fafb] px-4 py-1 rounded-lg" vertical>
+                  <Title level={5}>Phone</Title>
+                  <Text className="text-gray-shade-1 font-semibold">
+                    {workerInfo?.phone}
+                  </Text>
                 </Flex>
 
                 {/* JoinAt */}

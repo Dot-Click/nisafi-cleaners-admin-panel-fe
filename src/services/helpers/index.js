@@ -1,27 +1,31 @@
 import { message } from "antd";
 
-export const successMessage = () => {
+export const successMessage = (msg) => {
   const [messageApi] = message.useMessage();
   messageApi.open({
     type: "success",
-    content: "This is a success message",
+    content: msg,
   });
 };
 
-export const errorMessage = () => {
+export const errorMessage = (msg) => {
   const [messageApi] = message.useMessage();
   messageApi.open({
     type: "error",
-    content: "This is an error message",
+    content: msg,
   });
 };
 
-export const warningMessage = () => {
+export const warningMessage = (msg) => {
   const [messageApi] = message.useMessage();
   messageApi.open({
     type: "warning",
-    content: "This is a warning message",
+    content: msg,
   });
+};
+
+const showInfo = (messageContent, duration = 3) => {
+  message.info(messageContent, duration);
 };
 
 export const trimString = (string, length = 10) => {

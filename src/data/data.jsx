@@ -386,6 +386,7 @@ export const workerInfo = {
   profession: "Dry Cleaner",
   address: "123 Main Street, Cityville, State",
   joinAt: "January 1, 2023",
+  phone: "+92 31213312122",
   rating: 4,
   documents: [
     {
