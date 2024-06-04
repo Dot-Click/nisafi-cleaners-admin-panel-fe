@@ -24,10 +24,6 @@ export const warningMessage = (msg) => {
   });
 };
 
-const showInfo = (messageContent, duration = 3) => {
-  message.info(messageContent, duration);
-};
-
 export const trimString = (string, length = 10) => {
   if (string.length > length) {
     return `${string.slice(0, length)}...`;

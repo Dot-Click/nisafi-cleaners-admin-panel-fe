@@ -27,7 +27,7 @@ const WorkerInfo = () => {
 
   const copyTextToClipboard = (text) => {
     // successMessage("Copied!🎉");
-    showInfo("Copied");
+    // showInfo("Copied");
     navigator.clipboard
       .writeText(text)
       .then(() => {
