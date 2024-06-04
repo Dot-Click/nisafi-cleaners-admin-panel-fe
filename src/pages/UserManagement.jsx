@@ -17,6 +17,7 @@ import ChevronDown from "../assets/icons/ChevronDown";
 import { UsersRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
+import { WashingMachine } from "lucide-react";
 
 const UserManagement = () => {
   const [isModalOpened, setModalOpen] = useState(false);
@@ -300,30 +301,29 @@ const UserManagement = () => {
         popupClassName="text-red-500"
       >
         <Tabs.TabPane
-          // style={{ backgroundColor: "blue" }}
+          tab={
+            <span className="flex gap-2">
+              <WashingMachine />
+              Worker
+            </span>
+          }
+          key="1"
+        >
+          <FiltersComponents />
+
+          <GeneralTable columns={workerCols} data={workerData} />
+        </Tabs.TabPane>
+        <Tabs.TabPane
           tab={
             <span className="flex gap-2">
               <UsersRound />
               Customer
             </span>
           }
-          key="1"
-        >
-          <FiltersComponents />
-          <GeneralTable columns={custCols} data={userData} />
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={
-            <span className="flex gap-2">
-              <UsersRound />
-              Worker
-            </span>
-          }
           key="2"
         >
           <FiltersComponents />
-
-          <GeneralTable columns={workerCols} data={workerData} />
+          <GeneralTable columns={custCols} data={userData} />
         </Tabs.TabPane>
       </Tabs>
 

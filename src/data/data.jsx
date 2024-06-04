@@ -5,6 +5,8 @@ import Grid from "../assets/icons/Grid";
 import UserGear from "../assets/icons/UserGear";
 import CreditCard from "../assets/icons/CreditCard";
 import GearFilled from "../assets/icons/GearFilled";
+// import { BriefcaseBusiness } from "lucide-react";
+import { FaBriefcase } from "react-icons/fa";
 
 export const sidebar = [
   {
@@ -21,12 +23,19 @@ export const sidebar = [
   },
   {
     id: 3,
+    name: "Jobs Management",
+    link: "/dashboard/jobs-managment",
+    icon: FaBriefcase,
+  },
+
+  {
+    id: 4,
     name: "Payment Details",
     link: "/dashboard/payment-details",
     icon: CreditCard,
   },
   {
-    id: 4,
+    id: 5,
     name: "Settings",
     link: "/dashboard/settings",
     icon: GearFilled,
@@ -365,7 +374,14 @@ export const workerInfo = {
     "Meet our diligent laundry experts! With years of experience, they ensure your garments receive the utmost care. From delicate fabrics to tough stains, they handle it all with precision and expertise. Our team is dedicated to providing prompt service and impeccable results, leaving your clothes fresh and rejuvenated every time. Trust our laundry professionals to exceed your expectations and deliver a pristine wardrobe, tailored to perfection. Experience the difference with our meticulous attention to detail and commitment to excellence.",
   qualification: "Graduated",
   experience: "2+ years of experience",
-  skills: ["Dry cleaning techniques", "Stain removal", "Garment care"],
+  skills: [
+    "Dry cleaning techniques",
+    "Stain removal",
+    "Garment care",
+    "Garment care",
+    "Garment care",
+    "Garment care",
+  ],
   certificate: "Certified Dry Cleaner",
   profession: "Dry Cleaner",
   address: "123 Main Street, Cityville, State",

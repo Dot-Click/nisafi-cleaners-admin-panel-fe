@@ -17,3 +17,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary: "#6BC3E6";
+}
+
+.ant-tabs-tab-btn {
+  color: "#6BC3E6" !important;
+  /* other styles */
+}

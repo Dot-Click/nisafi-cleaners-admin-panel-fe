@@ -37,13 +37,13 @@ const Sidebar = ({ isOpened, setOpened }) => {
               <Link
                 to={val?.link}
                 key={i}
-                className={`px-3 sidebar-link ${
+                className={` px-3 sidebar-link !font-semibold ${
                   val.link === location?.pathname && "active-link"
                 }`}
                 onClick={() => setOpened(!isOpened)}
               >
                 <Flex align="center">
-                  <val.icon size={20} fill="#9DB2CE" />
+                  <val.icon size={20} fill="#9DB2CE" stroke="#fff" />
                   <Text className="mx-1 link-name">{val?.name}</Text>
                 </Flex>
               </Link>
