@@ -10,12 +10,15 @@ import {
   Image,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
+import { useAuthStore } from "../../stores/authStore";
 
 const { Text } = Typography;
 
 const Login = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { login, loading } = useAuthStore(useShallow((state) => state));
 
   // ? keep these hard code initial values untill the things are dynamic and we integrate APIs.
   const [initialValues, setInitialValues] = useState({
@@ -39,15 +42,16 @@ const Login = () => {
     }
   }, []);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     if (values.remember) {
       localStorage.setItem("email", values?.email);
       localStorage.setItem("password", window.btoa(values.password));
       localStorage.setItem("remember", values?.remember);
     }
-
-    // ? for development's sake only:
-    navigate("/dashboard");
+    const res = await login(values);
+    if (res) {
+      navigate("/dashboard");
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -171,7 +175,11 @@ const Login = () => {
               span: 24,
             }}
           >
-            <Button htmlType="submit" className="w-100 login-btn">
+            <Button
+              loading={loading}
+              htmlType="submit"
+              className="w-100 login-btn"
+            >
               LOGIN
             </Button>
           </Form.Item>

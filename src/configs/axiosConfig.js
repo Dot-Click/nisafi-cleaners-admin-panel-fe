@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { errorMessage } from "../globalFunctions";
 
-export const baseURL = "http://127.0.0.1:8000/api";
+export const baseURL = "https://nisafi-staging.up.railway.app";
 
 // axios instance for json data
 const custAxios = axios.create({
@@ -18,6 +18,8 @@ export const attachToken = () => {
 
   if (token) {
     custAxios.defaults.headers.common["Authorization"] = token;
+  } else {
+    custAxios.defaults.headers.common["Authorization"] = null;
   }
 };
 
@@ -27,6 +29,8 @@ export const attachTokenWithFormAxios = () => {
 
   if (token) {
     formAxios.defaults.headers.common["Authorization"] = token;
+  } else {
+    formAxios.defaults.headers.common["Authorization"] = null;
   }
 };
 

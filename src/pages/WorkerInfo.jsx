@@ -19,7 +19,7 @@ import pdfImage from "../../public/images/icons/pdf.png";
 import Download from "../assets/icons/Download";
 import { useMobile, useTablet } from "../services/hooks/mediaquery";
 import { Copy } from "lucide-react";
-import { successMessage, showInfo } from "../services/helpers";
+import { successMessage } from "../services/helpers";
 
 const WorkerInfo = () => {
   const tablet = useTablet();

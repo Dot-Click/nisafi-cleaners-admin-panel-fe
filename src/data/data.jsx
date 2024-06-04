@@ -439,3 +439,66 @@ export const workerInfo = {
     },
   ],
 };
+
+export const jobsData = [
+  {
+    key: "1",
+    name: "Md Umer",
+    email: "iambatman@wayneindustry.com",
+    register: "21st May 2000",
+    phone: "090078603",
+    profession: "worker",
+    role: "worker",
+    certificate: "worker",
+    idNumber: "121293203-12812",
+    address: "7330 Scheme 33, Gulshan-e-Iqbal",
+    image:
+      "https://cdn.vox-cdn.com/thumbor/u89Vw8FBkT534OG_QkYMewjYoL8=/0x0:3028x1350/1200x800/filters:focal(1164x235:1648x719)/cdn.vox-cdn.com/uploads/chorus_image/image/70579733/rev_1_TBM_TRL_001_High_Res_JPEG.0.jpeg",
+    status: "disputed",
+  },
+  {
+    key: "2",
+    name: "Zubair Arif",
+    email: "zubarif@gmail.com",
+    register: "3rd Jan 2005",
+    phone: "090078601",
+    profession: "customer",
+    role: "customer",
+    certificate: "none",
+    idNumber: "121293203-12810",
+    address: "6681 Korangi Chay number",
+    image:
+      "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+    status: "disputed",
+  },
+  {
+    key: "3",
+    name: "John Jons",
+    email: "martinmanhunter@gmail.com",
+    register: "23rd Mar 1566",
+    phone: "090078602",
+    profession: "worker",
+    role: "worker",
+    certificate: "worker",
+    idNumber: "121293203-12811",
+    address: "6681 Korangi Aath number",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/3/34/Martian_Manhunter_Alex_Ross.png",
+    status: "delivered",
+  },
+  {
+    key: "4",
+    name: "Clark Kent",
+    email: "clarkkent@dailyplanet.com",
+    register: "29 Feb 2002",
+    phone: "090078604",
+    profession: "customer",
+    role: "customer",
+    certificate: "none",
+    idNumber: "121293203-12813",
+    address: "6912 Lalo Keth Das number",
+    image:
+      "https://i0.wp.com/www.heyuguys.com/images/2014/08/Clark-Kent.jpg?fit=962%2C536&ssl=1",
+    status: "completed",
+  },
+];

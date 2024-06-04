@@ -1,8 +1,49 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+
+// export const useAuth = () => {
+//   const { isAuthenticated } = useSelector((state) => state.auth);
+
+//   if (isAuthenticated) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };
+
+// export const getToken = () => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     return token;
+//   } else {
+//     return false;
+//   }
+// };
+
+// export const getUserData = () => {
+//   const userData = JSON.parse(localStorage.getItem("user"));
+//   if (userData) {
+//     return userData;
+//   } else {
+//     return false;
+//   }
+// };
+
+// export const UseGetRole = () => {
+//   const { user } = useSelector((state) => state.auth);
+//   if (user) {
+//     return user?.userData?.role;
+//   } else {
+//     return false;
+//   }
+// };
+
+import { useAuthStore } from "../../stores/authStore";
+import { useShallow } from "zustand/react/shallow";
 
 export const useAuth = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-
+  const [isAuthenticated, loading] = useAuthStore(
+    useShallow((state) => [state.isAuthenticated, state.loading])
+  );
   if (isAuthenticated) {
     return true;
   } else {
@@ -20,19 +61,22 @@ export const getToken = () => {
 };
 
 export const getUserData = () => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  if (userData) {
-    return userData;
+  const [isAuthenticated, user] = useAuthStore(
+    useShallow((state) => [state.isAuthenticated, state.user])
+  );
+  if (isAuthenticated && user) {
+    return user?.userData;
   } else {
-    return false;
+    return null;
   }
 };
-
-export const UseGetRole = () => {
-  const { user } = useSelector((state) => state.auth);
-  if (user) {
+export const useGetRole = () => {
+  const [isAuthenticated, user] = useAuthStore(
+    useShallow((state) => [state?.isAuthenticated, state?.user])
+  );
+  if (isAuthenticated && user) {
     return user?.userData?.role;
   } else {
-    return false;
+    return null;
   }
 };

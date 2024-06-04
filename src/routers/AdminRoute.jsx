@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { UseGetRole, useAuth } from "../services/hooks";
+import { useGetRole, useAuth } from "../services/hooks";
 
 const AdminRoute = ({ Component }) => {
   const isAuthenticated = useAuth();
-  const role = UseGetRole();
+  const role = useGetRole();
   if (!isAuthenticated) {
     return <Navigate to="/" />;
   } else {

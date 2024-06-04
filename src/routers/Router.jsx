@@ -13,6 +13,8 @@ import PaymentDetails from "../pages/PaymentDetails";
 import Settings from "../pages/Settings";
 import WorkerInfo from "../pages/WorkerInfo";
 import JobManagement from "../pages/JobManagement";
+import AuthRoute from "./AuthRoute";
+import AdminRoute from "./AdminRoute";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -21,20 +23,48 @@ const Router = () => {
     <Routes>
       {/* Default Layout routes */}
       <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="/dashboard/user-managment" element={<UserManagement />} />
-        <Route path="/dashboard/user/worker-info" element={<WorkerInfo />} />
-        <Route path="/dashboard/payment-details" element={<PaymentDetails />} />
-        <Route path="/dashboard/settings" element={<Settings />} />
-        <Route path="/dashboard/jobs-managment" element={<JobManagement />} />
+        <Route index element={<AdminRoute Component={Dashboard} />} />
+
+        <Route
+          path="/dashboard/user-managment"
+          element={<AdminRoute Component={UserManagement} />}
+        />
+        <Route
+          path="/dashboard/user/worker-info"
+          element={<AdminRoute Component={WorkerInfo} />}
+        />
+        <Route
+          path="/dashboard/payment-details"
+          element={<AdminRoute Component={PaymentDetails} />}
+        />
+        <Route
+          path="/dashboard/settings"
+          element={<AdminRoute Component={Settings} />}
+        />
+
+        <Route
+          path="/dashboard/jobs-managment"
+          element={<AdminRoute Component={JobManagement} />}
+        />
       </Route>
 
       {/* Auth routes */}
       <Route path="/" element={<AuthLayout />}>
-        <Route path="/" element={<Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/new-password" element={<NewPassword />} />
+        <Route path="/" element={<AuthRoute Component={Login} />} />
+
+        <Route
+          path="/forgot-password"
+          element={<AuthRoute Component={ForgotPassword} />}
+        />
+
+        <Route
+          path="/verify-email"
+          element={<AuthRoute Component={VerifyEmail} />}
+        />
+        <Route
+          path="/new-password"
+          element={<AuthRoute Component={NewPassword} />}
+        />
       </Route>
 
       {/* Not found page */}
