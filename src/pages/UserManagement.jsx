@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
 import {
   Button,
@@ -9,6 +9,7 @@ import {
   Select,
   Typography,
   Tabs,
+  Avatar,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
@@ -16,14 +17,33 @@ import { userData, workerData } from "../data/data";
 import ChevronDown from "../assets/icons/ChevronDown";
 import { UsersRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-const { Text } = Typography;
 import { WashingMachine } from "lucide-react";
+import { useUserManagementStore } from "../stores/userManagementStore";
+import { useShallow } from "zustand/react/shallow";
+import { baseURL } from "../configs/axiosConfig";
+import { getTimeFromNow } from "../utils";
 
+const { Text } = Typography;
 const UserManagement = () => {
   const [isModalOpened, setModalOpen] = useState(false);
+  const [role, setrole] = useState("worker");
   const [activeTab, setActiveTab] = useState("1");
   const [record, setRecord] = useState(null);
   const navigate = useNavigate();
+  const {
+    // func
+    fetchUsers,
+    // data
+    userList,
+    // loaders
+    usersLoader,
+  } = useUserManagementStore(useShallow((state) => state));
+
+  useEffect(() => {
+    fetchUsers(role);
+  }, [role]);
+
+  console.log("userlist", userList);
 
   const hanldeViewDetails = (data) => {
     try {
@@ -44,15 +64,15 @@ const UserManagement = () => {
   };
 
   const handleTabChange = (key) => {
+    if (key === "1") {
+      setrole("worker");
+    } else {
+      setrole("client");
+    }
     setActiveTab(key);
   };
 
   const custCols = [
-    {
-      title: "Sr",
-      dataIndex: "key",
-      key: "key",
-    },
     {
       title: "Username",
       dataIndex: "name",
@@ -65,23 +85,10 @@ const UserManagement = () => {
     },
     {
       title: "Registration Date",
-      dataIndex: "register",
-      key: "register",
+      dataIndex: "createdAt",
+      key: "createdAt",
     },
-    // {
-    //   title: "Role",
-    //   dataIndex: "role",
-    //   key: "role",
-    //   render: (_, { role }) => (
-    //     <Tag
-    //       color={role === "worker" ? "magenta" : "gold"}
-    //       className="role"
-    //       key={role}
-    //     >
-    //       {role?.toUpperCase()}
-    //     </Tag>
-    //   ),
-    // },
+
     {
       title: "Actions",
       key: "action",
@@ -138,14 +145,22 @@ const UserManagement = () => {
   ];
   const workerCols = [
     {
-      title: "Sr",
-      dataIndex: "key",
-      key: "key",
-    },
-    {
-      title: "Username",
+      title: "Name",
       dataIndex: "name",
       key: "name",
+      render: (_, { name, profilePic }) => (
+        <Flex gap={10} align="center">
+          {!profilePic ? (
+            <Avatar size={"large"} src={baseURL + profilePic} className="" />
+          ) : (
+            <Avatar size={"large"} style={{ backgroundColor: "#87d068" }}>
+              {name?.charAt(0)?.toUpperCase()}
+            </Avatar>
+          )}
+
+          <Text>{name}</Text>
+        </Flex>
+      ),
     },
     {
       title: "Email",
@@ -153,9 +168,24 @@ const UserManagement = () => {
       key: "email",
     },
     {
+      title: "Profession",
+      dataIndex: "profession",
+      key: "profession",
+    },
+    {
+      title: "Experience",
+      dataIndex: "experience",
+      key: "experience",
+    },
+    {
+      title: "Qualification",
+      dataIndex: "qualification",
+      key: "qualification",
+    },
+    {
       title: "Registration Date",
-      dataIndex: "register",
-      key: "register",
+      dataIndex: "createdAt",
+      key: "createdAt",
     },
     // {
     //   title: "Role",
@@ -311,7 +341,7 @@ const UserManagement = () => {
         >
           <FiltersComponents />
 
-          <GeneralTable columns={workerCols} data={workerData} />
+          <GeneralTable columns={workerCols} data={userList} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -323,7 +353,7 @@ const UserManagement = () => {
           key="2"
         >
           <FiltersComponents />
-          <GeneralTable columns={custCols} data={userData} />
+          <GeneralTable columns={custCols} data={userList} />
         </Tabs.TabPane>
       </Tabs>
 

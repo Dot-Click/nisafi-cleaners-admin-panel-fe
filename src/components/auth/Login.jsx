@@ -22,8 +22,8 @@ const Login = () => {
 
   // ? keep these hard code initial values untill the things are dynamic and we integrate APIs.
   const [initialValues, setInitialValues] = useState({
-    email: "admin@gmail.com",
-    password: "Password@123",
+    email: "jawadAdmin@email.com",
+    password: "123",
     remember: true,
   });
 
