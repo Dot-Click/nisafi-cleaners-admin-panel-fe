@@ -22,7 +22,7 @@ const Login = () => {
 
   // ? keep these hard code initial values untill the things are dynamic and we integrate APIs.
   const [initialValues, setInitialValues] = useState({
-    email: "random_email@development.env",
+    email: "admin@gmail.com",
     password: "Password@123",
     remember: true,
   });
@@ -121,24 +121,24 @@ const Login = () => {
           <Text className="login-lable">Password</Text>
           <Form.Item
             name="password"
-            rules={[
-              {
-                required: true,
-                validator: (rule, value) => {
-                  if (
-                    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(
-                      value
-                    )
-                  ) {
-                    return Promise.reject(
-                      "Password should contain atleast 8 characters,at least one uppercase letter, one lowercase letter, one number and one special character"
-                    );
-                  }
-                  return Promise.resolve(); // Validation successful
-                },
-                // message: "Please input your password!",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     validator: (rule, value) => {
+            //       if (
+            //         !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(
+            //           value
+            //         )
+            //       ) {
+            //         return Promise.reject(
+            //           "Password should contain atleast 8 characters,at least one uppercase letter, one lowercase letter, one number and one special character"
+            //         );
+            //       }
+            //       return Promise.resolve(); // Validation successful
+            //     },
+            //     // message: "Please input your password!",
+            //   },
+            // ]}
           >
             <Input.Password
               type="password"
@@ -178,7 +178,7 @@ const Login = () => {
             <Button
               loading={loading}
               htmlType="submit"
-              className="w-100 login-btn"
+              className="w-100 login-btn rounded-md"
             >
               LOGIN
             </Button>

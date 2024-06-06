@@ -26,12 +26,10 @@ const WorkerInfo = () => {
   const mobile = useMobile();
 
   const copyTextToClipboard = (text) => {
-    // successMessage("Copied!🎉");
-    // showInfo("Copied");
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        // alert(text);
+        successMessage("Copied!🎉");
       })
       .catch((err) => console.error("Error copying text: ", err));
   };

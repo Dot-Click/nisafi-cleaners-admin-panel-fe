@@ -5,6 +5,7 @@ import custAxios, {
   attachTokenWithFormAxios,
   formAxios,
 } from "../configs/axiosConfig";
+import { successMessage, errorMessage } from "../services/helpers";
 
 export const useAuthStore = create((set) => {
   const userData = JSON.parse(localStorage.getItem("user"));
@@ -41,13 +42,12 @@ export const useAuthStore = create((set) => {
           });
           localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
           localStorage.setItem("token", res?.data?.data?.token);
-          // successMessage(res?.data?.data?.message);
+          successMessage(res?.data?.data?.message);
           return true;
         }
       } catch (error) {
         set({ loading: false, isAuthenticated: false });
-        alert(error?.response?.data?.message);
-        // errorMessage(error?.response?.data?.message);
+        errorMessage(error?.response?.data?.message);
       }
     },
     updateProfile: async (values) => {
@@ -113,7 +113,6 @@ export const useAuthStore = create((set) => {
         });
         if (res?.data?.success) {
           set({ loading: false, isAuthenticated: false });
-
           successMessage(res?.data?.message);
           return true;
         }
@@ -136,7 +135,6 @@ export const useAuthStore = create((set) => {
         });
         if (res?.data?.success) {
           set({ loading: false, isAuthenticated: false });
-
           successMessage(res?.data?.data?.message);
           return true;
         }
@@ -160,13 +158,11 @@ export const useAuthStore = create((set) => {
         if (res?.data?.success) {
           set({ loading: false, isAuthenticated: false });
         }
-        alert("Logout Successful");
-        // successMessage("Logout Successful");
+        successMessage("Logout Successful");
         return true;
       } catch (error) {
         set({ loading: false, isAuthenticated: false });
-        // errorMessage(error?.response?.data?.message);
-        alert(error?.response?.data?.message);
+        errorMessage(error?.response?.data?.message);
       }
     },
     getProfile: async () => {
