@@ -10,6 +10,7 @@ import {
   Typography,
   Tabs,
   Avatar,
+  Pagination,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
@@ -29,6 +30,7 @@ const UserManagement = () => {
   const [role, setrole] = useState("worker");
   const [activeTab, setActiveTab] = useState("1");
   const [record, setRecord] = useState(null);
+  const [filter, setFilter] = useState("desc");
   const navigate = useNavigate();
   const {
     // func
@@ -38,11 +40,6 @@ const UserManagement = () => {
     // loaders
     usersLoader,
   } = useUserManagementStore(useShallow((state) => state));
-
-  useEffect(() => {
-    fetchUsers(role);
-  }, [role]);
-
   console.log("userlist", userList);
 
   const hanldeViewDetails = (data) => {
@@ -62,6 +59,11 @@ const UserManagement = () => {
       console.error(error);
     }
   };
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const paginationHandler = (page, pageSize) => {
+    setCurrentPage(page);
+  };
 
   const handleTabChange = (key) => {
     if (key === "1") {
@@ -69,8 +71,30 @@ const UserManagement = () => {
     } else {
       setrole("client");
     }
+    setCurrentPage(1);
+    setFilter("desc");
     setActiveTab(key);
   };
+
+  const handleSort = (value) => {
+    setFilter(value);
+  };
+
+  const handleSearch = async (e) => {
+    console.log("handleSearch........e", e.target.value);
+    await fetchUsers(role, currentPage, e.target.value, "");
+  };
+
+  const onChange = async (e) => {
+    if (e.target.value === "") {
+      console.log("onChange Run");
+      await fetchUsers(role, currentPage, e.target.value, filter);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers(role, currentPage, "", filter);
+  }, [role, filter]);
 
   const custCols = [
     {
@@ -187,20 +211,7 @@ const UserManagement = () => {
       dataIndex: "createdAt",
       key: "createdAt",
     },
-    // {
-    //   title: "Role",
-    //   dataIndex: "role",
-    //   key: "role",
-    //   render: (_, { role }) => (
-    //     <Tag
-    //       color={role === "worker" ? "magenta" : "gold"}
-    //       className="role"
-    //       key={role}
-    //     >
-    //       {role?.toUpperCase()}
-    //     </Tag>
-    //   ),
-    // },
+    // color={role === "worker" ? "magenta" : "gold"}
     {
       title: "Actions",
       key: "action",
@@ -255,8 +266,6 @@ const UserManagement = () => {
     },
   ];
 
-  console.log("active tab", activeTab);
-
   const FiltersComponents = () => {
     return (
       <Row className="search-box" justify="space-between">
@@ -264,54 +273,51 @@ const UserManagement = () => {
           className="search-input"
           size="large"
           placeholder="Search..."
+          onPressEnter={handleSearch}
+          onChange={onChange}
           prefix={<SearchOutlined />}
         />
 
-        {/* // ? filters */}
         <Flex align="center" className="filters" gap={10}>
           {/* // ? sort by filter */}
           <Flex className="filter" align="center">
             <Text className="lebal">Sort By:</Text>
             <Select
-              defaultValue="newest"
+              defaultValue="Newest"
+              onChange={handleSort}
               suffixIcon={<ChevronDown />}
               options={[
                 {
-                  value: "newest",
+                  value: "desc",
                   label: "Newest",
                 },
                 {
-                  value: "oldest",
+                  value: "asc",
                   label: "Oldest",
-                },
-              ]}
-            />
-          </Flex>
-
-          {/* // ? sort by filter */}
-          <Flex className="filter" align="center">
-            <Text className="lebal">Role:</Text>
-            <Select
-              defaultValue="all"
-              suffixIcon={<ChevronDown />}
-              options={[
-                {
-                  value: "all",
-                  label: "All",
-                },
-                {
-                  value: "customer",
-                  label: "Customer",
-                },
-                {
-                  value: "worker",
-                  label: "Worker",
                 },
               ]}
             />
           </Flex>
         </Flex>
       </Row>
+    );
+  };
+
+  const PaginationComponent = () => {
+    return (
+      <div className="flex items-center justify-center my-6">
+        <Pagination
+          className="border-0 border-red-500"
+          total={12}
+          pageSize={10}
+          showQuickJumper={false}
+          showTitle={false}
+          showSizeChanger={false}
+          responsive
+          current={currentPage}
+          onChange={(page, pageSize) => paginationHandler(page, pageSize)}
+        />
+      </div>
     );
   };
 
@@ -330,30 +336,27 @@ const UserManagement = () => {
         }}
         popupClassName="text-red-500"
       >
-        <Tabs.TabPane
-          tab={
-            <span className="flex gap-2">
-              <WashingMachine />
-              Worker
-            </span>
-          }
-          key="1"
-        >
+        <Tabs.TabPane tab={<span className="flex gap-2">Worker</span>} key="1">
           <FiltersComponents />
 
-          <GeneralTable columns={workerCols} data={userList} />
+          <GeneralTable
+            columns={workerCols}
+            data={userList}
+            loading={usersLoader}
+          />
+          <PaginationComponent />
         </Tabs.TabPane>
         <Tabs.TabPane
-          tab={
-            <span className="flex gap-2">
-              <UsersRound />
-              Customer
-            </span>
-          }
+          tab={<span className="flex gap-2">Customer</span>}
           key="2"
         >
           <FiltersComponents />
-          <GeneralTable columns={custCols} data={userList} />
+          <GeneralTable
+            columns={custCols}
+            data={userList}
+            loading={usersLoader}
+          />
+          <PaginationComponent />
         </Tabs.TabPane>
       </Tabs>
 

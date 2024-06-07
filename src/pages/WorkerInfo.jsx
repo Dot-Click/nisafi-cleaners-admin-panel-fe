@@ -18,17 +18,22 @@ import { Link } from "react-router-dom";
 import pdfImage from "../../public/images/icons/pdf.png";
 import Download from "../assets/icons/Download";
 import { useMobile, useTablet } from "../services/hooks/mediaquery";
-import { Copy } from "lucide-react";
+import { CheckCheck, Copy } from "lucide-react";
 import { successMessage } from "../services/helpers";
 
 const WorkerInfo = () => {
   const tablet = useTablet();
   const mobile = useMobile();
+  const [showCheck, setShowCheck] = useState(false);
 
   const copyTextToClipboard = (text) => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
+        setShowCheck(true);
+        setTimeout(() => {
+          setShowCheck(false);
+        }, 1500);
         successMessage("Copied!🎉");
       })
       .catch((err) => console.error("Error copying text: ", err));
@@ -145,10 +150,19 @@ const WorkerInfo = () => {
                     <Text className="text-gray-shade-1 font-semibold">
                       {workerInfo?.email}
                     </Text>
-                    <Copy
-                      className="cursor-pointer text-gray-shade-1"
-                      onClick={() => copyTextToClipboard(workerInfo.email)}
-                    />
+
+                    {showCheck ? (
+                      <CheckCheck
+                        size={18}
+                        className="cursor-pointer text-gray-shade-1 transition-all"
+                      />
+                    ) : (
+                      <Copy
+                        size={18}
+                        className="cursor-pointer text-gray-shade-1 transition-all"
+                        onClick={() => copyTextToClipboard(workerInfo.email)}
+                      />
+                    )}
                   </Flex>
                 </Flex>
 

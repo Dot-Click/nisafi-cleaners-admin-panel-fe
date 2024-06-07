@@ -11,7 +11,7 @@ export const useUserManagementStore = create((set) => ({
   usersLoader: false,
   userList: [],
 
-  fetchUsers: async (role, search, sort) => {
+  fetchUsers: async (role, page, search, sort) => {
     try {
       set({
         usersLoader: true,
@@ -22,8 +22,11 @@ export const useUserManagementStore = create((set) => ({
         role,
         search,
         sort,
+        page,
+        limit: 2,
       };
       const res = await custAxios.get(`/admin/users`, { params: queryParams });
+      console.log("res", res?.data);
       if (res?.data?.success) {
         set({
           usersLoader: false,
