@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
 import {
   Button,
-  Dropdown,
+  Avatar,
   Flex,
   Input,
   Row,
@@ -19,9 +19,36 @@ import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
 import { WashingMachine } from "lucide-react";
 
+const tabList = [
+  {
+    label: "Open",
+    key: "open",
+  },
+  {
+    label: "Completed",
+    key: "completed",
+  },
+  {
+    label: "In Progress",
+    key: "in-progress",
+  },
+  {
+    label: "Payment Requested",
+    key: "paymentRequested",
+  },
+  {
+    label: "Cancelled",
+    key: "cancelled",
+  },
+  {
+    label: "Disputed",
+    key: "disputed",
+  },
+];
+
 const JobManagement = () => {
   const [isModalOpened, setModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("1");
+  const [activeTab, setActiveTab] = useState(tabList[0].key);
   const [record, setRecord] = useState(null);
   const navigate = useNavigate();
 
@@ -40,39 +67,42 @@ const JobManagement = () => {
 
   const jobCols = [
     {
-      title: "Sr",
-      dataIndex: "key",
-      key: "key",
+      title: "Name",
+      dataIndex: "clientDetail",
+      key: "clientDetail",
+      render: (_, { clientDetail }) => (
+        <Flex gap={10} align="center">
+          <Avatar size={"large"} src={clientDetail?.profilePic} className="" />
+          <Text>{clientDetail.name}</Text>
+        </Flex>
+      ),
     },
     {
-      title: "Username",
-      dataIndex: "name",
-      key: "name",
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Budget",
+      dataIndex: "budget",
+      key: "budget",
     },
     {
-      title: "Registration Date",
-      dataIndex: "register",
-      key: "register",
+      title: "Proposals",
+      dataIndex: "proposals",
+      key: "proposals",
     },
-    // {
-    //   title: "Role",
-    //   dataIndex: "role",
-    //   key: "role",
-    //   render: (_, { role }) => (
-    //     <Tag
-    //       color={role === "worker" ? "magenta" : "gold"}
-    //       className="role"
-    //       key={role}
-    //     >
-    //       {role?.toUpperCase()}
-    //     </Tag>
-    //   ),
-    // },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+    },
+
     {
       title: "Actions",
       key: "action",
@@ -148,7 +178,7 @@ const JobManagement = () => {
   return (
     <Row className=" d-block user-management-container">
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey={tabList[0].key}
         activeKey={activeTab}
         onChange={handleTabChange}
         className="px-4"
@@ -160,37 +190,20 @@ const JobManagement = () => {
         }}
         popupClassName="text-red-500"
       >
-        <Tabs.TabPane
-          tab={<span className="flex gap-2">Completed</span>}
-          key="1"
-        >
-          <FiltersComponents />
+        {tabList?.map((tab, index) => (
+          <Tabs.TabPane
+            key={tab.key}
+            tab={<span className="flex gap-2">{tab.label}</span>}
+          >
+            <FiltersComponents />
 
-          <GeneralTable
-            columns={jobCols}
-            data={jobsData?.filter((item) => item.status === "completed")}
-          />
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={<span className="flex gap-2">Delivered</span>}
-          key="2"
-        >
-          <FiltersComponents />
-          <GeneralTable
-            columns={jobCols}
-            data={jobsData?.filter((item) => item.status === "delivered")}
-          />
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={<span className="flex gap-2">Disputed</span>}
-          key="3"
-        >
-          <FiltersComponents />
-          <GeneralTable
-            columns={jobCols}
-            data={jobsData?.filter((item) => item.status === "disputed")}
-          />
-        </Tabs.TabPane>
+            <GeneralTable
+              columns={jobCols}
+              // data={jobsData?.filter((item) => item.status === tab.key)}
+              data={jobsData}
+            />
+          </Tabs.TabPane>
+        ))}
       </Tabs>
     </Row>
   );

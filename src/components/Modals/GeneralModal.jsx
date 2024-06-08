@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
 
-const GeneralModal = ({ title, component }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+const GeneralModal = ({
+  title = "",
+  setModalOpen,
+  open,
+  clickHandler,
+  component,
+}) => {
   const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
+    setModalOpen(true);
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setModalOpen(false);
   };
 
   return (
     <Modal
+      width={400}
+      cancelText={"Han beya"}
       title={title}
-      open={isModalOpen}
-      onOk={handleOk}
+      
+      open={open}
+      onOk={clickHandler}
       onCancel={handleCancel}
     >
       {component}

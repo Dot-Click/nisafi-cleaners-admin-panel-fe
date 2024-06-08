@@ -28,3 +28,5 @@ export const trimString = (string, length = 10) => {
 
   return string;
 };
+
+

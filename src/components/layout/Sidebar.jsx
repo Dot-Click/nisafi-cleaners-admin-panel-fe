@@ -1,5 +1,5 @@
 import { Flex, Image, Row, Typography } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import logo from "/images/logos/logo.png";
 import { sidebar } from "../../data/data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -7,21 +7,24 @@ import { GrClose } from "react-icons/gr";
 import Logout from "../../assets/icons/Logout";
 import { useAuthStore } from "../../stores/authStore";
 import { useShallow } from "zustand/react/shallow";
-import GeneralModal from "../Modals/GeneralModal";
+import { showConfirm } from "../../utils/modal";
 
 const { Text } = Typography;
 
 const Sidebar = ({ isOpened, setOpened }) => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { logout, loading } = useAuthStore(useShallow((state) => state));
 
   const logoutHandler = async () => {
-    // const res = await logout();
-    // if (res) {
-    //   navigate("/");
-    // }
+    const res = await logout();
+    if (res) {
+      navigate("/");
+    }
+  };
+
+  const handleLogoutClick = () => {
+    showConfirm("Logout", "Are you sure you want to log out?", logoutHandler);
   };
   return (
     <>
@@ -64,7 +67,7 @@ const Sidebar = ({ isOpened, setOpened }) => {
               );
             })}
           </Flex>
-          <Link onClick={logoutHandler} className="px-3  sidebar-link">
+          <Link onClick={handleLogoutClick} className="px-3  sidebar-link">
             <Flex align="center">
               <Logout />
               <Text className="mx-1 link-name">Logout</Text>
@@ -72,12 +75,6 @@ const Sidebar = ({ isOpened, setOpened }) => {
           </Link>
         </Flex>
       </Row>
-
-      {/* <GeneralModal
-        title={"Hello"}
-        setModalOpen={setIsModalOpen}
-        component={<></>}
-      /> */}
     </>
   );
 };

@@ -15,6 +15,7 @@ import WorkerInfo from "../pages/WorkerInfo";
 import JobManagement from "../pages/JobManagement";
 import AuthRoute from "./AuthRoute";
 import AdminRoute from "./AdminRoute";
+import JobDetail from "../pages/JobDetail";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -45,6 +46,10 @@ const Router = () => {
         <Route
           path="/dashboard/jobs-managment"
           element={<AdminRoute Component={JobManagement} />}
+        />
+        <Route
+          path="/dashboard/jobs/details"
+          element={<AdminRoute Component={JobDetail} />}
         />
       </Route>
 
