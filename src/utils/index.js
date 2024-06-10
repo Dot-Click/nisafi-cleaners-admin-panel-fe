@@ -4,8 +4,12 @@ export const getTimeFromNow = (date) => {
   return currentDate.fromNow();
 };
 
-export const formatDate = (dateString) => {
+export const formatDateString = (dateString) => {
   return moment(dateString).format("MMMM Do YYYY");
+};
+
+export const formatDate = (date) => {
+  return moment(date).format("YYYY-MM-DD");
 };
 
 export const formatPrice = (price) => {

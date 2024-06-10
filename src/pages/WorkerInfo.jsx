@@ -14,7 +14,6 @@ import {
   Tag,
 } from "antd";
 const { Title, Text } = Typography;
-import { workerInfo } from "../data/data";
 import { Link, useParams } from "react-router-dom";
 import pdfImage from "../../public/images/icons/pdf.png";
 import Download from "../assets/icons/Download";
@@ -23,26 +22,39 @@ import { CheckCheck, Copy } from "lucide-react";
 import { successMessage } from "../services/helpers";
 import { useShallow } from "zustand/react/shallow";
 import { useUserManagementStore } from "../stores/userManagementStore";
-import { capitalizeFirstLetter, formatDate, splittingSkills } from "../utils";
+import {
+  capitalizeFirstLetter,
+  formatDateString,
+  splittingSkills,
+} from "../utils";
 import { baseURL } from "../configs/axiosConfig";
+import { showConfirm } from "../utils/modal";
+import LoadingBar from "react-top-loading-bar";
 
 const WorkerInfo = () => {
   const { id } = useParams();
   const tablet = useTablet();
   const mobile = useMobile();
   const [showCheck, setShowCheck] = useState(false);
+  const [progress, setProgress] = useState(20);
   const {
     // func
     fetchUserDetail,
+    approveWorker,
     // data
     userDetail,
     // loaders
     userDetailLoader,
+    approvalLoader,
   } = useUserManagementStore(useShallow((state) => state));
 
   useEffect(() => {
     fetchUserDetail(id);
   }, []);
+
+  useEffect(() => {
+    setProgress(100);
+  }, [userDetail]);
 
   const copyTextToClipboard = (text) => {
     navigator.clipboard
@@ -55,6 +67,22 @@ const WorkerInfo = () => {
         successMessage("Copied!🎉");
       })
       .catch((err) => console.error("Error copying text: ", err));
+  };
+
+  const updateWorkerStatus = async (status) => {
+    const res = await approveWorker(id, status);
+    if (res) {
+      fetchUserDetail(id);
+    }
+  };
+
+  const handleOkClick = (status) => {
+    showConfirm(
+      "Update",
+      "Are you sure you want to update status",
+      () => updateWorkerStatus(status),
+      approvalLoader
+    );
   };
 
   const Document = ({ title, documentURL, documentName, fileSize }) => {
@@ -117,12 +145,19 @@ const WorkerInfo = () => {
 
   return (
     <>
+      <LoadingBar
+        height={4}
+        color={"#C3EAF5"}
+        progress={progress}
+        onLoaderFinished={() => {}}
+      />
+
       <Flex className="settings" justify="center">
         <Row className="settings-container">
           <Col span={24} className="settings-container-header"></Col>
           <Col span={24} className="settings-form-container">
             <Row
-              className="border-0 pb-4"
+              // className="border-0 pb-4"
               gutter={[16, 16]}
               className="px-6 py-4"
               wrap
@@ -135,20 +170,16 @@ const WorkerInfo = () => {
                 >
                   {userDetailLoader ? (
                     <Skeleton.Avatar active shape="circle" size={180} />
-                  ) : userDetail?.profilePic ? (
-                    <Avatar
+                  ) : (
+                    <Image
+                      preview={false}
                       size={"large"}
                       src={baseURL + userDetail?.profilePic}
-                      className="display-avatar border-0 border-purple-600"
+                      fallback={`https://placehold.co/180x180/3A779B/white?text=${userDetail?.name?.charAt(
+                        0
+                      )}`}
+                      className="display-avatar border-0 border-purple-600 !w-[180px] !h-[180px] rounded-full"
                     />
-                  ) : (
-                    <Avatar
-                      size={"large"}
-                      className="display-avatar border-0 border-purple-600 text-6xl font-semibold"
-                      style={{ backgroundColor: "#87d068" }}
-                    >
-                      {userDetail?.name?.charAt(0)?.toUpperCase()}
-                    </Avatar>
                   )}
 
                   <Row className="w-full" align="center" justify="center">
@@ -273,7 +304,7 @@ const WorkerInfo = () => {
                         />
                       ) : (
                         <Text className="text-gray-shade-1 font-semibold">
-                          {formatDate(userDetail?.createdAt)}
+                          {formatDateString(userDetail?.createdAt)}
                         </Text>
                       )}
                     </Flex>
@@ -310,8 +341,18 @@ const WorkerInfo = () => {
                 >
                   {userDetail?.adminApproval === "pending" ? (
                     <>
-                      <Button className="primary-btn">Accept</Button>
-                      <Button className="danger-btn">Reject</Button>
+                      <Button
+                        onClick={() => handleOkClick("approved")}
+                        className="primary-btn"
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        onClick={() => handleOkClick("rejected")}
+                        className="danger-btn"
+                      >
+                        Reject
+                      </Button>
                     </>
                   ) : (
                     <Tag

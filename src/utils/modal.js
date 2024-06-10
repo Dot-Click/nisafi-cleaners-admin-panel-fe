@@ -5,7 +5,6 @@ const { confirm } = Modal;
 export const showConfirm = (title, desc = null, handleClick, loading) => {
   confirm({
     title: title,
-    // icon: <ExclamationCircleFilled />,
     content: desc,
     onOk: handleClick,
     loading,

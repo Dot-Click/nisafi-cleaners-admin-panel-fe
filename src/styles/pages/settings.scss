@@ -19,6 +19,7 @@ $poppins: Poppins;
     }
 
     .settings-form-container {
+      display: flex;
       background-color: white;
 
       .image-container {
@@ -32,6 +33,7 @@ $poppins: Poppins;
 
         @media screen and (max-width: 767px) {
           height: 160px;
+          flex-wrap: wrap;
         }
 
         .display-picture-container {

@@ -34,6 +34,7 @@ const UserManagement = () => {
     fetchUsers,
     // data
     userList,
+    pagesCount,
     // loaders
     usersLoader,
   } = useUserManagementStore(useShallow((state) => state));
@@ -169,7 +170,7 @@ const UserManagement = () => {
       dataIndex: "name",
       key: "name",
       render: (_, { name, profilePic }) => (
-        <Flex gap={10} align="center">
+        <Flex gap={10} align="center" className="w-[150px]">
           {!profilePic ? (
             <Avatar size={"large"} src={baseURL + profilePic} className="" />
           ) : (
@@ -301,10 +302,9 @@ const UserManagement = () => {
 
   const PaginationComponent = () => {
     return (
-      <div className="flex items-center justify-center my-6">
+      <div className="py-4 flex flex-wrap flex-1 items-center justify-center my-6">
         <Pagination
-          className="border-0 border-red-500"
-          total={12}
+          total={pagesCount}
           pageSize={10}
           showQuickJumper={false}
           showTitle={false}
