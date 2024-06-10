@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
   Col,
   Flex,
   Input,
-  Modal,
+  Skeleton,
   Row,
   Image,
   Typography,
@@ -14,17 +14,38 @@ import {
 } from "antd";
 const { Title, Text } = Typography;
 import { workerInfo } from "../data/data";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import pdfImage from "../../public/images/icons/pdf.png";
 import Download from "../assets/icons/Download";
 import { useMobile, useTablet } from "../services/hooks/mediaquery";
 import { CheckCheck, Copy } from "lucide-react";
 import { successMessage } from "../services/helpers";
+import { useShallow } from "zustand/react/shallow";
+import { useUserManagementStore } from "../stores/userManagementStore";
+import { capitalizeFirstLetter, formatDate, splittingSkills } from "../utils";
+import { baseURL } from "../configs/axiosConfig";
+import { UserOutlined } from "@ant-design/icons";
+import Loader from "../components/common/Loader";
 
 const WorkerInfo = () => {
+  const { id } = useParams();
   const tablet = useTablet();
   const mobile = useMobile();
   const [showCheck, setShowCheck] = useState(false);
+  const {
+    // func
+    fetchUserDetail,
+    // data
+    userDetail,
+    // loaders
+    userDetailLoader,
+  } = useUserManagementStore(useShallow((state) => state));
+
+  useEffect(() => {
+    fetchUserDetail(id);
+  }, []);
+
+  console.log("userDetail", userDetail);
 
   const copyTextToClipboard = (text) => {
     navigator.clipboard
@@ -97,171 +118,209 @@ const WorkerInfo = () => {
     );
   };
   return (
-    <Flex className="settings" justify="center">
-      <Row className="settings-container">
-        <Col span={24} className="settings-container-header"></Col>
-        <Col span={24} className="settings-form-container">
-          <Row className="border-0 pb-4">
-            <Col lg={6} md={22} sm={22} sx={22} className="mx-6 border-0">
-              <Flex
-                className="border-0 border-red-400 flex -translate-y-[100px]"
-                vertical
-                align="center"
-              >
-                <Avatar
-                  src={workerInfo.profilePic}
-                  className="display-avatar  border-0 border-purple-600"
-                />
-                <Text level={4} className="text-center pt-2 text-lg font-bold">
-                  {workerInfo.username}
-                </Text>
+    <>
+      {userDetailLoader ? (
+        <Row className="mx-auto my-auto">
+          <Loader size={64} />
+        </Row>
+      ) : (
+        <Flex className="settings" justify="center">
+          <Row className="settings-container">
+            <Col span={24} className="settings-container-header"></Col>
+            <Col span={24} className="settings-form-container">
+              <Row className="border-0 pb-4">
+                <Col lg={6} md={22} sm={22} sx={22} className="mx-6 border-0">
+                  <Flex
+                    className="border-0 border-red-400 flex -translate-y-[100px]"
+                    vertical
+                    align="center"
+                  >
+                    {/* <Skeleton.Avatar
+                      active={true}
+                      size={"large"}
+                      shape={"circle"}
+                      className="!display-avatar border-0 border-purple-600"
+                    /> */}
 
-                <Flex gap={"small"} align="center">
-                  <Rate
-                    disabled
-                    defaultValue={workerInfo?.rating}
-                    style={{
-                      fontSize: 16,
-                    }}
-                  />
-                  <Text>{workerInfo?.rating?.toFixed(1)}</Text>
-                </Flex>
-              </Flex>
-
-              {/* personal Details */}
-
-              <Flex
-                vertical={true}
-                className="w-fit"
-                justify="center"
-                gap={"middle"}
-              >
-                {/* name */}
-                <Flex className="bg-[#f9fafb] px-4 py-1 rounded-lg" vertical>
-                  <Title level={5}>Name</Title>
-                  <Text className="text-gray-shade-1 font-semibold">
-                    {workerInfo?.username}
-                  </Text>
-                </Flex>
-                {/* email */}
-                <Flex className="bg-[#f9fafb] px-4 py-1 rounded-lg" vertical>
-                  <Title level={5}>Email</Title>
-                  <Flex gap={15}>
-                    <Text className="text-gray-shade-1 font-semibold">
-                      {workerInfo?.email}
-                    </Text>
-
-                    {showCheck ? (
-                      <CheckCheck
-                        size={18}
-                        className="cursor-pointer text-gray-shade-1 transition-all"
+                    {!userDetail?.profilePic ? (
+                      <Avatar
+                        size={"large"}
+                        src={baseURL + userDetail?.profilePic}
+                        className="display-avatar border-0 border-purple-600"
                       />
                     ) : (
-                      <Copy
-                        size={18}
-                        className="cursor-pointer text-gray-shade-1 transition-all"
-                        onClick={() => copyTextToClipboard(workerInfo.email)}
-                      />
+                      <Avatar
+                        size={"large"}
+                        className="display-avatar border-0 border-purple-600 text-6xl font-semibold"
+                        style={{ backgroundColor: "#87d068" }}
+                      >
+                        {userDetail?.name?.charAt(0)?.toUpperCase()}
+                      </Avatar>
                     )}
-                  </Flex>
-                </Flex>
 
-                {/* Phone */}
-                <Flex className="bg-[#f9fafb] px-4 py-1 rounded-lg" vertical>
-                  <Title level={5}>Phone</Title>
-                  <Text className="text-gray-shade-1 font-semibold">
-                    {workerInfo?.phone}
-                  </Text>
-                </Flex>
-
-                {/* JoinAt */}
-                <Flex className="bg-[#f9fafb] px-4 py-1 rounded-lg" vertical>
-                  <Title level={5}>JoinAt</Title>
-                  <Text className="text-gray-shade-1 font-semibold">
-                    {workerInfo?.joinAt}
-                  </Text>
-                </Flex>
-
-                {/* address */}
-                <Flex className="bg-[#f9fafb] px-4 py-1 rounded-lg" vertical>
-                  <Title level={5}>Address</Title>
-                  <Text className="text-gray-shade-1 font-semibold">
-                    {workerInfo?.address}
-                  </Text>
-                </Flex>
-              </Flex>
-            </Col>
-            <Col lg={16} md={24} className="my-4">
-              <Flex
-                className="mb-4 items-end mx-4  "
-                justify="flex-end"
-                gap={"middle"}
-              >
-                <Button className="primary-btn">Accept</Button>
-                <Button className="danger-btn">Reject</Button>
-              </Flex>
-              <Card title="About Worker" bordered={false}>
-                <Text className="text-gray-shade-1 font-semibold">
-                  {workerInfo?.aboutMe}
-                </Text>
-
-                {/* Qualification */}
-                <Flex vertical className="my-4">
-                  <Title level={5}>Profession:</Title>
-                  <Text className="text-gray-shade-1 font-semibold">
-                    {workerInfo?.profession}
-                  </Text>
-                </Flex>
-                {/* skills */}
-                <Title level={5}>Skills:</Title>
-                <Flex wrap={"wrap"} gap={"middle"} className="mb-4">
-                  {workerInfo?.skills?.map((i, index) => (
-                    <Flex
-                      key={index}
-                      wrap={"wrap"}
-                      className="rounded-lg bg-[#EDEFEF] px-4 py-[6px] w-fit font-semibold flex-wrap"
+                    <Text
+                      level={4}
+                      className="text-center pt-2 text-lg font-bold"
                     >
-                      <Text className="capitalize">{i}</Text>
-                    </Flex>
-                  ))}
-                </Flex>
+                      {userDetail?.name}
+                    </Text>
 
-                {/* Experience */}
-                <Flex vertical className="mb-4">
-                  <Title level={5}>Experience:</Title>
-                  <Text className="text-gray-shade-1 font-semibold text-[16px]">
-                    {workerInfo?.experience}
-                  </Text>
-                </Flex>
-                {/* Qualification */}
-                <Flex vertical className="mb-4 ">
-                  <Title level={5}>Qualification:</Title>
-                  <Text className="text-gray-shade-1 font-semibold">
-                    {workerInfo?.qualification}
-                  </Text>
-                </Flex>
-
-                {/* docunm */}
-                <Title level={5}>Documents:</Title>
-                <Row gutter={[16, 16]}>
-                  {workerInfo?.documents?.map((doc, index) => {
-                    return (
-                      <Document
-                        key={index}
-                        title={doc?.documentTitle}
-                        documentName={doc?.filename}
-                        documentURL={doc?.url}
-                        fileSize={doc?.size}
+                    <Flex gap={"small"} align="center">
+                      <Rate
+                        disabled
+                        defaultValue={userDetail?.avgRating}
+                        style={{
+                          fontSize: 16,
+                        }}
                       />
-                    );
-                  })}
-                </Row>
-              </Card>
+                      <Text>{userDetail?.avgRating?.toFixed(1)}</Text>
+                    </Flex>
+                  </Flex>
+
+                  {/* personal Details */}
+
+                  <Flex
+                    vertical={true}
+                    className="w-fit"
+                    justify="center"
+                    gap={"middle"}
+                  >
+                    {/* email */}
+                    <Flex
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      vertical
+                    >
+                      <Skeleton.Input active={true} />
+                      <Title level={5}>Email</Title>
+                      <Flex gap={15}>
+                        <Text className="text-gray-shade-1 font-semibold">
+                          {userDetail?.email}
+                        </Text>
+
+                        {showCheck ? (
+                          <CheckCheck
+                            size={18}
+                            className="cursor-pointer text-gray-shade-1 transition-all"
+                          />
+                        ) : (
+                          <Copy
+                            size={18}
+                            className="cursor-pointer text-gray-shade-1 transition-all"
+                            onClick={() =>
+                              copyTextToClipboard(userDetail?.email)
+                            }
+                          />
+                        )}
+                      </Flex>
+                    </Flex>
+
+                    {/* Phone */}
+                    <Flex
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      vertical
+                    >
+                      <Title level={5}>Phone</Title>
+                      <Text className="text-gray-shade-1 font-semibold">
+                        {userDetail?.phone}
+                      </Text>
+                    </Flex>
+
+                    {/* JoinAt */}
+                    <Flex
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      vertical
+                    >
+                      <Title level={5}>JoinAt</Title>
+                      <Text className="text-gray-shade-1 font-semibold">
+                        {formatDate(userDetail?.createdAt)}
+                      </Text>
+                    </Flex>
+
+                    {/* address */}
+                    <Flex
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      vertical
+                    >
+                      <Title level={5}>Address</Title>
+                      <Text className="text-gray-shade-1 font-semibold">
+                        {userDetail?.address}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Col>
+                <Col lg={16} md={24} className="my-4">
+                  <Flex
+                    className="mb-4 items-end mx-4  "
+                    justify="flex-end"
+                    gap={"middle"}
+                  >
+                    <Button className="primary-btn">Accept</Button>
+                    <Button className="danger-btn">Reject</Button>
+                  </Flex>
+                  <Card title="About Worker" bordered={false}>
+                    <Text className="text-gray-shade-1 font-semibold">
+                      {capitalizeFirstLetter(userDetail?.aboutMe)}
+                    </Text>
+
+                    {/* Qualification */}
+                    <Flex vertical className="my-4">
+                      <Title level={5}>Profession:</Title>
+                      <Text className="text-gray-shade-1 font-semibold">
+                        {userDetail?.profession}
+                      </Text>
+                    </Flex>
+                    {/* skills */}
+                    <Title level={5}>Skills:</Title>
+                    <Flex wrap={"wrap"} gap={"middle"} className="mb-4">
+                      {splittingSkills(userDetail?.skills)?.map((i, index) => (
+                        <Flex
+                          key={index}
+                          wrap={"wrap"}
+                          className="rounded-lg bg-[#EDEFEF] px-4 py-[6px] w-fit font-semibold flex-wrap"
+                        >
+                          <Text className="capitalize">{i}</Text>
+                        </Flex>
+                      ))}
+                    </Flex>
+
+                    {/* Experience */}
+                    <Flex vertical className="mb-4">
+                      <Title level={5}>Experience:</Title>
+                      <Text className="text-gray-shade-1 font-semibold text-[16px]">
+                        {userDetail?.experience}
+                      </Text>
+                    </Flex>
+                    {/* Qualification */}
+                    <Flex vertical className="mb-4 ">
+                      <Title level={5}>Qualification:</Title>
+                      <Text className="text-gray-shade-1 font-semibold">
+                        {capitalizeFirstLetter(userDetail?.qualification)}
+                      </Text>
+                    </Flex>
+
+                    {/* docunm */}
+                    <Title level={5}>Documents:</Title>
+                    <Row gutter={[16, 16]}>
+                      {workerInfo?.documents?.map((doc, index) => {
+                        return (
+                          <Document
+                            key={index}
+                            title={doc?.documentTitle}
+                            documentName={doc?.filename}
+                            documentURL={doc?.url}
+                            fileSize={doc?.size}
+                          />
+                        );
+                      })}
+                    </Row>
+                  </Card>
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Col>
-      </Row>
-    </Flex>
+        </Flex>
+      )}
+    </>
   );
 };
 

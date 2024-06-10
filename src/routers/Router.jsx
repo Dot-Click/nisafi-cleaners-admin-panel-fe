@@ -31,7 +31,7 @@ const Router = () => {
           element={<AdminRoute Component={UserManagement} />}
         />
         <Route
-          path="/dashboard/user/worker-info"
+          path="/dashboard/user/worker-info/:id"
           element={<AdminRoute Component={WorkerInfo} />}
         />
         <Route

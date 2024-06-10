@@ -9,6 +9,8 @@ import { successMessage, errorMessage } from "../services/helpers";
 
 export const useUserManagementStore = create((set) => ({
   usersLoader: false,
+  userDetailLoader: false,
+  userDetail: {},
   userList: [],
 
   fetchUsers: async (role, page, search, sort) => {
@@ -37,6 +39,31 @@ export const useUserManagementStore = create((set) => ({
     } catch (error) {
       set({
         usersLoader: false,
+      });
+      console.error(error);
+      errorMessage(error?.response?.data?.message);
+    }
+  },
+
+  fetchUserDetail: async (id) => {
+    try {
+      set({
+        userDetailLoader: true,
+      });
+
+      attachToken();
+      const res = await custAxios.get(`/admin/users/${id}`);
+      console.log("res", res?.data);
+      if (res?.data?.success) {
+        set({
+          userDetailLoader: false,
+          userDetail: res?.data?.data,
+        });
+      }
+      return true;
+    } catch (error) {
+      set({
+        userDetailLoader: false,
       });
       console.error(error);
       errorMessage(error?.response?.data?.message);

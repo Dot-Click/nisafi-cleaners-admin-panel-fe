@@ -14,11 +14,8 @@ import {
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
-import { userData, workerData } from "../data/data";
 import ChevronDown from "../assets/icons/ChevronDown";
-import { UsersRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { WashingMachine } from "lucide-react";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { baseURL } from "../configs/axiosConfig";
@@ -40,7 +37,6 @@ const UserManagement = () => {
     // loaders
     usersLoader,
   } = useUserManagementStore(useShallow((state) => state));
-  console.log("userlist", userList);
 
   const hanldeViewDetails = (data) => {
     try {
@@ -217,7 +213,7 @@ const UserManagement = () => {
       key: "action",
       render: (_, record) => (
         <Button
-          onClick={() => navigate("/dashboard/user/worker-info")}
+          onClick={() => navigate(`/dashboard/user/worker-info/${record._id}`)}
           className="primary-btn"
         >
           View Detail
