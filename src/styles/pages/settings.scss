@@ -19,12 +19,7 @@ $poppins: Poppins;
     }
 
     .settings-form-container {
-      display: flex;
       background-color: white;
-
-      @media screen and (max-width: 767px) {
-        flex-wrap: wrap;
-      }
 
       .image-container {
         padding: 25px;

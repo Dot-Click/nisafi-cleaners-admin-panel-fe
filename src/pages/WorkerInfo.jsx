@@ -4,13 +4,14 @@ import {
   Button,
   Col,
   Flex,
-  Input,
   Skeleton,
   Row,
   Image,
   Typography,
   Rate,
   Card,
+  Progress,
+  Tag,
 } from "antd";
 const { Title, Text } = Typography;
 import { workerInfo } from "../data/data";
@@ -24,8 +25,6 @@ import { useShallow } from "zustand/react/shallow";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { capitalizeFirstLetter, formatDate, splittingSkills } from "../utils";
 import { baseURL } from "../configs/axiosConfig";
-import { UserOutlined } from "@ant-design/icons";
-import Loader from "../components/common/Loader";
 
 const WorkerInfo = () => {
   const { id } = useParams();
@@ -44,8 +43,6 @@ const WorkerInfo = () => {
   useEffect(() => {
     fetchUserDetail(id);
   }, []);
-
-  console.log("userDetail", userDetail);
 
   const copyTextToClipboard = (text) => {
     navigator.clipboard
@@ -117,162 +114,251 @@ const WorkerInfo = () => {
       </Col>
     );
   };
+
   return (
     <>
-      {userDetailLoader ? (
-        <Row className="mx-auto my-auto">
-          <Loader size={64} />
-        </Row>
-      ) : (
-        <Flex className="settings" justify="center">
-          <Row className="settings-container">
-            <Col span={24} className="settings-container-header"></Col>
-            <Col span={24} className="settings-form-container">
-              <Row className="border-0 pb-4">
-                <Col lg={6} md={22} sm={22} sx={22} className="mx-6 border-0">
-                  <Flex
-                    className="border-0 border-red-400 flex -translate-y-[100px]"
-                    vertical
-                    align="center"
-                  >
-                    {/* <Skeleton.Avatar
-                      active={true}
+      <Flex className="settings" justify="center">
+        <Row className="settings-container">
+          <Col span={24} className="settings-container-header"></Col>
+          <Col span={24} className="settings-form-container">
+            <Row
+              className="border-0 pb-4"
+              gutter={[16, 16]}
+              className="px-6 py-4"
+              wrap
+            >
+              <Col lg={7} md={24} sm={24} sx={24} className="border-0">
+                <Flex
+                  className="border-0 border-red-400 flex -translate-y-[100px]"
+                  vertical
+                  align="center"
+                >
+                  {userDetailLoader ? (
+                    <Skeleton.Avatar active shape="circle" size={180} />
+                  ) : userDetail?.profilePic ? (
+                    <Avatar
                       size={"large"}
-                      shape={"circle"}
-                      className="!display-avatar border-0 border-purple-600"
-                    /> */}
-
-                    {!userDetail?.profilePic ? (
-                      <Avatar
-                        size={"large"}
-                        src={baseURL + userDetail?.profilePic}
-                        className="display-avatar border-0 border-purple-600"
-                      />
-                    ) : (
-                      <Avatar
-                        size={"large"}
-                        className="display-avatar border-0 border-purple-600 text-6xl font-semibold"
-                        style={{ backgroundColor: "#87d068" }}
-                      >
-                        {userDetail?.name?.charAt(0)?.toUpperCase()}
-                      </Avatar>
-                    )}
-
-                    <Text
-                      level={4}
-                      className="text-center pt-2 text-lg font-bold"
+                      src={baseURL + userDetail?.profilePic}
+                      className="display-avatar border-0 border-purple-600"
+                    />
+                  ) : (
+                    <Avatar
+                      size={"large"}
+                      className="display-avatar border-0 border-purple-600 text-6xl font-semibold"
+                      style={{ backgroundColor: "#87d068" }}
                     >
-                      {userDetail?.name}
-                    </Text>
+                      {userDetail?.name?.charAt(0)?.toUpperCase()}
+                    </Avatar>
+                  )}
 
-                    <Flex gap={"small"} align="center">
+                  <Row className="w-full" align="center" justify="center">
+                    <Col>
+                      <Text
+                        level={4}
+                        className="text-center pt-2 text-lg font-bold"
+                      >
+                        {userDetail?.name}
+                      </Text>
+                    </Col>
+                    <Col
+                      lg={24}
+                      md={24}
+                      sm={24}
+                      justify="center"
+                      align="center"
+                      gap="10"
+                    >
                       <Rate
                         disabled
                         defaultValue={userDetail?.avgRating}
                         style={{
                           fontSize: 16,
+                          marginRight: 10,
                         }}
                       />
                       <Text>{userDetail?.avgRating?.toFixed(1)}</Text>
-                    </Flex>
-                  </Flex>
+                    </Col>
+                    <Col lg={16} md={13} sm={13} xs={18}>
+                      <Progress
+                        percent={userDetail?.successRate}
+                        status="active"
+                        strokeColor="#87D068"
+                      />
+                    </Col>
+                  </Row>
+                </Flex>
 
-                  {/* personal Details */}
+                {/* personal Details */}
 
-                  <Flex
-                    vertical={true}
-                    className="w-fit"
-                    justify="center"
-                    gap={"middle"}
-                  >
-                    {/* email */}
+                <Row
+                  vertical={false}
+                  className="w-fit wrap"
+                  justify="center"
+                  gap={"middle"}
+                  gutter={[16, 16]}
+                >
+                  {/* email */}
+                  <Col gap={"large"} lg={24} md={12} sm={12} xs={24}>
                     <Flex
-                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg  min-w-[200px]"
                       vertical
                     >
-                      <Skeleton.Input active={true} />
                       <Title level={5}>Email</Title>
                       <Flex gap={15}>
-                        <Text className="text-gray-shade-1 font-semibold">
-                          {userDetail?.email}
-                        </Text>
-
-                        {showCheck ? (
-                          <CheckCheck
-                            size={18}
-                            className="cursor-pointer text-gray-shade-1 transition-all"
+                        {userDetailLoader ? (
+                          <Skeleton.Input
+                            active={true}
+                            size={22}
+                            className="mb-1"
                           />
                         ) : (
-                          <Copy
-                            size={18}
-                            className="cursor-pointer text-gray-shade-1 transition-all"
-                            onClick={() =>
-                              copyTextToClipboard(userDetail?.email)
-                            }
-                          />
+                          <>
+                            <Text className="text-gray-shade-1 font-semibold">
+                              {userDetail?.email}
+                            </Text>
+
+                            {showCheck ? (
+                              <CheckCheck
+                                size={18}
+                                className="cursor-pointer text-gray-shade-1 transition-all"
+                              />
+                            ) : (
+                              <Copy
+                                size={18}
+                                className="cursor-pointer text-gray-shade-1 transition-all"
+                                onClick={() =>
+                                  copyTextToClipboard(userDetail?.email)
+                                }
+                              />
+                            )}
+                          </>
                         )}
                       </Flex>
                     </Flex>
+                  </Col>
 
-                    {/* Phone */}
+                  {/* Phone */}
+                  <Col gap={"large"} lg={24} md={12} sm={12} xs={24}>
                     <Flex
-                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg min-w-[200px]"
                       vertical
                     >
                       <Title level={5}>Phone</Title>
-                      <Text className="text-gray-shade-1 font-semibold">
-                        {userDetail?.phone}
-                      </Text>
+                      {userDetailLoader ? (
+                        <Skeleton.Input
+                          active={true}
+                          size={22}
+                          className="mb-1"
+                        />
+                      ) : (
+                        <Text className="text-gray-shade-1 font-semibold">
+                          {userDetail?.phone}
+                        </Text>
+                      )}
                     </Flex>
+                  </Col>
 
-                    {/* JoinAt */}
+                  {/* JoinAt */}
+                  <Col gap={"large"} lg={24} md={12} sm={12} xs={24}>
                     <Flex
-                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg min-w-[200px]"
                       vertical
                     >
                       <Title level={5}>JoinAt</Title>
-                      <Text className="text-gray-shade-1 font-semibold">
-                        {formatDate(userDetail?.createdAt)}
-                      </Text>
+                      {userDetailLoader ? (
+                        <Skeleton.Input
+                          active={true}
+                          size={22}
+                          className="mb-1"
+                        />
+                      ) : (
+                        <Text className="text-gray-shade-1 font-semibold">
+                          {formatDate(userDetail?.createdAt)}
+                        </Text>
+                      )}
                     </Flex>
-
-                    {/* address */}
+                  </Col>
+                  <Col gap={"large"} lg={24} md={12} sm={12} xs={24}>
                     <Flex
-                      className="bg-[#f9fafb] px-4 py-1 rounded-lg"
+                      className="bg-[#f9fafb] px-4 py-1 rounded-lg min-w-[200px]"
                       vertical
                     >
                       <Title level={5}>Address</Title>
-                      <Text className="text-gray-shade-1 font-semibold">
-                        {userDetail?.address}
-                      </Text>
+
+                      {userDetailLoader ? (
+                        <Skeleton.Input
+                          active={true}
+                          size={22}
+                          className="mb-1"
+                        />
+                      ) : (
+                        <Text className="text-gray-shade-1 font-semibold">
+                          {userDetail?.address}
+                        </Text>
+                      )}
                     </Flex>
-                  </Flex>
-                </Col>
-                <Col lg={16} md={24} className="my-4">
-                  <Flex
-                    className="mb-4 items-end mx-4  "
-                    justify="flex-end"
-                    gap={"middle"}
-                  >
-                    <Button className="primary-btn">Accept</Button>
-                    <Button className="danger-btn">Reject</Button>
-                  </Flex>
-                  <Card title="About Worker" bordered={false}>
+                  </Col>
+
+                  {/* address */}
+                </Row>
+              </Col>
+              <Col lg={17} md={24} sm={24} sx={24}>
+                <Flex
+                  className="mb-4 items-end mx-4  "
+                  justify="flex-end"
+                  gap={"middle"}
+                >
+                  {userDetail?.adminApproval === "pending" ? (
+                    <>
+                      <Button className="primary-btn">Accept</Button>
+                      <Button className="danger-btn">Reject</Button>
+                    </>
+                  ) : (
+                    <Tag
+                      color={
+                        userDetail?.adminApproval === "rejected"
+                          ? "red"
+                          : "green"
+                      }
+                      className="!capitalize px-4 py-1  text-[16px]"
+                    >
+                      {userDetail?.adminApproval}
+                    </Tag>
+                  )}
+                </Flex>
+                <Card title="About Worker" bordered={false}>
+                  {userDetailLoader ? (
+                    <Skeleton active className="!w-full" />
+                  ) : (
                     <Text className="text-gray-shade-1 font-semibold">
                       {capitalizeFirstLetter(userDetail?.aboutMe)}
                     </Text>
+                  )}
 
-                    {/* Qualification */}
-                    <Flex vertical className="my-4">
-                      <Title level={5}>Profession:</Title>
+                  {/* Qualification */}
+                  <Flex vertical className="my-4">
+                    <Title level={5}>Profession:</Title>
+                    {userDetailLoader ? (
+                      <>
+                        <Skeleton.Input active={true} block={true} size={22} />
+                      </>
+                    ) : (
                       <Text className="text-gray-shade-1 font-semibold">
                         {userDetail?.profession}
                       </Text>
-                    </Flex>
-                    {/* skills */}
-                    <Title level={5}>Skills:</Title>
-                    <Flex wrap={"wrap"} gap={"middle"} className="mb-4">
-                      {splittingSkills(userDetail?.skills)?.map((i, index) => (
+                    )}
+                  </Flex>
+                  {/* skills */}
+                  <Title level={5}>Skills:</Title>
+                  <Flex wrap={"wrap"} gap={"middle"} className="mb-4">
+                    {userDetailLoader ? (
+                      <div className="flex gap-2 w-full flex-wrap">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                          <Skeleton.Input key={index} active={true} size={22} />
+                        ))}
+                      </div>
+                    ) : (
+                      splittingSkills(userDetail?.skills)?.map((i, index) => (
                         <Flex
                           key={index}
                           wrap={"wrap"}
@@ -280,46 +366,65 @@ const WorkerInfo = () => {
                         >
                           <Text className="capitalize">{i}</Text>
                         </Flex>
-                      ))}
-                    </Flex>
+                      ))
+                    )}
+                  </Flex>
 
-                    {/* Experience */}
-                    <Flex vertical className="mb-4">
-                      <Title level={5}>Experience:</Title>
+                  {/* Experience */}
+                  <Flex vertical className="mb-4">
+                    <Title level={5}>Experience:</Title>
+                    {userDetailLoader ? (
+                      <Skeleton.Input active={true} block={true} size={22} />
+                    ) : (
                       <Text className="text-gray-shade-1 font-semibold text-[16px]">
                         {userDetail?.experience}
                       </Text>
-                    </Flex>
-                    {/* Qualification */}
-                    <Flex vertical className="mb-4 ">
-                      <Title level={5}>Qualification:</Title>
+                    )}
+                  </Flex>
+                  {/* Qualification */}
+                  <Flex vertical className="mb-4 ">
+                    <Title level={5}>Qualification:</Title>
+                    {userDetailLoader ? (
+                      <Skeleton.Input active={true} block={true} size={22} />
+                    ) : (
                       <Text className="text-gray-shade-1 font-semibold">
                         {capitalizeFirstLetter(userDetail?.qualification)}
                       </Text>
-                    </Flex>
+                    )}
+                  </Flex>
 
-                    {/* docunm */}
-                    <Title level={5}>Documents:</Title>
-                    <Row gutter={[16, 16]}>
-                      {workerInfo?.documents?.map((doc, index) => {
-                        return (
-                          <Document
+                  {/* doc */}
+                  <Title level={5}>Documents:</Title>
+                  <Row gutter={[16, 16]}>
+                    {userDetailLoader
+                      ? Array.from({ length: 2 }).map((_, index) => (
+                          <Skeleton.Node
                             key={index}
-                            title={doc?.documentTitle}
-                            documentName={doc?.filename}
-                            documentURL={doc?.url}
-                            fileSize={doc?.size}
-                          />
-                        );
-                      })}
-                    </Row>
-                  </Card>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Flex>
-      )}
+                            active={true}
+                            size={64}
+                            className="!size-[264px] mx-2"
+                          >
+                            <></>
+                          </Skeleton.Node>
+                        ))
+                      : userDetail?.idDocs?.map((doc, index) => {
+                          return (
+                            <Document
+                              key={index}
+                              title={doc?.documentTitle}
+                              documentName={doc?.filename}
+                              documentURL={baseURL + doc}
+                              fileSize={doc?.size}
+                            />
+                          );
+                        })}
+                  </Row>
+                </Card>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Flex>
     </>
   );
 };
