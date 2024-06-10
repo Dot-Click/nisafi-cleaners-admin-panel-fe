@@ -1,4 +1,14 @@
-import { Flex, Row, Typography, Col, Card, Carousel } from "antd";
+import {
+  Flex,
+  Row,
+  Typography,
+  Col,
+  Card,
+  Carousel,
+  Avatar,
+  Tag,
+  Image,
+} from "antd";
 import React from "react";
 import { Calendar, MapPin, Timer, HandCoins } from "lucide-react";
 const { Title, Text } = Typography;
@@ -15,24 +25,90 @@ const JobDetail = () => {
   return (
     <Flex className="settings" justify="center">
       <Row className="settings-container">
-        <Row span={24} className="settings-form-container w-full h-full p-4">
-          <Col span={18}>
-            <div className="w-[75%]">
+        <Row
+          justify={"space-between"}
+          span={24}
+          className="settings-form-container w-full h-full p-4"
+        >
+          <Col span={16}>
+            <Flex gap={10} align="center" className="" justify="space-between">
+              <Avatar
+                size={52}
+                src={"https://github.com/shadcn.png"}
+                className=""
+              />
+              <Tag
+                color={"green"}
+                className="px-4 py-1 font-semibold text-[14px]"
+              >
+                Completed
+              </Tag>
+
+              {/* <Text className="text-lg font-semibold">Md Umer</Text> */}
+            </Flex>
+            <Flex vertical>
+              <span className="font-bold text-[22px] !mb-0">
+                Laundry Attendant
+              </span>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-shade-1 font-semibold">
+                  Posted 3 days ago
+                </span>
+              </div>
+            </Flex>
+
+            {/* <div className="w-[75%] my-4">
               <Carousel arrows dotPosition="bottom" infinite={false}>
-                <div>
-                  <h3 style={contentStyle}>1</h3>
+                <div style={contentStyle}>
+                  <Image
+                    preview={false}
+                    className="w-full !object-contain"
+                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                  />
                 </div>
-                <div>
-                  <h3 style={contentStyle}>2</h3>
+                <div style={contentStyle}>
+                  <Image
+                    preview={false}
+                    className="w-full !object-contain"
+                    src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg
+"
+                  />
                 </div>
-                <div>
-                  <h3 style={contentStyle}>3</h3>
-                </div>
-                <div>
-                  <h3 style={contentStyle}>4</h3>
+                <div style={contentStyle}>
+                  <Image
+                    className="w-full !object-contain"
+                    preview={false}
+                    src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+                  />
                 </div>
               </Carousel>
-            </div>
+            </div> */}
+
+            <Card className="my-4" title="Job Description" bordered={false}>
+              <Text className="text-gray-shade-1 font-semibold">
+                As a Laundry Attendant, you will be responsible for ensuring the
+                cleanliness and neat presentation of linens, towels, and other
+                textiles used in our establishment. Your duties will include
+                operating laundry equipment, sorting, washing, drying, folding,
+                and ironing linens according to established procedures and
+                standards. Additionally, you will be expected to maintain a
+                clean and organized work area, monitor inventory levels of
+                cleaning supplies and linens, and report any maintenance issues
+                or equipment malfunctions to the appropriate personnel.
+                Attention to detail, efficiency, and a strong work ethic are
+                essential for success in this role.
+              </Text>
+
+              {/* Experience */}
+              <Flex vertical className="my-4">
+                <Title level={5}>Resonsibilities:</Title>
+                <Text className="text-gray-shade-1 font-semibold text-[16px]">
+                  Oversaw laundry operations, managed a team of laundry
+                  attendants, scheduled shifts, maintained inventory levels,
+                  ensured compliance with safety and sanitation standards.
+                </Text>
+              </Flex>
+            </Card>
           </Col>
           <Col span={6}>
             <Card title="About Job" bordered={false} className="rounded-lg">
@@ -46,7 +122,7 @@ const JobDetail = () => {
 
               <Text className="text-xl font-bold">$500,00</Text>
 
-              <Row className="!py-4">
+              <Row className="my-4" gutter={[16, 16]}>
                 <Row>
                   <Flex gap={10}>
                     <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
