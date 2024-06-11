@@ -134,7 +134,7 @@ const JobManagement = () => {
       key: "action",
       render: (_, record) => (
         <Button
-          onClick={() => hanldeViewDetails(record)}
+          onClick={() => navigate("/dashboard/jobs/details")}
           className="primary-btn"
         >
           View Detail

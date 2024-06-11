@@ -4,14 +4,25 @@ import {
   Typography,
   Col,
   Card,
-  Carousel,
-  Avatar,
   Tag,
   Image,
+  Avatar,
+  Rate,
 } from "antd";
 import React from "react";
-import { Calendar, MapPin, Timer, HandCoins } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  Timer,
+  HandCoins,
+  FilePen,
+  Star,
+} from "lucide-react";
 const { Title, Text } = Typography;
+import ReactCarousel from "../components/common/ReactCarousel";
+import { StarFilled } from "@ant-design/icons";
+import { successRateColors } from "../utils";
+import { avatarUrl } from "../configs/axiosConfig";
 
 const contentStyle = {
   margin: 0,
@@ -21,6 +32,13 @@ const contentStyle = {
   textAlign: "center",
   background: "#364d79",
 };
+
+const images = [
+  "http://placehold.it/310x150",
+  "http://placehold.it/310x150",
+  "http://placehold.it/310x150",
+  "http://placehold.it/310x150/FFA500",
+];
 const JobDetail = () => {
   return (
     <Flex className="settings" justify="center">
@@ -31,58 +49,52 @@ const JobDetail = () => {
           className="settings-form-container w-full h-full p-4"
         >
           <Col span={16}>
-            <Flex gap={10} align="center" className="" justify="space-between">
-              <Avatar
-                size={52}
-                src={"https://github.com/shadcn.png"}
-                className=""
-              />
-              <Tag
-                color={"green"}
-                className="px-4 py-1 font-semibold text-[14px]"
-              >
-                Completed
-              </Tag>
-
-              {/* <Text className="text-lg font-semibold">Md Umer</Text> */}
-            </Flex>
-            <Flex vertical>
-              <span className="font-bold text-[22px] !mb-0">
-                Laundry Attendant
-              </span>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-shade-1 font-semibold">
-                  Posted 3 days ago
+            <Flex justify="space-between" align="">
+              <div>
+                <span className="font-bold text-[22px] !mb-0">
+                  Laundry Attendant
                 </span>
+
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-shade-1 font-semibold">
+                    Posted 3 days ago
+                  </span>
+                </div>
+              </div>
+              <div>
+                <Tag
+                  color={"green"}
+                  className="px-4 py-1 font-semibold text-[14px]"
+                >
+                  Completed
+                </Tag>
               </div>
             </Flex>
 
-            {/* <div className="w-[75%] my-4">
-              <Carousel arrows dotPosition="bottom" infinite={false}>
-                <div style={contentStyle}>
+            {/* Worker and Customer */}
+            <Row
+              className="my-6 border-0 pr-4"
+              gutter={[16, 16]}
+              justify="space-between "
+            >
+              <Col>
+                <Flex justify="" align="center" gap={"middle"}>
                   <Image
+                    src={avatarUrl}
+                    className="rounded-full !size-16"
                     preview={false}
-                    className="w-full !object-contain"
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                   />
-                </div>
-                <div style={contentStyle}>
-                  <Image
-                    preview={false}
-                    className="w-full !object-contain"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg
-"
-                  />
-                </div>
-                <div style={contentStyle}>
-                  <Image
-                    className="w-full !object-contain"
-                    preview={false}
-                    src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-                  />
-                </div>
-              </Carousel>
-            </div> */}
+                  <Flex vertical>
+                    <Text>Md Umer</Text>
+                    <Text>example@gmail.com</Text>
+                  </Flex>
+                </Flex>
+              </Col>
+            </Row>
+
+            <Row className="my-4 border-0">
+              <ReactCarousel images={images} />
+            </Row>
 
             <Card className="my-4" title="Job Description" bordered={false}>
               <Text className="text-gray-shade-1 font-semibold">
@@ -99,7 +111,6 @@ const JobDetail = () => {
                 essential for success in this role.
               </Text>
 
-              {/* Experience */}
               <Flex vertical className="my-4">
                 <Title level={5}>Resonsibilities:</Title>
                 <Text className="text-gray-shade-1 font-semibold text-[16px]">
@@ -110,71 +121,129 @@ const JobDetail = () => {
               </Flex>
             </Card>
           </Col>
-          <Col span={6}>
+          <Col span={8}>
             <Card title="About Job" bordered={false} className="rounded-lg">
-              {/* Experience */}
-              {/* <Flex vertical className="mb-4">
-                <Title level={5}>Experience:</Title>
-                <Text className="text-gray-shade-1 font-semibold text-[16px]">
-                  {"workerInfo?.experience"}
-                </Text>
-              </Flex> */}
-
               <Text className="text-xl font-bold">$500,00</Text>
 
               <Row className="my-4" gutter={[16, 16]}>
-                <Row>
+                <Col span={24}>
                   <Flex gap={10}>
                     <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
                       <Calendar size={20} className="text-gray-shade-1" />
                     </Flex>
                     <Flex vertical gap={0}>
-                      <Text className="text-black font-bold">24 Sep 2024</Text>
-                      <Text className="text-gray-shade-1">Posted</Text>
+                      <Text className="text-black font-bold">Posted</Text>
+                      <Text className="text-gray-shade-1">24 Sep 2024</Text>
                     </Flex>
                   </Flex>
-                </Row>
-
-                <Row>
+                </Col>
+                <Col span={24}>
+                  <Flex gap={10}>
+                    <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
+                      <FilePen size={20} className="text-gray-shade-1" />
+                    </Flex>
+                    <Flex vertical gap={0}>
+                      <Text className="text-black font-bold">
+                        Proposals Count
+                      </Text>
+                      <Text className="text-gray-shade-1 ">24</Text>
+                    </Flex>
+                  </Flex>
+                </Col>
+                <Col span={24}>
                   <Flex gap={10}>
                     <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
                       <MapPin size={20} className="text-gray-shade-1" />
                     </Flex>
                     <Flex vertical gap={0}>
-                      <Text className="text-black font-bold">
+                      <Text className="text-black font-bold">Location</Text>
+                      <Text className="text-gray-shade-1">
                         Sans Fransico, CA
                       </Text>
-                      <Text className="text-gray-shade-1">Location</Text>
                     </Flex>
                   </Flex>
-                </Row>
+                </Col>
 
-                <Row>
+                <Col span={24}>
                   <Flex gap={10}>
                     <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
                       <Timer size={20} className="text-gray-shade-1" />
                     </Flex>
                     <Flex vertical gap={0}>
                       <Text className="text-black font-bold">
+                        Schedule Time
+                      </Text>
+                      <Text className="text-gray-shade-1">
                         8:00am to 6:00pm
                       </Text>
-                      <Text className="text-gray-shade-1">Schedule Time</Text>
                     </Flex>
                   </Flex>
-                </Row>
-                <Row>
+                </Col>
+
+                <Col span={24}>
                   <Flex gap={10}>
                     <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
-                      <HandCoins size={20} className="text-gray-shade-1" />
+                      <Star size={20} className="text-gray-shade-1" />
                     </Flex>
                     <Flex vertical gap={0}>
-                      <Text className="text-black font-bold">Carpet Clean</Text>
-                      <Text className="text-gray-shade-1">Job-Type</Text>
+                      <Text className="text-black font-bold">Rating</Text>
+                      <Text className="text-gray-shade-1">4.0</Text>
                     </Flex>
                   </Flex>
-                </Row>
+                </Col>
+
+                <Text className="font-bold text-lg !pb-0 !mb-0">Review</Text>
+                <Text className="text-gray-shade-1 font-semibold">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quibusdam incidunt expedita vitae sapiente, delectus porro
+                  dolore dolor numquam fugiat modi, quod assumenda.
+                </Text>
               </Row>
             </Card>
+
+            {/* worker */}
+
+            <Card title="Worker" bordered={false} className="rounded-lg my-6">
+              <Row className="my-4" gutter={[16, 16]}>
+                <Col span={24} className="">
+                  <Flex className="justify-center items-center flex-col">
+                    <Avatar
+                      className="w-[120px] h-[120px] mb-4"
+                      size={"large"}
+                      src={avatarUrl}
+                    />
+                    <Title level={2}>Shabir Don</Title>
+                    <Flex className="justify-between items-center w-full">
+                      <Text className="font-bold text-lg">Rating</Text>
+                      <Text className="text-shade-1 font-semibold text-lg">
+                        4.0/5.0
+                        <span>
+                          <StarFilled
+                            size={22}
+                            style={{
+                              color: "orange",
+                              // backgroundColor: "yellow",
+                            }}
+                          />
+                        </span>
+                      </Text>
+                    </Flex>
+
+                    <Flex className="justify-between items-center w-full mt-2">
+                      <Text className="font-bold text-lg">Success Rate</Text>
+                      <Tag
+                        className="font-bold text-lg !m-0 border-0 py-1"
+                        color={successRateColors(72)}
+                      >
+                        {72}%
+                      </Tag>
+                    </Flex>
+                  </Flex>
+                </Col>
+              </Row>
+            </Card>
+
+            {/* worker end here */}
           </Col>
         </Row>
       </Row>

@@ -28,3 +28,15 @@ export const splittingSkills = (skills) => {
 export const capitalizeFirstLetter = (str) => {
   return str?.charAt(0)?.toUpperCase() + str?.slice(1);
 };
+
+export const successRateColors = (rate) => {
+  let color;
+  if (rate <= 40) {
+    color = "red";
+  } else if (rate > 40 && rate <= 70) {
+    color = "yellow";
+  } else {
+    color = "green";
+  }
+  return color;
+};
