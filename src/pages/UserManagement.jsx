@@ -280,7 +280,7 @@ const UserManagement = () => {
           <Flex className="filter" align="center">
             <Text className="lebal">Sort By:</Text>
             <Select
-              defaultValue="Newest"
+              defaultValue={filter}
               onChange={handleSort}
               suffixIcon={<ChevronDown />}
               options={[

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
 import {
   Button,
@@ -14,10 +14,14 @@ import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
 import { userData, jobsData } from "../data/data";
 import ChevronDown from "../assets/icons/ChevronDown";
-import { UsersRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
 import { WashingMachine } from "lucide-react";
+import { jobManagementStore } from "../stores/jobManagementStore";
+import { useShallow } from "zustand/react/shallow";
+import { formatDateString } from "../utils";
+import { Pagination } from "antd";
 
 const tabList = [
   {
@@ -47,33 +51,48 @@ const tabList = [
 ];
 
 const JobManagement = () => {
-  const [isModalOpened, setModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(tabList[0].key);
-  const [record, setRecord] = useState(null);
+  const [sort, setSort] = useState("desc");
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
-  const handleCloseModal = () => {
-    try {
-      setModalOpen(false);
-      setRecord(null);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    // func
+    fetchJobsList,
+    // data
+    jobsList,
+    pagesCount,
+    // loaders
+    listLoader,
+  } = jobManagementStore(useShallow((state) => state));
 
   const handleTabChange = (key) => {
     setActiveTab(key);
+    setSort("desc");
   };
 
   const jobCols = [
     {
       title: "Name",
-      dataIndex: "clientDetail",
-      key: "clientDetail",
-      render: (_, { clientDetail }) => (
+      dataIndex: "user",
+      key: "user",
+      render: (_, { user }) => (
         <Flex gap={10} align="center">
-          <Avatar size={"large"} src={clientDetail?.profilePic} className="" />
-          <Text>{clientDetail.name}</Text>
+          {user?.profileImage ? (
+            <Avatar
+              src={user.profileImage}
+              size={40}
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <Avatar
+              icon={<UserRound />}
+              size={40}
+              style={{ objectFit: "cover" }}
+            />
+          )}
+          <Text>{user.name}</Text>
         </Flex>
       ),
     },
@@ -91,16 +110,23 @@ const JobManagement = () => {
       title: "Proposals",
       dataIndex: "proposals",
       key: "proposals",
+      render: (_, { proposals }) => <Text>{proposals.length}</Text>,
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (_, { createdAt }) => <Text>{formatDateString(createdAt)}</Text>,
     },
     {
       title: "Location",
       dataIndex: "location",
       key: "location",
+      render: (_, { location }) => (
+        <Flex gap={10} align="center">
+          <Text>{location.string}</Text>
+        </Flex>
+      ),
     },
 
     {
@@ -125,6 +151,13 @@ const JobManagement = () => {
           size="large"
           placeholder="Search..."
           prefix={<SearchOutlined />}
+          defaultValue={search}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setSearch(e.target.value);
+            }
+          }}
+          onChange={(e) => e.target.value === "" && setSearch("")}
         />
 
         {/* // ? filters */}
@@ -133,47 +166,51 @@ const JobManagement = () => {
           <Flex className="filter" align="center">
             <Text className="lebal">Sort By:</Text>
             <Select
-              defaultValue="newest"
+              defaultValue={sort}
               suffixIcon={<ChevronDown />}
               options={[
                 {
-                  value: "newest",
+                  value: "desc",
                   label: "Newest",
                 },
                 {
-                  value: "oldest",
+                  value: "asc",
                   label: "Oldest",
                 },
               ]}
-            />
-          </Flex>
-
-          {/* // ? sort by filter */}
-          <Flex className="filter" align="center">
-            <Text className="lebal">Role:</Text>
-            <Select
-              defaultValue="all"
-              suffixIcon={<ChevronDown />}
-              options={[
-                {
-                  value: "all",
-                  label: "All",
-                },
-                {
-                  value: "customer",
-                  label: "Customer",
-                },
-                {
-                  value: "worker",
-                  label: "Worker",
-                },
-              ]}
+              onChange={(value) => setSort(value)}
             />
           </Flex>
         </Flex>
       </Row>
     );
   };
+
+  const PaginationComponent = () => {
+    return (
+      pagesCount > 1 && (
+        <div className="py-4 flex flex-wrap flex-1 items-center justify-center my-6">
+          <Pagination
+            total={pagesCount}
+            pageSize={10}
+            showQuickJumper={false}
+            showTitle={false}
+            showSizeChanger={false}
+            responsive
+            current={currentPage}
+            onChange={(page, pageSize) => setCurrentPage(page)}
+          />
+        </div>
+      )
+    );
+  };
+
+  async function fetchData() {
+    await fetchJobsList(1, search, sort, 10, activeTab);
+  }
+  useEffect(() => {
+    fetchData();
+  }, [activeTab, sort, search]);
 
   return (
     <Row className=" d-block user-management-container">
@@ -199,9 +236,10 @@ const JobManagement = () => {
 
             <GeneralTable
               columns={jobCols}
-              // data={jobsData?.filter((item) => item.status === tab.key)}
-              data={jobsData}
+              data={jobsList}
+              loading={listLoader}
             />
+            <PaginationComponent />
           </Tabs.TabPane>
         ))}
       </Tabs>
