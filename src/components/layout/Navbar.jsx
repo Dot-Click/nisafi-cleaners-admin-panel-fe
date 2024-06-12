@@ -14,12 +14,18 @@ import { Link, useLocation } from "react-router-dom";
 import Gear from "../../assets/icons/Gear";
 import Bell from "../../assets/icons/Bell";
 import { trimString } from "../../services/helpers";
+import { useAuthStore } from "../../stores/authStore";
+import { useShallow } from "zustand/react/shallow";
+import { UserRound } from "lucide-react";
+import { baseURL } from "../../configs/axiosConfig";
 
 const { Text } = Typography;
 
 const Navbar = ({ isOpened, setOpened }) => {
   const [pageName, setPageName] = useState("");
   const { pathname } = useLocation();
+
+  const {user} = useAuthStore(useShallow((state) => state));
 
   useEffect(() => {
     // ? setting the current page dynamically
@@ -55,12 +61,15 @@ const Navbar = ({ isOpened, setOpened }) => {
       >
         {/* // ? avatar and username */}
         <Flex align="center">
-          <Avatar
-            src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
+          {user?.userData?.profilePic ? (
+            <Avatar
+            src={baseURL+user?.userData?.profilePic}
             className="avatar"
-          />
+          />) : (
+            <Avatar icon={<UserRound />} className="avatar" />
+          )}
           <Tooltip title="Zubair Arif" className="username-tooltip">
-            <Text className="user-name">{trimString("Zubair Arif")}</Text>
+            <Text className="user-name">{trimString(user?.userData?.name)}</Text>
           </Tooltip>
         </Flex>
         <Flex>

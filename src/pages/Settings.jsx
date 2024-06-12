@@ -14,6 +14,10 @@ import React, { useState } from "react";
 import Camera from "../assets/icons/Camera";
 import countries from "../data/countries.json";
 import ImgCrop from "antd-img-crop";
+import { useAuthStore } from "../stores/authStore";
+import { useShallow } from "zustand/react/shallow";
+import { UserRound } from "lucide-react";
+import { baseURL } from "../configs/axiosConfig";
 
 const { Title, Text } = Typography;
 
@@ -26,16 +30,7 @@ const Settings = () => {
     country: "United States",
   });
 
-  const handleChange = (e) => {
-    try {
-      setValues({
-        ...values,
-        [e.target.name]: e.target.value,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { user, loading } = useAuthStore(useShallow((state) => state));
 
   return (
     <Flex className="settings" justify="center">
@@ -43,11 +38,11 @@ const Settings = () => {
         <Col span={24} className="settings-container-header"></Col>
         <Col span={24} className="settings-form-container">
           <Col lg={8} md={10} xs={24} className="image-container">
-            <UpdateProfileImage />
+            <UpdateProfileImage image={user?.userData?.profilePic} />
           </Col>
           <Col lg={16} md={14} xs={24} className="fields-container">
             <Flex vertical className="name-plate">
-              <Title level={3}>Zubair Arif</Title>
+              <Title level={3}>{user?.userData?.name}</Title>
               <Text>
                 Take full control of your account, update your profile.
               </Text>
@@ -57,35 +52,28 @@ const Settings = () => {
               {/* // ? update username field */}
               <UpdateFields
                 fieldTitle={"Username"}
-                fieldName={"username"}
-                fieldValue={values.username}
-                handleChange={handleChange}
+                fieldName={"name"}
+                fieldValue={user?.userData?.name}
               />
 
               {/* // ? update email field */}
               <UpdateFields
                 fieldTitle={"Email Address"}
                 fieldName={"email"}
-                fieldValue={values.email}
-                handleChange={handleChange}
+                fieldValue={user?.userData?.email}
               />
 
               {/* // ? update phone field */}
               <UpdateFields
                 fieldTitle={"Phone"}
                 fieldName={"phone"}
-                fieldValue={values.phone}
-                handleChange={handleChange}
+                fieldValue={user?.userData?.phone || "N/A"}
               />
 
               {/* // ? update password component */}
               <PasswordField />
 
               {/* // ? update country component */}
-              <CountryField
-                fieldValue={values.country}
-                handleChange={handleChange}
-              />
             </Flex>
           </Col>
         </Col>
@@ -94,8 +82,10 @@ const Settings = () => {
   );
 };
 
-const UpdateFields = ({ fieldTitle, fieldName, fieldValue, handleChange }) => {
+const UpdateFields = ({ fieldTitle, fieldName, fieldValue }) => {
   const [isEditable, setEditable] = useState(false);
+  const [newVal, setNewVal] = useState(fieldValue);
+  const { updateProfile, loading } = useAuthStore(useShallow((state) => state));
 
   return (
     <Row className="field-row">
@@ -110,9 +100,9 @@ const UpdateFields = ({ fieldTitle, fieldName, fieldValue, handleChange }) => {
                 ? "number"
                 : "text"
             }
-            value={fieldValue}
+            defaultValue={newVal}
             name={fieldName}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => setNewVal(e.target.value)}
           />
         ) : (
           <Text className="field-value">{fieldValue}</Text>
@@ -124,7 +114,12 @@ const UpdateFields = ({ fieldTitle, fieldName, fieldValue, handleChange }) => {
             <Button className="grey-btn" onClick={() => setEditable(false)}>
               Cancel
             </Button>
-            <Button className="save-btn" onClick={() => setEditable(false)}>
+            <Button className="save-btn" onClick={async() => {
+              const res = await updateProfile({ [fieldName]: newVal });
+              if (res) {
+                setEditable(false);
+              }
+            }} loading={loading}>
               Save
             </Button>
           </>
@@ -235,60 +230,10 @@ const PasswordField = () => {
   );
 };
 
-const CountryField = ({ fieldValue, handleChange }) => {
-  const [isEditable, setEditable] = useState(false);
 
-  const countriesList = countries?.map((country) => ({
-    image: country?.flag,
-    label: country?.name,
-    value: country?.name,
-  }));
-
-  const filterOption = (input, option) =>
-    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-
-  return (
-    <Row className="field-row country-field">
-      <Col lg={16} xs={24} className="field">
-        <Text className="field-name">Country</Text>
-        {isEditable ? (
-          <Select
-            showSearch
-            placeholder="Select Country"
-            defaultValue={fieldValue}
-            optionFilterProp="children"
-            filterOption={filterOption}
-            options={countriesList}
-            onChange={handleChange}
-          />
-        ) : (
-          <Text className="field-value">{fieldValue}</Text>
-        )}
-      </Col>
-      <Col lg={8} xs={24} className="btns">
-        {isEditable ? (
-          <>
-            <Button className="grey-btn" onClick={() => setEditable(false)}>
-              Cancel
-            </Button>
-            <Button className="save-btn" onClick={() => setEditable(false)}>
-              Save
-            </Button>
-          </>
-        ) : (
-          <Button className="grey-btn" onClick={() => setEditable(true)}>
-            Edit
-          </Button>
-        )}
-      </Col>
-    </Row>
-  );
-};
-
-const UpdateProfileImage = () => {
-  const [imageSrc, setImageSrc] = useState(
-    "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
-  );
+const UpdateProfileImage = (props) => {
+  const [imageSrc, setImageSrc] = useState(props.image);
+  const {updateProfile} = useAuthStore(useShallow((state) => state));
 
   const [fileList, setFileList] = useState([
     {
@@ -299,20 +244,23 @@ const UpdateProfileImage = () => {
     },
   ]);
 
-  const getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-
   const onChange = async ({ fileList: newFileList }) => {
     setFileList(newFileList);
-
+    console.log("newFileList", newFileList);
     if (newFileList.length > 0 && newFileList[0].originFileObj) {
-      const base64 = await getBase64(newFileList[0]?.originFileObj);
-      setImageSrc(base64);
+      let imageUrl;
+      const reader = new FileReader();
+      reader.readAsDataURL(newFileList[0].originFileObj);
+      reader.onload = () => {
+        imageUrl = reader.result;
+        setImageSrc(imageUrl);
+      };
+      const formData = new FormData();
+      formData.append("image", newFileList[0].originFileObj);
+      const res = await updateProfile(formData);
+      console.log("res", res);
+
+      // setImageSrc(base64);
     } else {
       setImageSrc("");
     }
@@ -328,6 +276,7 @@ const UpdateProfileImage = () => {
 
   return (
     <label className="display-picture-container" onClick={handleTriggerUpload}>
+      {console.log("imageSrc", imageSrc)}
       <ImgCrop rotationSlider>
         <Upload
           ref={(node) => {
@@ -343,7 +292,20 @@ const UpdateProfileImage = () => {
         ></Upload>
       </ImgCrop>
 
-      <Avatar src={imageSrc} className="display-picture" />
+      {imageSrc ? (
+        <Avatar
+          src={imageSrc.includes("uploads") ? `${baseURL}${imageSrc}` : imageSrc}
+          className="display-picture"
+          style={{ objectFit: "cover" }}
+        />
+      ) : (
+        // user dummy image
+        <Avatar
+          icon={<UserRound size={100} />}
+          className="display-picture"
+          style={{ objectFit: "cover" }}
+        />
+      )}
       <Text className="camera-icon" justify="flex-end">
         <Camera />
       </Text>

@@ -56,7 +56,7 @@ export const useAuthStore = create((set) => {
           loading: true,
         });
         attachTokenWithFormAxios();
-        const res = await formAxios.put(`/auth/update-profile`, values);
+        const res = await formAxios.put(`/auth/me`, values);
 
         if (res?.data?.success) {
           set({
@@ -172,7 +172,7 @@ export const useAuthStore = create((set) => {
           isAuthenticated: false,
         });
         attachToken();
-        const res = await custAxios.get(`/auth/get-profile`);
+        const res = await custAxios.get(`/auth/me`);
         if (res?.data?.success) {
           set({
             loading: false,
