@@ -18,6 +18,7 @@ import { useAuthStore } from "../stores/authStore";
 import { useShallow } from "zustand/react/shallow";
 import { UserRound } from "lucide-react";
 import { baseURL } from "../configs/axiosConfig";
+import { errorMessage } from "../services/helpers";
 
 const { Title, Text } = Typography;
 
@@ -114,12 +115,16 @@ const UpdateFields = ({ fieldTitle, fieldName, fieldValue }) => {
             <Button className="grey-btn" onClick={() => setEditable(false)}>
               Cancel
             </Button>
-            <Button className="save-btn" onClick={async() => {
-              const res = await updateProfile({ [fieldName]: newVal });
-              if (res) {
-                setEditable(false);
-              }
-            }} loading={loading}>
+            <Button
+              className="save-btn"
+              onClick={async () => {
+                const res = await updateProfile({ [fieldName]: newVal });
+                if (res) {
+                  setEditable(false);
+                }
+              }}
+              loading={loading}
+            >
               Save
             </Button>
           </>
@@ -138,6 +143,7 @@ const PasswordField = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { updateProfile, loading } = useAuthStore(useShallow((state) => state));
 
   const handleChange = (e) => {
     try {
@@ -186,10 +192,40 @@ const PasswordField = () => {
       <Modal
         open={isModalOpened}
         okText={"Update"}
-        okButtonProps={{ className: "save-btn" }}
+        okButtonProps={{ className: "save-btn", loading: loading }}
         cancelButtonProps={{ className: "grey-btn" }}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
+        onOk={async () => {
+          if (
+            !currentPassword ||
+            !newPassword ||
+            !confirmPassword ||
+            newPassword === "" ||
+            confirmPassword === "" ||
+            currentPassword === ""
+          ) {
+            return errorMessage("Please fill all fields");
+          }
+          if (newPassword !== confirmPassword) {
+            return errorMessage("Password and Confirm Password does not match");
+          }
+          // call api to update password
+          const res = await updateProfile({
+            password: newPassword.toString(),
+            oldPassword: currentPassword.toString(),
+          });
+          if (res) {
+            setCurrentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            setModalOpen(false);
+          }
+        }}
+        onCancel={() => {
+          setCurrentPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+          setModalOpen(false);
+        }}
         destroyOnClose
         className="change-password-modal"
         centered
@@ -230,10 +266,9 @@ const PasswordField = () => {
   );
 };
 
-
 const UpdateProfileImage = (props) => {
   const [imageSrc, setImageSrc] = useState(props.image);
-  const {updateProfile} = useAuthStore(useShallow((state) => state));
+  const { updateProfile } = useAuthStore(useShallow((state) => state));
 
   const [fileList, setFileList] = useState([
     {
@@ -294,7 +329,9 @@ const UpdateProfileImage = (props) => {
 
       {imageSrc ? (
         <Avatar
-          src={imageSrc.includes("uploads") ? `${baseURL}${imageSrc}` : imageSrc}
+          src={
+            imageSrc.includes("uploads") ? `${baseURL}${imageSrc}` : imageSrc
+          }
           className="display-picture"
           style={{ objectFit: "cover" }}
         />
