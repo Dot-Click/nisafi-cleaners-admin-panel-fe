@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Image, Col } from "antd";
+import { baseURL } from "../../configs/axiosConfig";
 
 const ReactCarousel = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -13,15 +14,18 @@ const ReactCarousel = ({ images }) => {
   };
 
   return (
-    <Col span={18}>
+    <Col span={24}>
       <Carousel
         autoPlay={autoPlay}
         selectedItem={currentSlide}
         onChange={updateCurrentSlide}
         dynamicHeight
-        width={600}
+        // width={800}
+        width={"100%"}
+        className="!object-contain"
       >
         {images?.map((image, index) => (
+          // <img key={index} src={baseURL + image} alt={`Slide ${index}`} />
           <img key={index} src={image} alt={`Slide ${index}`} />
         ))}
       </Carousel>

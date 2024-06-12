@@ -51,11 +51,11 @@ const tabList = [
 ];
 
 const JobManagement = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(tabList[0].key);
   const [sort, setSort] = useState("desc");
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate();
 
   const {
     // func
@@ -66,6 +66,8 @@ const JobManagement = () => {
     // loaders
     listLoader,
   } = jobManagementStore(useShallow((state) => state));
+
+  console.log("jobsList", jobsList);
 
   const handleTabChange = (key) => {
     setActiveTab(key);
@@ -134,7 +136,7 @@ const JobManagement = () => {
       key: "action",
       render: (_, record) => (
         <Button
-          onClick={() => navigate("/dashboard/jobs/details")}
+          onClick={() => navigate(`/dashboard/jobs/details/${record._id}`)}
           className="primary-btn"
         >
           View Detail

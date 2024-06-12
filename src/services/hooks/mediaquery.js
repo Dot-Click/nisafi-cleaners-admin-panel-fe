@@ -23,7 +23,8 @@ const useMobile = () => {
 };
 
 const useTablet = () => {
-  return useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
+  // return useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
+  return useMediaQuery("(min-width: 768px) and (max-width: 990px)");
 };
 
 const useDesktop = () => {

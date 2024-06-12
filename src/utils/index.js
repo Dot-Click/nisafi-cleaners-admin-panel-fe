@@ -40,3 +40,21 @@ export const successRateColors = (rate) => {
   }
   return color;
 };
+
+export const getStatusColors = (status) => {
+  switch (status.toLowerCase()) {
+    case "completed":
+      return "green";
+    case "cancelled":
+      return "red";
+    case "disputed":
+      return "purple";
+    case "in-progress":
+      return "orange";
+    case "open":
+      return "blue";
+
+    default:
+      break;
+  }
+};

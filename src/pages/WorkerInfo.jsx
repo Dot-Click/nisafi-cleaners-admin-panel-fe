@@ -156,12 +156,7 @@ const WorkerInfo = () => {
         <Row className="settings-container">
           <Col span={24} className="settings-container-header"></Col>
           <Col span={24} className="settings-form-container">
-            <Row
-              // className="border-0 pb-4"
-              gutter={[16, 16]}
-              className="px-6 py-4"
-              wrap
-            >
+            <Row gutter={[16, 16]} className="px-6 py-4" wrap>
               <Col lg={7} md={24} sm={24} sx={24} className="border-0">
                 <Flex
                   className="border-0 border-red-400 flex -translate-y-[100px]"
