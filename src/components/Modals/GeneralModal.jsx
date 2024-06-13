@@ -1,32 +1,17 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Row, Modal } from "antd";
 
-const GeneralModal = ({
-  title = "",
-  setModalOpen,
-  open,
-  clickHandler,
-  component,
-}) => {
-  const showModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setModalOpen(false);
-  };
-
+const GeneralModal = ({ open, handleCancel, component }) => {
   return (
     <Modal
-      width={400}
-      cancelText={"Han beya"}
-      title={title}
-      
       open={open}
-      onOk={clickHandler}
+      destroyOnClose
+      footer={null}
       onCancel={handleCancel}
+      centered
+      // width={1200}
     >
-      {component}
+      <Row className="modal-container">{component}</Row>
     </Modal>
   );
 };

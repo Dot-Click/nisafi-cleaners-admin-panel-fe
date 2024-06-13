@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Flex,
   Row,
@@ -31,9 +31,10 @@ import {
 } from "../utils";
 import { avatarUrl, baseURL } from "../configs/axiosConfig";
 import { useTablet } from "../services/hooks/mediaquery";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { jobManagementStore } from "../stores/jobManagementStore";
+import GeneralModal from "../components/Modals/GeneralModal";
 
 const images = [
   "https://placehold.it/310x150",
@@ -44,6 +45,7 @@ const images = [
 const JobDetail = () => {
   const tablet = useTablet();
   const { id } = useParams();
+  const [isModalOpened, setModalOpen] = useState(false);
 
   const {
     // func
@@ -71,15 +73,21 @@ const JobDetail = () => {
     "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
     "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
   ];
+
+  const handleCancel = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <Flex className="settings" justify="center">
-      <Row className="settings-container">
-        <Row
-          justify={"space-between"}
-          className="settings-form-container w-full h-full p-4"
-        >
-          <Row className="border-0" justify="space-between" gutter={[0, 16]}>
-            <Col lg={15} md={24} sm={24} sx={24} className="border-0">
+    <>
+      <Flex className="settings" justify="center">
+        <Row className="settings-container">
+          <Row
+            justify={"space-between"}
+            className="settings-form-container w-full h-full p-4"
+          >
+            {/* Main Intro */}
+            <Col lg={24} md={24} sm={24} sx={24} className="border-0">
               <Flex
                 justify="space-between"
                 align=""
@@ -132,8 +140,8 @@ const JobDetail = () => {
                 </Flex>
               </Flex>
               {/* <ReactCarousel images={jobDetail?.images} /> */}
-              {true ? (
-                <Skeleton.Node active={true}>
+              {false ? (
+                <Skeleton.Node className="!w-full" active={true}>
                   <></>
                 </Skeleton.Node>
               ) : (
@@ -141,14 +149,35 @@ const JobDetail = () => {
               )}
             </Col>
 
-            <Col lg={8} md={24} sm={24} sx={24} className="">
+            {/* job desc */}
+            <Col
+              xl={24}
+              lg={24}
+              md={24}
+              sm={24}
+              className="border-0 border-purple-500"
+            >
+              <Card
+                type="inner"
+                className="my-4"
+                title="Job Description"
+                bordered={false}
+              >
+                <Text className="text-gray-shade-1 font-semibold !w-full">
+                  {jobDetail?.description}
+                </Text>
+              </Card>
+            </Col>
+
+            {/* About job */}
+            <Col lg={24} md={24} sm={24} sx={24} className="">
               <Card
                 type="inner"
                 title="About Job"
                 bordered={false}
                 className="rounded-lg"
               >
-                {true ? (
+                {false ? (
                   <div className="flex flex-col space-y-4">
                     <Skeleton.Input
                       active={true}
@@ -263,61 +292,11 @@ const JobDetail = () => {
                 )}
               </Card>
             </Col>
-          </Row>
 
-          <Row gutter={[32, 16]} justify="space-between" className="!w-full">
-            <Col
-              order={tablet ? 2 : 1}
-              xl={16}
-              lg={16}
-              md={24}
-              sm={24}
-              className="border-0 border-purple-500"
-            >
-              <Card
-                type="inner"
-                className="my-4"
-                title="Job Description"
-                bordered={false}
-              >
-                <Text className="text-gray-shade-1 font-semibold !w-full">
-                  {jobDetail?.description}
-                </Text>
-
-                {/* Prof of work */}
-
-                <Row className="my-6">
-                  <Flex vertical>
-                    <Text className="font-bold text-lg">Proof of work</Text>
-
-                    {/* Images */}
-                    <Row gutter={[16, 16]}>
-                      {pow?.map((img, index) => (
-                        <Col key={index} lg={8} md={8} sm={12} xs={24}>
-                          <Image
-                            width={150}
-                            height={150}
-                            src={img}
-                            fallback={""}
-                            style={{
-                              borderRadius: "8px",
-                              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                            }}
-                          />
-                        </Col>
-                      ))}
-                    </Row>
-                    <Text className="font-semibold"> Description</Text>
-                    <Text className="text-gray-shade-1 font-semibold">
-                      {jobDetail?.proofOfWork?.description}
-                    </Text>
-                  </Flex>
-                </Row>
-              </Card>
-            </Col>
+            {/* Worker Detail */}
             {jobDetail?.worker && (
-              <Col order={tablet ? 1 : 2} lg={8} md={24} sm={24} xs={24}>
-                {true ? (
+              <Col lg={24} md={24} sm={24} xs={24}>
+                {false ? (
                   <Skeleton className="my-4" />
                 ) : (
                   <Card
@@ -339,7 +318,9 @@ const JobDetail = () => {
                             {jobDetail?.worker?.name}
                           </Title>
                           <Flex className="justify-between items-center w-full">
-                            <Text className="font-bold text-lg">Rating</Text>
+                            <Text className="font-semibold text-lg">
+                              Rating
+                            </Text>
                             <Text className="text-shade-1 font-semibold text-lg">
                               {jobDetail?.worker?.avgRating}/5.0
                               <span>
@@ -355,11 +336,11 @@ const JobDetail = () => {
                           </Flex>
 
                           <Flex className="justify-between items-center w-full mt-2">
-                            <Text className="font-bold text-lg">
+                            <Text className="font-semibold text-lg">
                               Success Rate
                             </Text>
                             <Tag
-                              className="font-bold text-lg !m-0 border-0 py-1"
+                              className="font-semibold text-lg !m-0 border-0 py-1"
                               color={successRateColors(
                                 jobDetail?.worker?.successRate
                               )}
@@ -374,10 +355,69 @@ const JobDetail = () => {
                 )}
               </Col>
             )}
+
+            {/* Completed Details */}
+            {jobDetail?.proofOfWork && (
+              <Col span={24}>
+                <Card type="inner" title={"Completed Details"}>
+                  <Flex
+                    justify="space-between"
+                    align="center"
+                    className="my-2 w-full"
+                  >
+                    <Text className="font-semibold text-gray-shade-1 text-lg">
+                      Proof of work:
+                    </Text>
+                    <div>
+                      <Link
+                        onClick={() => setModalOpen(true)}
+                        href=""
+                        style={{ color: "#1677ff" }}
+                      >
+                        View images
+                      </Link>
+                    </div>
+                  </Flex>
+                  <Text>
+                    {jobDetail?.proofOfWork?.description}
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vero eligendi quod assumenda.
+                  </Text>
+                </Card>
+              </Col>
+            )}
           </Row>
         </Row>
-      </Row>
-    </Flex>
+      </Flex>
+
+      <GeneralModal
+        open={isModalOpened}
+        handleCancel={handleCancel}
+        component={
+          <>
+            <Text className="font-bold text-lg">Proof of work</Text>
+
+            {/* Images */}
+            <Row gutter={[16, 16]}>
+              {pow?.map((img, index) => (
+                <Col key={index} lg={8} md={8} sm={12} xs={12}>
+                  <Image
+                    width={150}
+                    height={150}
+                    src={img}
+                    fallback={""}
+                    style={{
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    }}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </>
+        }
+      />
+    </>
   );
 };
 

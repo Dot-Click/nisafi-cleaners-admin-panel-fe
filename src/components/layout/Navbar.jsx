@@ -25,7 +25,13 @@ const Navbar = ({ isOpened, setOpened }) => {
   const [pageName, setPageName] = useState("");
   const { pathname } = useLocation();
 
-  const {user} = useAuthStore(useShallow((state) => state));
+  const { user } = useAuthStore(useShallow((state) => state));
+
+  // const pagesName = {
+  //   "/dashboard": "dashboard",
+  //   "/dashboard/user-managment": "user management",
+  //   "/dashboard/user-managment": "user management",
+  // };
 
   useEffect(() => {
     // ? setting the current page dynamically
@@ -63,13 +69,16 @@ const Navbar = ({ isOpened, setOpened }) => {
         <Flex align="center">
           {user?.userData?.profilePic ? (
             <Avatar
-            src={baseURL+user?.userData?.profilePic}
-            className="avatar"
-          />) : (
+              src={baseURL + user?.userData?.profilePic}
+              className="avatar"
+            />
+          ) : (
             <Avatar icon={<UserRound />} className="avatar" />
           )}
           <Tooltip title="Zubair Arif" className="username-tooltip">
-            <Text className="user-name">{trimString(user?.userData?.name)}</Text>
+            <Text className="user-name">
+              {trimString(user?.userData?.name)}
+            </Text>
           </Tooltip>
         </Flex>
         <Flex>
