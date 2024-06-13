@@ -12,7 +12,7 @@ const ReactCarousel = ({ images }) => {
       setCurrentSlide(index);
     }
   };
-
+  console.log("images", images);
   return (
     <Col span={24}>
       <Carousel
@@ -25,12 +25,12 @@ const ReactCarousel = ({ images }) => {
         className="!object-contain"
       >
         {images?.map((image, index) => (
-          // <img key={index} src={baseURL + image} alt={`Slide ${index}`} />
           <img key={index} src={image} alt={`Slide ${index}`} />
         ))}
       </Carousel>
     </Col>
   );
 };
+// <img key={index} src={baseURL + image} alt={`Slide ${index}`} />
 
 export default ReactCarousel;

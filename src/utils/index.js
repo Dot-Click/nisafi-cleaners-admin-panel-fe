@@ -42,7 +42,7 @@ export const successRateColors = (rate) => {
 };
 
 export const getStatusColors = (status) => {
-  switch (status.toLowerCase()) {
+  switch (status?.toLowerCase()) {
     case "completed":
       return "green";
     case "cancelled":

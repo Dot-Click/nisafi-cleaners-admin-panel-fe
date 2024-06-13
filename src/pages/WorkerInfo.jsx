@@ -170,8 +170,8 @@ const WorkerInfo = () => {
                       preview={false}
                       size={"large"}
                       src={baseURL + userDetail?.profilePic}
-                      fallback={`https://placehold.co/180x180/3A779B/white?text=${userDetail?.name?.charAt(
-                        0
+                      fallback={`https://placehold.co/180x180/3A779B/white?text=${capitalizeFirstLetter(
+                        userDetail?.name?.charAt(0)
                       )}`}
                       className="display-avatar border-0 border-purple-600 !w-[180px] !h-[180px] rounded-full"
                     />
