@@ -26,3 +26,20 @@
   color: "#6BC3E6" !important;
   /* other styles */
 }
+
+.card-head .ant-card-head {
+  background-color: #6bc3e6 !important;
+  color: #fff;
+  font-size: bold;
+}
+.custom-select .ant-select-selector {
+  /* min-width: auto !important; */
+  padding: 18px 90px !important;
+}
+
+.custom-select .ant-select-item {
+  width: auto !important;
+  padding: 0 70px !important;
+
+  white-space: nowrap;
+}

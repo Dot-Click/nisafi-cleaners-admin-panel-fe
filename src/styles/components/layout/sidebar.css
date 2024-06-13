@@ -1,0 +1,65 @@
+.sidebar {
+  width: 100%;
+  max-width: 280px;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: 6px -1px 22px 0px rgba(0, 0, 0, 0.031372549);
+  border: 1px solid #eff0f6;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: ease-in-out 0.6s;
+}
+@media screen and (max-width: 1199px) {
+  .sidebar {
+    position: fixed;
+    transform: translateX(-600px);
+  }
+  .sidebar.active {
+    transform: translateX(0);
+  }
+}
+@media screen and (max-width: 576px) {
+  .sidebar {
+    max-width: unset;
+  }
+}
+.sidebar .aside-close-icon {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 36px;
+}
+@media screen and (max-width: 1200px) {
+  .sidebar .aside-close-icon {
+    display: unset;
+  }
+}
+.sidebar .sidebar-link {
+  font-family: Poppins;
+  color: #363636;
+  font-weight: 400;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 10px 0;
+}
+.sidebar .sidebar-link:hover {
+  transition: 0.5s;
+  background-color: #1fb1de;
+}
+.sidebar .sidebar-link:hover .link-name {
+  color: #fff;
+}
+.sidebar .sidebar-link:hover svg path {
+  fill: #fff;
+}
+.sidebar .active-link {
+  background-color: #1fb1de;
+}
+.sidebar .active-link .link-name {
+  color: #fff;
+}
+.sidebar .active-link svg path {
+  fill: #fff;
+}/*# sourceMappingURL=sidebar.css.map */

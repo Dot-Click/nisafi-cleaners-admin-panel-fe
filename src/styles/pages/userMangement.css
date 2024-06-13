@@ -1,0 +1,265 @@
+.user-management-container {
+  height: 100%;
+  background-color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin: 2rem;
+}
+@media screen and (max-width: 767px) {
+  .user-management-container {
+    margin: 2rem 1rem;
+  }
+}
+.user-management-container .search-box {
+  background-color: rgba(36, 180, 223, 0.8);
+  padding: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.0509803922);
+  gap: 1rem;
+}
+.user-management-container .search-box .search-input {
+  background-color: rgba(131, 212, 233, 0.6705882353);
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.0705882353);
+}
+@media screen and (max-width: 767px) {
+  .user-management-container .search-box .search-input {
+    max-width: unset;
+    min-width: 200px;
+    flex: 1;
+  }
+}
+.user-management-container .search-box .search-input::-moz-placeholder {
+  color: #fff !important;
+}
+.user-management-container .search-box .search-input::placeholder {
+  color: #fff !important;
+}
+.user-management-container .search-box .search-input input::-moz-placeholder {
+  font-family: Poppins;
+  color: #fff !important;
+  padding-left: 10px;
+}
+.user-management-container .search-box .search-input input::placeholder {
+  font-family: Poppins;
+  color: #fff !important;
+  padding-left: 10px;
+}
+@media screen and (max-width: 1400px) {
+  .user-management-container .datatable {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+.user-management-container .datatable table tr {
+  font-family: Poppins;
+}
+.user-management-container .datatable table tr .role,
+.user-management-container .datatable table tr .status {
+  border: none;
+  padding: 8px 12px;
+}
+
+.ant-table-content table thead tr th {
+  border-top: 7px solid #ffffff !important;
+  font-family: Poppins;
+  color: #363636;
+}
+.ant-table-content table thead tr th:first-child {
+  border-radius: 0 !important;
+}
+.ant-table-content table thead tr th:last-child {
+  border-radius: 0 !important;
+}
+.ant-table-content table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.ant-pagination-item-link {
+  display: none !important;
+}
+
+.ant-pagination-item {
+  border-radius: 50% !important;
+  border: 1px solid #363636;
+  color: #363636;
+}
+
+.ant-pagination-item-active {
+  background-color: #16afde !important;
+  border: none;
+}
+.ant-pagination-item-active a {
+  color: #fff !important;
+}
+
+.ant-pagination-prev {
+  position: relative !important;
+}
+.ant-pagination-prev::before {
+  font-family: Poppins;
+  content: "Prev" !important;
+  position: absolute !important;
+  width: 50px;
+  left: -25px;
+  color: #363636;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+.ant-pagination-next {
+  position: relative !important;
+}
+.ant-pagination-next::before {
+  font-family: Poppins;
+  content: "Next" !important;
+  position: absolute !important;
+  width: 50px;
+  right: -25px;
+  color: #363636;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+.filters .filter {
+  position: relative;
+}
+.filters .filter .ant-select-selector {
+  padding: 18px 18px 18px 72px;
+  font-family: Poppins;
+  background-color: rgba(255, 255, 255, 0.8509803922) !important;
+  border: 1px solid #26c4f2 !important;
+}
+.filters .filter .ant-select-selector .ant-select-selection-item {
+  margin-top: 3px;
+}
+.filters .filter .ant-select-selector span {
+  font-weight: 600;
+}
+.filters .filter .ant-select-arrow {
+  margin-top: -5px;
+}
+.filters .filter .lebal {
+  font-family: Poppins;
+  position: absolute;
+  z-index: 2;
+  margin-top: 10px;
+  margin-inline-start: 12px;
+}
+
+.view-details-btn {
+  transition: all 0.5s;
+  color: #1064e2 !important;
+  text-decoration: underline;
+}
+.view-details-btn:hover {
+  text-decoration: none;
+}
+
+.user-details-modal {
+  padding: 0 1rem;
+}
+@media screen and (max-width: 576px) {
+  .user-details-modal {
+    padding: 0 0.5rem;
+  }
+}
+.user-details-modal .ant-modal-content {
+  padding: 50px 100px;
+}
+@media screen and (max-width: 1200px) {
+  .user-details-modal .ant-modal-content {
+    padding: 50px 25px;
+  }
+}
+@media screen and (max-width: 992px) {
+  .user-details-modal .ant-modal-content {
+    padding: 30px 15px;
+  }
+}
+.user-details-modal .modal-container {
+  max-width: 1080px;
+}
+.user-details-modal .modal-container .modal-card {
+  padding: 12px;
+  min-height: 280px;
+}
+.user-details-modal .modal-container .modal-card.last-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.user-details-modal .modal-container .modal-card.last-card .modal-card-inner {
+  height: unset;
+}
+.user-details-modal .modal-container .modal-card.last-card .btns {
+  justify-content: center;
+}
+@media screen and (min-width: 992px) {
+  .user-details-modal .modal-container .modal-card.last-card .btns {
+    justify-content: space-between;
+  }
+}
+.user-details-modal .modal-container .modal-card.last-card .btns button {
+  padding: 0 24px;
+  width: 140px;
+  height: 38px;
+}
+.user-details-modal .modal-container .modal-card .field-label {
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: Poppins;
+  color: #6d6868;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner {
+  border-radius: 12px;
+  padding: 14px;
+  height: 100%;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner,
+.user-details-modal .modal-container .modal-card .modal-card-inner img {
+  border: 1px solid #eeeeee;
+  box-shadow: 0px 8px 12.1px 0px rgba(0, 0, 0, 0.0705882353);
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner img {
+  border-radius: 12px;
+  -o-object-position: top center;
+     object-position: top center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  aspect-ratio: 1/1;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner .name-and-size {
+  font-family: Poppins;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner .name-and-size .file-name {
+  font-size: 1rem;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner .name-and-size .file-size {
+  font-size: 12px;
+  color: #838383;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner.fields-card {
+  padding: 0;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner .card-fields {
+  border-top: 1px solid #eeeeee;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner .card-fields .field-name {
+  font-size: 12px;
+  color: #838383;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner .card-fields .field-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #838383;
+}
+.user-details-modal .modal-container .modal-card .modal-card-inner .field-label,
+.user-details-modal .modal-container .modal-card .modal-card-inner .card-fields {
+  padding: 20px;
+}/*# sourceMappingURL=userMangement.css.map */

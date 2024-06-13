@@ -1,0 +1,45 @@
+.payment-details-container .datatable table tr td,
+.payment-details-container .datatable table tr .amount,
+.payment-details-container .datatable table tr .date {
+  color: #838383 !important;
+}
+
+.payment-details-modal {
+  padding: 50px 26px;
+}
+.payment-details-modal .details-container {
+  max-width: 600px;
+  margin: 50px 15px;
+  width: 100%;
+  gap: 32px;
+}
+.payment-details-modal .details-container .detail-row {
+  border-radius: 1rem;
+  padding: 26px;
+  border: 1px solid #eeeeee;
+  box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.1098039216);
+}
+.payment-details-modal .details-container .detail-row .field-name,
+.payment-details-modal .details-container .detail-row .field-value {
+  font-family: Poppins;
+  color: #6d6868;
+}
+.payment-details-modal .details-container .detail-row .field-name {
+  font-weight: 400;
+  font-size: 13px;
+}
+@media screen and (max-width: 576px) {
+  .payment-details-modal .details-container .detail-row .field-name {
+    margin-top: 10px;
+  }
+}
+.payment-details-modal .details-container .detail-row .field-value,
+.payment-details-modal .details-container .detail-row .status {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.payment-details-modal .details-container .detail-row .status {
+  border: none;
+  padding: 8px 24px;
+  margin-top: 5px;
+}/*# sourceMappingURL=paymentDetails.css.map */

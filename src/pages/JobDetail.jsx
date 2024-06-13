@@ -7,7 +7,7 @@ import {
   Card,
   Tag,
   Image,
-  Avatar,
+  Select,
   Rate,
   Skeleton,
 } from "antd";
@@ -35,12 +35,19 @@ import { Link, useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { jobManagementStore } from "../stores/jobManagementStore";
 import GeneralModal from "../components/Modals/GeneralModal";
+import ChevronDown from "../assets/icons/ChevronDown";
 
 const images = [
-  "https://placehold.it/310x150",
-  "https://placehold.it/310x150",
-  "https://placehold.it/310x150",
-  "https://placehold.it/310x150",
+  // "https://placehold.it/310x150",
+  // "https://placehold.it/310x150",
+  // "https://placehold.it/310x150",
+  // "https://placehold.it/310x150",
+  "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
+  "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
+  "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
+  "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
+  "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
+  "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
 ];
 const JobDetail = () => {
   const tablet = useTablet();
@@ -78,6 +85,33 @@ const JobDetail = () => {
     setModalOpen(false);
   };
 
+  const ActionComponent = () => {
+    return (
+      <Flex align="center" className="filters" gap={10}>
+        {/* // ? sort by filter */}
+        <Flex className="filter" align="center">
+          <Text className="lebal">Resolve</Text>
+          <Select
+            defaultValue={""}
+            suffixIcon={<ChevronDown />}
+            className="custom-select w-fit"
+            options={[
+              {
+                value: "desc",
+                label: "Refund to client",
+              },
+              {
+                value: "asc",
+                label: "Release worker's payment",
+              },
+            ]}
+            onChange={(value) => alert(value)}
+          />
+        </Flex>
+      </Flex>
+    );
+  };
+
   return (
     <>
       <Flex className="settings" justify="center">
@@ -88,60 +122,87 @@ const JobDetail = () => {
           >
             {/* Main Intro */}
             <Col lg={24} md={24} sm={24} sx={24} className="border-0">
-              <Flex
-                justify="space-between"
-                align=""
-                className="my-4 border-0 border-purple-900"
-              >
-                <div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-[22px] !mb-0">
-                      {jobDetail?.type}
-                    </span>
-                    {jobDetail?.tags?.length > 0 && (
-                      <span className="font-semibold text-gray-shade-1 text-md !mb-0">
-                        {jobDetail?.tags?.[0]
-                          .split(",")
-                          .map((i) => "#" + i.trim())
-                          .join(" ")}
+              {false ? (
+                <Skeleton active />
+              ) : (
+                <Flex
+                  justify="space-between"
+                  align=""
+                  className="my-4 border-0 border-purple-900"
+                >
+                  <div>
+                    <div className="flex flex-col">
+                      <span className="font-bold text-[22px] !mb-0">
+                        {jobDetail?.type}
                       </span>
-                    )}
+                      {jobDetail?.tags?.length > 0 && (
+                        <span className="font-semibold text-gray-shade-1 text-md !mb-0">
+                          {jobDetail?.tags?.[0]
+                            .split(",")
+                            .map((i) => "#" + i.trim())
+                            .join(" ")}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-shade-1 font-semibold">
+                        {getTimeFromNow(JobDetail?.createdAt)}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-shade-1 font-semibold">
-                      {getTimeFromNow(JobDetail?.createdAt)}
-                    </span>
+                  <div>
+                    <Tag
+                      color={getStatusColors(jobDetail?.status)}
+                      className="px-4 py-1 font-semibold text-[14px]"
+                    >
+                      {capitalizeFirstLetter(jobDetail?.status)}
+                    </Tag>
                   </div>
-                </div>
-                <div>
-                  <Tag
-                    color={getStatusColors(jobDetail?.status)}
-                    className="px-4 py-1 font-semibold text-[14px]"
-                  >
-                    {capitalizeFirstLetter(jobDetail?.status)}
-                  </Tag>
-                </div>
-              </Flex>
+                </Flex>
+              )}
 
               <Flex
-                justify=""
                 align="center"
                 gap={""}
                 className="my-4 border-0 border-purple-900"
               >
-                <Image
-                  src={avatarUrl}
-                  className="rounded-full !size-16"
-                  preview={false}
-                />
-                <Flex vertical>
-                  <Text>{jobDetail?.user?.name}</Text>
-                  <Text>{jobDetail?.user?.email}</Text>
+                {false ? (
+                  <Skeleton.Avatar active size={64} shape={"circle"} />
+                ) : (
+                  <Image
+                    src={avatarUrl}
+                    fallback={`https://placehold.co/180x180/3A779B/white?text=${capitalizeFirstLetter(
+                      jobDetail?.user?.name?.charAt(0)
+                    )}`}
+                    className="rounded-full !size-16"
+                    preview={false}
+                  />
+                )}
+                <Flex className="px-4" vertical>
+                  {false ? (
+                    <Skeleton.Input size="small" active />
+                  ) : (
+                    <Text className="font-semibold text-gray-shade-1">
+                      {jobDetail?.user?.name}
+                    </Text>
+                  )}
+                  {false ? (
+                    <Skeleton.Input size="small" active className="mt-1" />
+                  ) : (
+                    <Text className="font-semibold text-gray-shade-1">
+                      {jobDetail?.user?.email}
+                    </Text>
+                  )}
                 </Flex>
               </Flex>
-              {/* <ReactCarousel images={jobDetail?.images} /> */}
+
               {false ? (
-                <Skeleton.Node className="!w-full" active={true}>
+                <Skeleton.Node
+                  active
+                  size={164}
+                  // className="!w-[70%]"
+                  className="!size-[364px] !w-[80%] mx-2"
+                >
                   <></>
                 </Skeleton.Node>
               ) : (
@@ -155,17 +216,22 @@ const JobDetail = () => {
               lg={24}
               md={24}
               sm={24}
+              xs={24}
               className="border-0 border-purple-500"
             >
               <Card
                 type="inner"
-                className="my-4"
+                className="my-4 card-head"
                 title="Job Description"
                 bordered={false}
               >
-                <Text className="text-gray-shade-1 font-semibold !w-full">
-                  {jobDetail?.description}
-                </Text>
+                {false ? (
+                  <Skeleton active />
+                ) : (
+                  <Text className="text-gray-shade-1 font-semibold !w-full">
+                    {jobDetail?.description}
+                  </Text>
+                )}
               </Card>
             </Col>
 
@@ -175,18 +241,23 @@ const JobDetail = () => {
                 type="inner"
                 title="About Job"
                 bordered={false}
-                className="rounded-lg"
+                className="my-4 rounded-lg card-head"
               >
                 {false ? (
                   <div className="flex flex-col space-y-4">
                     <Skeleton.Input
-                      active={true}
-                      block={true}
+                      active
+                      block
+                      size="small"
                       className="px-0 mx-0"
                     />
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <Skeleton.Input key={index} active={true} />
-                    ))}
+                    <Row gutter={[16, 32]} wrap>
+                      {Array.from({ length: 5 }).map((_, index) => (
+                        <Col lg={8} md={12} sm={12} xs={24} className="flex">
+                          <Skeleton.Input size="small" key={index} active />
+                        </Col>
+                      ))}
+                    </Row>
                   </div>
                 ) : (
                   <>
@@ -195,7 +266,7 @@ const JobDetail = () => {
                     </Text>
 
                     <Row className="my-4 !w-full" gutter={[16, 16]}>
-                      <Col span={24}>
+                      <Col lg={8} md={12} sm={12} xs={24}>
                         <Flex gap={10}>
                           <Flex className="px-3 bg-[#f9fafb] rounded-full items-center justify-center">
                             <Calendar size={20} className="text-gray-shade-1" />
@@ -209,7 +280,7 @@ const JobDetail = () => {
                         </Flex>
                       </Col>
 
-                      <Col span={24}>
+                      <Col lg={8} md={12} sm={12} xs={24}>
                         <Flex gap={10}>
                           <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
                             <FilePen size={20} className="text-gray-shade-1" />
@@ -225,7 +296,7 @@ const JobDetail = () => {
                         </Flex>
                       </Col>
 
-                      <Col span={24}>
+                      <Col lg={8} md={12} sm={12} xs={24}>
                         <Flex gap={10}>
                           <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
                             <MapPin size={20} className="text-gray-shade-1" />
@@ -242,7 +313,7 @@ const JobDetail = () => {
                       </Col>
 
                       {jobDetail?.status !== "open" && (
-                        <Col span={24}>
+                        <Col lg={8} md={12} sm={12} xs={24}>
                           <Flex gap={10}>
                             <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
                               <Timer size={20} className="text-gray-shade-1" />
@@ -260,7 +331,7 @@ const JobDetail = () => {
                       )}
 
                       {jobDetail?.status !== "open" && (
-                        <Col span={24}>
+                        <Col lg={8} md={12} sm={12} xs={24}>
                           <Flex gap={10}>
                             <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
                               <Star size={20} className="text-gray-shade-1" />
@@ -278,14 +349,16 @@ const JobDetail = () => {
                       )}
 
                       {jobDetail?.status !== "open" && (
-                        <div className="flex flex-col">
-                          <Text className="font-bold text-lg !pb-0 !mb-0 px-3">
-                            Review
-                          </Text>
-                          <Text className="text-gray-shade-1 font-semibold px-3">
-                            {jobDetail?.review?.review}
-                          </Text>
-                        </div>
+                        <Col span={24}>
+                          <div className="flex flex-col">
+                            <Text className="font-bold text-lg !pb-0 !mb-0 px-3">
+                              Review
+                            </Text>
+                            <Text className="text-gray-shade-1 font-semibold px-3">
+                              {jobDetail?.review?.review}
+                            </Text>
+                          </div>
+                        </Col>
                       )}
                     </Row>
                   </>
@@ -296,70 +369,70 @@ const JobDetail = () => {
             {/* Worker Detail */}
             {jobDetail?.worker && (
               <Col lg={24} md={24} sm={24} xs={24}>
-                {false ? (
-                  <Skeleton className="my-4" />
-                ) : (
-                  <Card
-                    type="inner"
-                    title="Worker"
-                    bordered={false}
-                    className="rounded-lg my-4"
-                  >
-                    <Row className="my-4" gutter={[16, 16]}>
-                      <Col span={24} className="">
-                        <Flex className="justify-center items-center flex-col">
-                          <Avatar
-                            className="w-[120px] h-[120px] mb-4"
-                            size={"large"}
-                            // src={avatarUrl}
-                            src={baseURL + jobDetail?.worker?.profilePic}
-                          />
-                          <Title className="capitalize" level={2}>
-                            {jobDetail?.worker?.name}
-                          </Title>
-                          <Flex className="justify-between items-center w-full">
-                            <Text className="font-semibold text-lg">
-                              Rating
-                            </Text>
-                            <Text className="text-shade-1 font-semibold text-lg">
-                              {jobDetail?.worker?.avgRating}/5.0
-                              <span>
-                                <StarFilled
-                                  size={22}
-                                  style={{
-                                    color: "orange",
-                                    // backgroundColor: "yellow",
-                                  }}
-                                />
-                              </span>
-                            </Text>
-                          </Flex>
-
-                          <Flex className="justify-between items-center w-full mt-2">
-                            <Text className="font-semibold text-lg">
-                              Success Rate
-                            </Text>
-                            <Tag
-                              className="font-semibold text-lg !m-0 border-0 py-1"
-                              color={successRateColors(
-                                jobDetail?.worker?.successRate
-                              )}
-                            >
-                              {jobDetail?.worker?.successRate}%
-                            </Tag>
-                          </Flex>
+                <Card
+                  type="inner"
+                  title="Worker"
+                  bordered={false}
+                  className="my-4 rounded-lg card-head"
+                >
+                  <Row className="my-4" gutter={[16, 16]}>
+                    <Col span={24} className="">
+                      <Flex className="justify-center items-center flex-col">
+                        <Image
+                          sizes="middle"
+                          className="!size-[96px] mb-4 rounded-full"
+                          fallback={`https://placehold.co/180x180/3A779B/white?text=${capitalizeFirstLetter(
+                            jobDetail?.worker?.name?.charAt(0)
+                          )}`}
+                          src={baseURL + jobDetail?.worker?.profilePic}
+                          preview={false}
+                        />
+                        <Title className="capitalize" level={2}>
+                          {jobDetail?.worker?.name}
+                        </Title>
+                        <Flex className="justify-between items-center w-full">
+                          <Text className="font-semibold text-lg">Rating</Text>
+                          <Text className="text-shade-1 font-semibold text-lg">
+                            {jobDetail?.worker?.avgRating} / 5.0
+                            <span className="pl-2">
+                              <StarFilled
+                                size={22}
+                                style={{
+                                  color: "orange",
+                                }}
+                              />
+                            </span>
+                          </Text>
                         </Flex>
-                      </Col>
-                    </Row>
-                  </Card>
-                )}
+
+                        <Flex className="justify-between items-center w-full mt-2">
+                          <Text className="font-semibold text-lg">
+                            Success Rate
+                          </Text>
+                          <Tag
+                            className="font-semibold text-lg !m-0 border-0 py-1"
+                            color={successRateColors(
+                              jobDetail?.worker?.successRate
+                            )}
+                          >
+                            {jobDetail?.worker?.successRate}%
+                          </Tag>
+                        </Flex>
+                      </Flex>
+                    </Col>
+                  </Row>
+                </Card>
               </Col>
             )}
 
-            {/* Completed Details */}
-            {jobDetail?.proofOfWork && (
-              <Col span={24}>
-                <Card type="inner" title={"Completed Details"}>
+            {/* Completed Details/ Dispute Detail */}
+            <Col span={24}>
+              {jobDetail?.proofOfWork && jobDetail?.status !== "disputed" ? (
+                <Card
+                  type="inner"
+                  title={"Completed Details"}
+                  className="my-4 rounded-lg card-head"
+                >
                   <Flex
                     justify="space-between"
                     align="center"
@@ -371,7 +444,7 @@ const JobDetail = () => {
                     <div>
                       <Link
                         onClick={() => setModalOpen(true)}
-                        href=""
+                        className="font-semibold"
                         style={{ color: "#1677ff" }}
                       >
                         View images
@@ -384,8 +457,55 @@ const JobDetail = () => {
                     Vero eligendi quod assumenda.
                   </Text>
                 </Card>
-              </Col>
-            )}
+              ) : (
+                <Card
+                  title={"Dispute detail"}
+                  type="inner"
+                  extra={<ActionComponent />}
+                  className="my-4 rounded-lg card-head"
+                >
+                  <Row justify={"space-between"} gutter={[32, 12]}>
+                    <Col span={12}>
+                      <Title level={5}>Worker</Title>
+
+                      <Row>
+                        <Text>Proof of Work:</Text>
+                        <Text>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Numquam quaerat ratione vel veniam incidunt.
+                        </Text>
+
+                        <Link
+                          onClick={() => setModalOpen(true)}
+                          className="font-semibold"
+                          style={{ color: "#1677ff" }}
+                        >
+                          View images
+                        </Link>
+                      </Row>
+                    </Col>
+                    <Col span={12}>
+                      <Title level={5}>Customer</Title>
+                      <Row>
+                        <Text>Reason:</Text>
+                        <Text>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Numquam quaerat ratione vel veniam incidunt.
+                        </Text>
+
+                        <Link
+                          onClick={() => setModalOpen(true)}
+                          className="font-semibold"
+                          style={{ color: "#1677ff" }}
+                        >
+                          View images
+                        </Link>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Card>
+              )}
+            </Col>
           </Row>
         </Row>
       </Flex>

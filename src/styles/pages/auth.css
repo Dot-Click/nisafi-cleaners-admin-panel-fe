@@ -1,0 +1,52 @@
+.login-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-container {
+  position: relative;
+  height: 100vh;
+  background-image: url(/images/auth/login.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-bottom: 2rem;
+}
+.img-container::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(22, 175, 222, 0.35) 0%, rgba(12, 95, 120, 0.69) 100%);
+  mix-blend-mode: overlay;
+}
+.img-container .login-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  max-width: 992px;
+  max-height: 750px;
+}
+.img-container .login-glass-box {
+  width: 320px;
+  background: rgba(190, 190, 190, 0.542);
+  border-radius: 6px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.9px);
+  -webkit-backdrop-filter: blur(9.9px);
+}
+.img-container .login-glass-box .heading-text {
+  padding: 7px;
+  font-size: 14px;
+  color: #000;
+  font-weight: 600;
+  background-color: #20dc49;
+  border-radius: 7px;
+}
+.img-container .login-glass-box .login-text {
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+}/*# sourceMappingURL=auth.css.map */

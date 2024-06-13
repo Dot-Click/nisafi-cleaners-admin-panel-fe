@@ -12,15 +12,15 @@ const ReactCarousel = ({ images }) => {
       setCurrentSlide(index);
     }
   };
-  console.log("images", images);
   return (
-    <Col span={24}>
+    // className="!h-[600px]"
+    <Col span={12} className="min-h-[550px] !object-fill">
       <Carousel
         autoPlay={autoPlay}
         selectedItem={currentSlide}
         onChange={updateCurrentSlide}
-        dynamicHeight
-        // width={800}
+        dynamicHeight={false}
+        // dynamicHeight
         width={"100%"}
         className="!object-contain"
       >

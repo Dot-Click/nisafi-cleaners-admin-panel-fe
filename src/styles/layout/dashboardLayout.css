@@ -1,3 +1,22 @@
 .navbar-outlet {
-  width: 80vw;
+  width: 100%;
+  max-width: calc(100vw - 280px);
+  padding-bottom: 25px;
+}
+@media screen and (max-width: 1500px) {
+  .navbar-outlet {
+    max-width: calc(100vw - 290px);
+  }
+}
+@media screen and (max-width: 1199px) {
+  .navbar-outlet {
+    max-width: 100vw;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .dashboard-container {
+    padding: 1rem;
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=dashboardLayout.css.map */
