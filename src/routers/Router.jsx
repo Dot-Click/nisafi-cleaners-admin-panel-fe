@@ -27,7 +27,7 @@ const Router = () => {
         <Route index element={<AdminRoute Component={Dashboard} />} />
 
         <Route
-          path="/dashboard/user-management"
+          path="/dashboard/user/management"
           element={<AdminRoute Component={UserManagement} />}
         />
         <Route
@@ -44,7 +44,7 @@ const Router = () => {
         />
 
         <Route
-          path="/dashboard/jobs-management"
+          path="/dashboard/jobs/management"
           element={<AdminRoute Component={JobManagement} />}
         />
         <Route

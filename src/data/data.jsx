@@ -12,19 +12,21 @@ export const sidebar = [
   {
     id: 1,
     name: "Dashboard",
-    link: "/dashboard",
+    key: "dashboard",
+    route: ["/dashboard"],
     icon: Grid,
   },
   {
     id: 2,
     name: "User Management",
-    link: "/dashboard/user-management",
+    key: "user",
+    route: ["/dashboard/user/management", "/dashboard/user/worker-info"],
     icon: UserGear,
   },
   {
     id: 3,
     name: "Jobs Management",
-    link: "/dashboard/jobs-management",
+    route: ["/dashboard/jobs/management", "/dashboard/jobs/details"],
     icon: FaBriefcase,
   },
 

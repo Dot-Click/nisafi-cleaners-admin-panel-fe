@@ -34,8 +34,8 @@ const Navbar = ({ isOpened, setOpened }) => {
       label: "dashboard",
     },
     {
-      path: "/dashboard/user-management",
-      label: "user managment",
+      path: "/dashboard/user/management",
+      label: "user management",
     },
     {
       path: "/dashboard/user/worker-info",
@@ -50,7 +50,7 @@ const Navbar = ({ isOpened, setOpened }) => {
       label: "settings",
     },
     {
-      path: "/dashboard/jobs-management",
+      path: "/dashboard/jobs/management",
       label: "jobs management",
     },
     {

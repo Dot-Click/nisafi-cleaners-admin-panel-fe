@@ -1,4 +1,4 @@
-import { Flex } from "antd";
+import { Flex, Breadcrumb } from "antd";
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/layout/Sidebar";
@@ -12,6 +12,7 @@ const DashboardLayout = () => {
       <Sidebar isOpened={isAsideOpened} setOpened={setAsideOpened} />
       <Flex vertical className="navbar-outlet">
         <Navbar isOpened={isAsideOpened} setOpened={setAsideOpened} />
+
         <Outlet />
       </Flex>
     </Flex>
