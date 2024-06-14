@@ -14,6 +14,7 @@ const { Text } = Typography;
 const Sidebar = ({ isOpened, setOpened }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const currentPathname = location.pathname;
   const { logout, loading } = useAuthStore(useShallow((state) => state));
 
   const logoutHandler = async () => {
@@ -50,12 +51,20 @@ const Sidebar = ({ isOpened, setOpened }) => {
         >
           <Flex vertical>
             {sidebar?.map((val, i) => {
+              let isActive =
+                currentPathname === val.route[0] ||
+                val.route.some(
+                  (value) =>
+                    value !== "/dashboard" && currentPathname.startsWith(value)
+                );
+
               return (
                 <Link
-                  to={val?.link}
+                  // to={val?.link}
+                  to={val.route[0]}
                   key={i}
                   className={` px-3 sidebar-link !font-semibold ${
-                    val.link === location?.pathname && "active-link"
+                    isActive && "active-link"
                   }`}
                   onClick={() => setOpened(!isOpened)}
                 >

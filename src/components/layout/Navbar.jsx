@@ -10,7 +10,7 @@ import {
   Button,
 } from "antd";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Gear from "../../assets/icons/Gear";
 import Bell from "../../assets/icons/Bell";
 import { trimString } from "../../services/helpers";
@@ -25,6 +25,7 @@ const { Text } = Typography;
 const Navbar = ({ isOpened, setOpened }) => {
   const [pageName, setPageName] = useState("dashboard");
   const { pathname } = useLocation();
+  const params = useParams();
 
   const { user } = useAuthStore(useShallow((state) => state));
 
@@ -38,7 +39,7 @@ const Navbar = ({ isOpened, setOpened }) => {
       label: "user management",
     },
     {
-      path: "/dashboard/user/worker-info",
+      path: `/dashboard/user/worker-info/${params.id}`,
       label: "worker info",
     },
     {
@@ -54,7 +55,7 @@ const Navbar = ({ isOpened, setOpened }) => {
       label: "jobs management",
     },
     {
-      path: "/dashboard/jobs/details",
+      path: `/dashboard/jobs/details/${params.id}`,
       label: "jobs details",
     },
   ];

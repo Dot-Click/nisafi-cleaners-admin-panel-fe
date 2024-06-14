@@ -33,13 +33,13 @@ export const sidebar = [
   {
     id: 4,
     name: "Payment Details",
-    link: "/dashboard/payment-details",
+    route: ["/dashboard/payment-details"],
     icon: CreditCard,
   },
   {
     id: 5,
     name: "Settings",
-    link: "/dashboard/settings",
+    route: ["/dashboard/settings"],
     icon: GearFilled,
   },
 ];
