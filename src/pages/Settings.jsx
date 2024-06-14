@@ -37,11 +37,11 @@ const Settings = () => {
     <Flex className="settings" justify="center">
       <Row className="settings-container">
         <Col span={24} className="settings-container-header"></Col>
-        <Col span={24} className="settings-form-container">
-          <Col lg={8} md={10} xs={24} className="image-container">
+        <Row span={24} className="settings-form-container !w-full">
+          <Col lg={8} md={10} sm={24} xs={24} className="image-container">
             <UpdateProfileImage image={user?.userData?.profilePic} />
           </Col>
-          <Col lg={16} md={14} xs={24} className="fields-container">
+          <Col lg={16} md={14} sm={24} xs={24} className="fields-container">
             <Flex vertical className="name-plate">
               <Title level={3}>{user?.userData?.name}</Title>
               <Text>
@@ -50,20 +50,19 @@ const Settings = () => {
             </Flex>
 
             <Flex vertical className="editable-fields">
+              {/* // ? update email field */}
+              <UpdateFields
+                fieldTitle={"Email Address"}
+                fieldName={"email"}
+                fieldValue={user?.userData?.email}
+                isEditAllowed={false}
+              />
               {/* // ? update username field */}
               <UpdateFields
                 fieldTitle={"Username"}
                 fieldName={"name"}
                 fieldValue={user?.userData?.name}
               />
-
-              {/* // ? update email field */}
-              <UpdateFields
-                fieldTitle={"Email Address"}
-                fieldName={"email"}
-                fieldValue={user?.userData?.email}
-              />
-
               {/* // ? update phone field */}
               <UpdateFields
                 fieldTitle={"Phone"}
@@ -77,13 +76,18 @@ const Settings = () => {
               {/* // ? update country component */}
             </Flex>
           </Col>
-        </Col>
+        </Row>
       </Row>
     </Flex>
   );
 };
 
-const UpdateFields = ({ fieldTitle, fieldName, fieldValue }) => {
+const UpdateFields = ({
+  fieldTitle,
+  fieldName,
+  fieldValue,
+  isEditAllowed = true,
+}) => {
   const [isEditable, setEditable] = useState(false);
   const [newVal, setNewVal] = useState(fieldValue);
   const { updateProfile, loading } = useAuthStore(useShallow((state) => state));
@@ -109,31 +113,33 @@ const UpdateFields = ({ fieldTitle, fieldName, fieldValue }) => {
           <Text className="field-value">{fieldValue}</Text>
         )}
       </Col>
-      <Col xs={24} lg={8} className="btns">
-        {isEditable ? (
-          <>
-            <Button className="grey-btn" onClick={() => setEditable(false)}>
-              Cancel
+      {isEditAllowed && (
+        <Col xs={24} lg={8} className="btns">
+          {isEditable ? (
+            <>
+              <Button className="grey-btn" onClick={() => setEditable(false)}>
+                Cancel
+              </Button>
+              <Button
+                className="save-btn"
+                onClick={async () => {
+                  const res = await updateProfile({ [fieldName]: newVal });
+                  if (res) {
+                    setEditable(false);
+                  }
+                }}
+                loading={loading}
+              >
+                Save
+              </Button>
+            </>
+          ) : (
+            <Button className="grey-btn" onClick={() => setEditable(true)}>
+              Edit
             </Button>
-            <Button
-              className="save-btn"
-              onClick={async () => {
-                const res = await updateProfile({ [fieldName]: newVal });
-                if (res) {
-                  setEditable(false);
-                }
-              }}
-              loading={loading}
-            >
-              Save
-            </Button>
-          </>
-        ) : (
-          <Button className="grey-btn" onClick={() => setEditable(true)}>
-            Edit
-          </Button>
-        )}
-      </Col>
+          )}
+        </Col>
+      )}
     </Row>
   );
 };
@@ -275,7 +281,8 @@ const UpdateProfileImage = (props) => {
       uid: "-1",
       name: "user-avatar.png",
       status: "done",
-      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+      url:
+        "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
     },
   ]);
 

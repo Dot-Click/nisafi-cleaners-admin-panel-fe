@@ -18,27 +18,52 @@ import { useAuthStore } from "../../stores/authStore";
 import { useShallow } from "zustand/react/shallow";
 import { UserRound } from "lucide-react";
 import { baseURL } from "../../configs/axiosConfig";
+import CustomAvatar from "../common/CustomAvatar";
 
 const { Text } = Typography;
 
 const Navbar = ({ isOpened, setOpened }) => {
-  const [pageName, setPageName] = useState("");
+  const [pageName, setPageName] = useState("dashboard");
   const { pathname } = useLocation();
 
   const { user } = useAuthStore(useShallow((state) => state));
 
-  // const pagesName = {
-  //   "/dashboard": "dashboard",
-  //   "/dashboard/user-managment": "user management",
-  //   "/dashboard/user-managment": "user management",
-  // };
+  const pagesName = [
+    {
+      path: "/dashboard",
+      label: "dashboard",
+    },
+    {
+      path: "/dashboard/user-management",
+      label: "user managment",
+    },
+    {
+      path: "/dashboard/user/worker-info",
+      label: "worker info",
+    },
+    {
+      path: "/dashboard/payment-details",
+      label: "payment details",
+    },
+    {
+      path: "/dashboard/settings",
+      label: "settings",
+    },
+    {
+      path: "/dashboard/jobs-management",
+      label: "jobs management",
+    },
+    {
+      path: "/dashboard/jobs/details",
+      label: "jobs details",
+    },
+  ];
 
   useEffect(() => {
-    // ? setting the current page dynamically
-    let currentPage = pathname?.split("/");
-    currentPage = currentPage[currentPage.length - 1];
-    currentPage = currentPage.replace("-", " ");
-    setPageName(currentPage);
+    const pageTitle = pagesName.find((val) => val.path === pathname);
+    if (pageTitle && pageTitle.label) {
+      setPageName(pageTitle.label);
+    }
   }, [pathname]);
 
   return (
@@ -55,7 +80,7 @@ const Navbar = ({ isOpened, setOpened }) => {
           onClick={() => setOpened(!isOpened)}
           className="menu-icon"
         />
-        <Text className="page-name">{pageName}</Text>
+        <Text className="page-name capitalize">{pageName}</Text>
       </Flex>
 
       {/* // ? navbar right side  */}
@@ -63,25 +88,21 @@ const Navbar = ({ isOpened, setOpened }) => {
         justify="space-between"
         align="center"
         gap={10}
-        className="proflie-box py-1"
+        className="profile-box py-4 px-0"
       >
         {/* // ? avatar and username */}
         <Flex align="center">
-          {user?.userData?.profilePic ? (
-            <Avatar
-              src={baseURL + user?.userData?.profilePic}
-              className="avatar"
-            />
-          ) : (
-            <Avatar icon={<UserRound />} className="avatar" />
-          )}
-          <Tooltip title="Zubair Arif" className="username-tooltip">
-            <Text className="user-name">
-              {trimString(user?.userData?.name)}
-            </Text>
+          <CustomAvatar
+            size={56}
+            imgUrl={baseURL + user?.userData?.profilePic}
+            name={user?.userData?.name}
+          />
+
+          <Tooltip title={user?.userData?.name} className="username-tooltip">
+            <Text className="user-name px-2">{user?.userData?.name}</Text>
           </Tooltip>
         </Flex>
-        <Flex>
+        <Flex className="px-4">
           {/* // ? notifications and settings */}
           <Flex gap={16} className="notifications-and-settings">
             <Popover

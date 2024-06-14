@@ -9,7 +9,6 @@ import {
   Select,
   Typography,
   Tabs,
-  Avatar,
   Pagination,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -19,7 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { baseURL } from "../configs/axiosConfig";
-import { getTimeFromNow } from "../utils";
+import { capitalizeFirstLetter, formatDate } from "../utils";
+import CustomAvatar from "../components/common/CustomAvatar";
 
 const { Text } = Typography;
 const UserManagement = () => {
@@ -78,7 +78,6 @@ const UserManagement = () => {
   };
 
   const handleSearch = async (e) => {
-    console.log("handleSearch........e", e.target.value);
     await fetchUsers(role, currentPage, e.target.value, "");
   };
 
@@ -98,6 +97,12 @@ const UserManagement = () => {
       title: "Username",
       dataIndex: "name",
       key: "name",
+      render: (_, { name, profilePic }) => (
+        <Flex gap={10} align="center" className="w-[150px]">
+          <CustomAvatar size={40} imgUrl={baseURL + profilePic} name={name} />
+          <Text>{name}</Text>
+        </Flex>
+      ),
     },
     {
       title: "Email",
@@ -105,9 +110,15 @@ const UserManagement = () => {
       key: "email",
     },
     {
-      title: "Registration Date",
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "JoinAt",
       dataIndex: "createdAt",
       key: "createdAt",
+      render: (_, createdAt) => <Text>{formatDate(createdAt)}</Text>,
     },
 
     {
@@ -171,14 +182,7 @@ const UserManagement = () => {
       key: "name",
       render: (_, { name, profilePic }) => (
         <Flex gap={10} align="center" className="w-[150px]">
-          {!profilePic ? (
-            <Avatar size={"large"} src={baseURL + profilePic} className="" />
-          ) : (
-            <Avatar size={"large"} style={{ backgroundColor: "#87d068" }}>
-              {name?.charAt(0)?.toUpperCase()}
-            </Avatar>
-          )}
-
+          <CustomAvatar size={40} imgUrl={baseURL + profilePic} name={name} />
           <Text>{name}</Text>
         </Flex>
       ),
@@ -205,8 +209,9 @@ const UserManagement = () => {
     },
     {
       title: "Registration Date",
-      dataIndex: "createdAt",
+      dataIndex: `createdAt`,
       key: "createdAt",
+      render: (_, createdAt) => <Text>{formatDate(createdAt)}</Text>,
     },
     // color={role === "worker" ? "magenta" : "gold"}
     {

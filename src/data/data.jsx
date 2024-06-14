@@ -18,13 +18,13 @@ export const sidebar = [
   {
     id: 2,
     name: "User Management",
-    link: "/dashboard/user-managment",
+    link: "/dashboard/user-management",
     icon: UserGear,
   },
   {
     id: 3,
     name: "Jobs Management",
-    link: "/dashboard/jobs-managment",
+    link: "/dashboard/jobs-management",
     icon: FaBriefcase,
   },
 

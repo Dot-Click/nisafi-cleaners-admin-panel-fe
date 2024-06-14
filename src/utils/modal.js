@@ -22,6 +22,7 @@ export const showConfirm = (title, desc = null, handleClick, loading) => {
       },
     },
     cancelButtonProps: {
+      className: "cancel-btn",
       style: {
         "&:hover": {
           color: "#FF0000",

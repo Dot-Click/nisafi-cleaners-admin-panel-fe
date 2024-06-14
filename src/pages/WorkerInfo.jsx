@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Avatar,
   Button,
   Col,
   Flex,
@@ -17,7 +16,6 @@ const { Title, Text } = Typography;
 import { Link, useParams } from "react-router-dom";
 import pdfImage from "../../public/images/icons/pdf.png";
 import Download from "../assets/icons/Download";
-import { useMobile, useTablet } from "../services/hooks/mediaquery";
 import { CheckCheck, Copy } from "lucide-react";
 import { successMessage } from "../services/helpers";
 import { useShallow } from "zustand/react/shallow";
@@ -33,8 +31,6 @@ import LoadingBar from "react-top-loading-bar";
 
 const WorkerInfo = () => {
   const { id } = useParams();
-  const tablet = useTablet();
-  const mobile = useMobile();
   const [showCheck, setShowCheck] = useState(false);
   const [progress, setProgress] = useState(20);
   const {
@@ -170,7 +166,7 @@ const WorkerInfo = () => {
                       preview={false}
                       size={"large"}
                       src={baseURL + userDetail?.profilePic}
-                      fallback={`https://placehold.co/180x180/3A779B/white?text=${capitalizeFirstLetter(
+                      fallback={`https://placehold.co/180x180/6BC3E6/white?text=${capitalizeFirstLetter(
                         userDetail?.name?.charAt(0)
                       )}`}
                       className="display-avatar border-0 border-purple-600 !w-[180px] !h-[180px] rounded-full"

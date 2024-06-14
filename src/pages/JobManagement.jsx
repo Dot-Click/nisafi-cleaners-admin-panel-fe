@@ -22,6 +22,8 @@ import { jobManagementStore } from "../stores/jobManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { formatDateString } from "../utils";
 import { Pagination } from "antd";
+import CustomAvatar from "../components/common/CustomAvatar";
+import { baseURL } from "../configs/axiosConfig";
 
 const tabList = [
   {
@@ -80,20 +82,12 @@ const JobManagement = () => {
       dataIndex: "user",
       key: "user",
       render: (_, { user }) => (
-        <Flex gap={10} align="center">
-          {user?.profileImage ? (
-            <Avatar
-              src={user.profileImage}
-              size={40}
-              style={{ objectFit: "cover" }}
-            />
-          ) : (
-            <Avatar
-              icon={<UserRound />}
-              size={40}
-              style={{ objectFit: "cover" }}
-            />
-          )}
+        <Flex gap={10} align="center" className="w-[150px]">
+          <CustomAvatar
+            size={40}
+            imgUrl={baseURL + user.profileImage}
+            name={user.name}
+          />
           <Text>{user.name}</Text>
         </Flex>
       ),

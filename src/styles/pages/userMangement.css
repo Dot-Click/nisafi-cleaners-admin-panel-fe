@@ -106,7 +106,7 @@
   content: "Prev" !important;
   position: absolute !important;
   width: 50px;
-  left: -25px;
+  left: -30px;
   color: #363636;
   font-weight: 600;
   background-color: #fff;
@@ -120,7 +120,7 @@
   content: "Next" !important;
   position: absolute !important;
   width: 50px;
-  right: -25px;
+  right: -30px;
   color: #363636;
   font-weight: 600;
   background-color: #fff;
