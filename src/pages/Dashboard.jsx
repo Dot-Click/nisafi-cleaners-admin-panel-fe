@@ -8,13 +8,10 @@ const Dashboard = () => {
     <Flex
       justify={"space-between"}
       align="flex-start"
-      className="dashboard-container"
+      className="dashboard-container w-full"
     >
-      <Col span={"auto"} className="dashboard-stats-container">
+      <Col span={24} className="dashboard-stats-container border-2">
         <DashboardStats />
-      </Col>
-      <Col span={"auto"} className="dashboard-right-aside">
-        <DashboardStatsAside />
       </Col>
     </Flex>
   );

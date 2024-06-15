@@ -428,28 +428,32 @@ const WorkerInfo = () => {
                   {/* doc */}
                   <Title level={5}>Documents:</Title>
                   <Row gutter={[16, 16]}>
-                    {userDetailLoader
-                      ? Array.from({ length: 2 }).map((_, index) => (
-                          <Skeleton.Node
-                            key={index}
-                            active={true}
-                            size={64}
-                            className="!size-[264px] mx-2"
-                          >
-                            <></>
-                          </Skeleton.Node>
-                        ))
-                      : userDetail?.idDocs?.map((doc, index) => {
-                          return (
-                            <Document
-                              key={index}
-                              title={doc?.documentTitle}
-                              documentName={doc?.filename}
-                              documentURL={baseURL + doc}
-                              fileSize={doc?.size}
-                            />
-                          );
-                        })}
+                    {userDetailLoader ? (
+                      Array.from({ length: 2 }).map((_, index) => (
+                        <Skeleton.Node
+                          key={index}
+                          active={true}
+                          size={64}
+                          className="!size-[264px] mx-2"
+                        >
+                          <></>
+                        </Skeleton.Node>
+                      ))
+                    ) : userDetail?.idDocs?.length > 0 ? (
+                      userDetail?.idDocs?.map((doc, index) => (
+                        <Document
+                          key={index}
+                          title={doc?.documentTitle}
+                          documentName={doc?.filename}
+                          documentURL={baseURL + doc}
+                          fileSize={doc?.size}
+                        />
+                      ))
+                    ) : (
+                      <Text className="text-gray-shade-1 font-semibold text-[16px] px-2">
+                        No Documents found!
+                      </Text>
+                    )}
                   </Row>
                 </Card>
               </Col>

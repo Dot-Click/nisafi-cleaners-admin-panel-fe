@@ -19,6 +19,8 @@ import { useShallow } from "zustand/react/shallow";
 import { UserRound } from "lucide-react";
 import { baseURL } from "../configs/axiosConfig";
 import { errorMessage } from "../services/helpers";
+import CustomAvatar from "../components/common/CustomAvatar";
+import BannerSettings from "../components/dashboard/BannerSettings";
 
 const { Title, Text } = Typography;
 
@@ -31,50 +33,97 @@ const Settings = () => {
     country: "United States",
   });
 
+  const [isSelectedProfile, setSelectedProfile] = useState(true);
+
   const { user, loading } = useAuthStore(useShallow((state) => state));
 
   return (
     <Flex className="settings" justify="center">
       <Row className="settings-container">
         <Col span={24} className="settings-container-header"></Col>
-        <Row span={24} className="settings-form-container !w-full">
-          <Col lg={8} md={10} sm={24} xs={24} className="image-container">
-            <UpdateProfileImage image={user?.userData?.profilePic} />
+        <Row span={24} className="settings-form-container !w-full  h-[80vh]">
+          <Col
+            lg={8}
+            md={10}
+            sm={24}
+            xs={24}
+            className="border-2 border-purple-400"
+          >
+            <Flex className="image-container">
+              <UpdateProfileImage
+                user={user}
+                image={user?.userData?.profilePic}
+              />
+            </Flex>
+
+            <Flex
+              vertical
+              className="absolute top-32 w-full transform mx-8"
+              gap={12}
+            >
+              <Button
+                onClick={() => setSelectedProfile(true)}
+                type={isSelectedProfile ? "primary" : "dashed"}
+                className={`${isSelectedProfile ? "primary-btn" : ""} w-[80%]`}
+              >
+                profile setting
+              </Button>
+              <Button
+                onClick={() => setSelectedProfile(false)}
+                type={!isSelectedProfile ? "primary" : "dashed"}
+                className={`${!isSelectedProfile ? "primary-btn" : ""} w-[80%]`}
+              >
+                banner setting
+              </Button>
+            </Flex>
           </Col>
-          <Col lg={16} md={14} sm={24} xs={24} className="fields-container">
-            <Flex vertical className="name-plate">
-              <Title level={3}>{user?.userData?.name}</Title>
-              <Text>
-                Take full control of your account, update your profile.
-              </Text>
-            </Flex>
 
-            <Flex vertical className="editable-fields">
-              {/* // ? update email field */}
-              <UpdateFields
-                fieldTitle={"Email Address"}
-                fieldName={"email"}
-                fieldValue={user?.userData?.email}
-                isEditAllowed={false}
-              />
-              {/* // ? update username field */}
-              <UpdateFields
-                fieldTitle={"Username"}
-                fieldName={"name"}
-                fieldValue={user?.userData?.name}
-              />
-              {/* // ? update phone field */}
-              <UpdateFields
-                fieldTitle={"Phone"}
-                fieldName={"phone"}
-                fieldValue={user?.userData?.phone || "N/A"}
-              />
+          <Col
+            lg={16}
+            md={14}
+            sm={24}
+            xs={24}
+            className="fields-container !h-full"
+          >
+            {isSelectedProfile ? (
+              <>
+                <Flex vertical className="name-plate">
+                  <Title level={3}>{user?.userData?.name}</Title>
+                  <Text>
+                    Take full control of your account, update your profile.
+                  </Text>
+                </Flex>
 
-              {/* // ? update password component */}
-              <PasswordField />
+                <Flex vertical className="editable-fields">
+                  {/* // ? update email field */}
+                  <UpdateFields
+                    fieldTitle={"Email Address"}
+                    fieldName={"email"}
+                    fieldValue={user?.userData?.email}
+                    isEditAllowed={false}
+                  />
+                  {/* // ? update username field */}
+                  <UpdateFields
+                    fieldTitle={"Username"}
+                    fieldName={"name"}
+                    fieldValue={user?.userData?.name}
+                  />
+                  {/* // ? update phone field */}
+                  <UpdateFields
+                    fieldTitle={"Phone"}
+                    fieldName={"phone"}
+                    fieldValue={user?.userData?.phone || "N/A"}
+                  />
 
-              {/* // ? update country component */}
-            </Flex>
+                  {/* // ? update password component */}
+                  <PasswordField />
+
+                  {/* // ? update country component */}
+                </Flex>
+              </>
+            ) : (
+              <BannerSettings />
+            )}
           </Col>
         </Row>
       </Row>
@@ -281,8 +330,7 @@ const UpdateProfileImage = (props) => {
       uid: "-1",
       name: "user-avatar.png",
       status: "done",
-      url:
-        "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
     },
   ]);
 
@@ -334,22 +382,13 @@ const UpdateProfileImage = (props) => {
         ></Upload>
       </ImgCrop>
 
-      {imageSrc ? (
-        <Avatar
-          src={
-            imageSrc.includes("uploads") ? `${baseURL}${imageSrc}` : imageSrc
-          }
-          className="display-picture"
-          style={{ objectFit: "cover" }}
-        />
-      ) : (
-        // user dummy image
-        <Avatar
-          icon={<UserRound size={100} />}
-          className="display-picture"
-          style={{ objectFit: "cover" }}
-        />
-      )}
+      <CustomAvatar
+        imgUrl={
+          imageSrc.includes("uploads") ? `${baseURL}${imageSrc}` : imageSrc
+        }
+        name={props.user?.userData?.name}
+        className={"display-picture"}
+      />
       <Text className="camera-icon" justify="flex-end">
         <Camera />
       </Text>

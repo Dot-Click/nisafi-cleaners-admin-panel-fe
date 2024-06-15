@@ -1,14 +1,40 @@
-import { Col, Flex, Row, Select, Typography } from "antd";
-import React, { useState } from "react";
+import {
+  Col,
+  DatePicker,
+  Flex,
+  Row,
+  Select,
+  Skeleton,
+  Tag,
+  Typography,
+} from "antd";
+import React, { useEffect, useState } from "react";
 import { dashboardStats, recentOrders } from "../../data/data";
 import ReactApexChart from "react-apexcharts";
 import ArrowTiltDown from "../../assets/icons/ArrowTiltDown";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { useShallow } from "zustand/react/shallow";
+import { useDashboardStore } from "../../stores/dashboardStore";
+import {
+  capitalizeFirstLetter,
+  formatPrice,
+  getStatusColors,
+} from "../../utils";
+import { MapPin } from "lucide-react";
 
 const { Text, Title } = Typography;
 
 const DashboardStats = () => {
+  const {
+    fetchJobStats,
+    totalJobs,
+    disputedJobs,
+    completedJobs,
+    jobStatsLoader,
+  } = useDashboardStore(useShallow((state) => state));
+  console.log("disputedJobs......", disputedJobs);
+
   return (
     <Flex vertical className="dashboard-stats" gap={45}>
       {/* // ? stats ccards */}
@@ -20,19 +46,25 @@ const DashboardStats = () => {
 
       {/* // ? sales and balance stats */}
       <Flex className="sales-and-balance">
-        <Col xxl={6} xl={9} lg={12} md={24} className="balance-stats">
-          <SalesAndBalance />
-        </Col>
         <Col flex={1}>
-          <DailySales />
+          {false ? (
+            <Skeleton.Node active size={164} className="!w-full !h-[380px]">
+              <></>
+            </Skeleton.Node>
+          ) : (
+            <DailySales />
+          )}
         </Col>
       </Flex>
 
       {/* // ? recent orders */}
       <Flex vertical className="recent-orders-section" gap={15}>
         <Flex justify="space-between" gap={20}>
-          <Title level={3}>Recent Orders</Title>
-          <Link to="" className="see-all">
+          <Title level={3}>Recent Jobs</Title>
+          <Link
+            to={"/dashboard/jobs/management"}
+            className="see-all font-semibold"
+          >
             See all
           </Link>
         </Flex>
@@ -51,24 +83,51 @@ const DashboardStats = () => {
 
 const OrderCard = ({ order }) => {
   return (
-    <Col xxl={6} sm={12} xs={24} className="order-card">
+    <Col xxl={6} lg={12} sm={24} md={12} xs={24} className="order-card">
       <Flex className="inner-card" vertical gap={12}>
         <Flex
           justify="space-between"
           gap={10}
           className="order-status-and-number"
         >
-          <Text className="order-number">{order?.orderNumber}</Text>
-          <Text className="order-status">{order?.orderStatus}</Text>
+          <Text className="order-number">24th July, 2024</Text>
+          <Tag
+            color={getStatusColors("completed")}
+            className="px-4 py-1 font-semibold text-[14px]"
+          >
+            {capitalizeFirstLetter("completed")}
+          </Tag>
         </Flex>
-        <Text className="customer-name">{`${order?.customer?.firstName} ${order?.customer?.lastName}`}</Text>
-        <Flex justify="space-between" gap={10} className="order-date-and-fee">
-          <Text className="order-date">
-            {moment(order?.orderDate).format("MMMM, Do YYYY")}
+        <Text className="customer-name !mb-0 !pb-0">Laundary Expert</Text>
+        {/* {["nisafi", "expert", "laudnary", "washing machine"]?.length > 0 && (
+          <span className="font-semibold text-gray-shade-1 text-md !mb-0">
+            {jobDetail?.tags?.[0]
+              .split(",")
+              .map((i) => "#" + i.trim())
+              .join(" ")}
+          </span>
+        )} */}
+
+        <span className=" text-gray-shade-1 text-md !mt-0 !pt-0">
+          {["nisafi", "expert", "laudnary", "washing machine"].map(
+            (i) => "#" + i.trim()
+          )}
+        </span>
+
+        <Flex align={"center"} gap={5}>
+          <MapPin size={17} className="text-gray-shade-1" />
+          <Text className=" text-[14px] text-gray-shade-1">
+            USA, los Angeles
           </Text>
-          <Text className="order-fee">${order?.orderFee}</Text>
         </Flex>
-        <Text className="order-type">{order?.orderType}</Text>
+        <Flex justify="space-between" align="center">
+          <Text className="font-semibold text-lg text-gray-shade-1">
+            ${377}
+          </Text>
+          <Link to={"#"} className="font-semibold see-all">
+            View Detail
+          </Link>
+        </Flex>
       </Flex>
     </Col>
   );
@@ -299,12 +358,44 @@ const SalesAndBalance = () => {
 };
 
 const DailySales = () => {
+  const {
+    fetchJobStats,
+    totalJobs,
+    disputedJobs,
+    completedJobs,
+    jobStatsLoader,
+  } = useDashboardStore(useShallow((state) => state));
+  console.log("disputedJobs......", disputedJobs);
+
+  const [selectedYear, setselectedYear] = useState(new Date().getFullYear());
+
+  const handleStatus = (value) => {
+    console.log("value", value);
+    setstatus(value);
+  };
+  const yearHandler = (date) => {
+    console.log("date", date?.$y);
+    setselectedYear(date?.$y);
+  };
+  useEffect(() => {
+    fetchJobStats(selectedYear);
+  }, [selectedYear]);
+
+  let data = [];
+  if (status === "total") {
+    data = totalJobs?.map((val) => val?.totalJobs) || [];
+  } else if (status === "completed") {
+    data = completedJobs?.map((val) => val?.completedJobs) || [];
+  } else if (status === "disputed") {
+    data = disputedJobs?.map((val) => val?.disputedJobs) || [];
+  }
+  console.log("data", data);
   // ? chart configuration and data
   const [chartConfig] = useState({
     series: [
       {
-        name: "Daily Sales",
-        data: [166, 174, 156, 204, 156, 180, 161, 145],
+        name: "Jobs",
+        data: data,
       },
     ],
     grid: {
@@ -324,6 +415,29 @@ const DailySales = () => {
         width: 2,
         curve: "smooth",
       },
+      xaxis: {
+        categories: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+      },
+      yaxis: {
+        labels: {
+          formatter: function (value) {
+            return Math.round(value);
+          },
+        },
+      },
     },
   });
 
@@ -337,32 +451,32 @@ const DailySales = () => {
       >
         {/* // ? Chart title and sales period date range */}
         <Flex vertical className="daily-sales-chart-header">
-          <Title level={3}>Daily Sales</Title>
-          <Text className="sales-period">July 25th - 31st</Text>
+          <Title level={3}>Job Stats</Title>
+          {/* // ? how many days data filter */}
+          <Row className="w-fit">
+            <Select
+              className="border-[1px] rounded-md "
+              defaultValue={status}
+              onChange={handleStatus}
+              options={[
+                {
+                  value: "total",
+                  label: "Total Jobs",
+                },
+                {
+                  value: "completed",
+                  label: "Completed Jobs",
+                },
+                {
+                  value: "disputed",
+                  label: "Disputed Jobs",
+                },
+              ]}
+            />
+          </Row>
         </Flex>
 
-        {/* // ? how many days data filter */}
-        <Select
-          defaultValue="7"
-          options={[
-            {
-              value: "3",
-              label: "Last 3 days",
-            },
-            {
-              value: "7",
-              label: "Last 7 days",
-            },
-            {
-              value: "14",
-              label: "Last 14 days",
-            },
-            {
-              value: "30",
-              label: "Last 30 days",
-            },
-          ]}
-        />
+        <DatePicker onChange={yearHandler} picker="year" />
       </Flex>
 
       {/* // ? the chart */}
