@@ -42,13 +42,7 @@ const Settings = () => {
       <Row className="settings-container">
         <Col span={24} className="settings-container-header"></Col>
         <Row span={24} className="settings-form-container !w-full  h-[80vh]">
-          <Col
-            lg={8}
-            md={10}
-            sm={24}
-            xs={24}
-            className="border-2 border-purple-400"
-          >
+          <Col lg={8} md={10} sm={24} xs={24}>
             <Flex className="image-container">
               <UpdateProfileImage
                 user={user}
@@ -384,7 +378,7 @@ const UpdateProfileImage = (props) => {
 
       <CustomAvatar
         imgUrl={
-          imageSrc.includes("uploads") ? `${baseURL}${imageSrc}` : imageSrc
+          imageSrc?.includes("uploads") ? `${baseURL}${imageSrc}` : imageSrc
         }
         name={props.user?.userData?.name}
         className={"display-picture"}

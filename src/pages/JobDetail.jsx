@@ -122,7 +122,7 @@ const JobDetail = () => {
           >
             {/* Main Intro */}
             <Col lg={24} md={24} sm={24} sx={24} className="border-0">
-              {false ? (
+              {jobDetailLoader ? (
                 <Skeleton active />
               ) : (
                 <Flex
@@ -166,7 +166,7 @@ const JobDetail = () => {
                 gap={""}
                 className="my-4 border-0 border-purple-900"
               >
-                {false ? (
+                {jobDetailLoader ? (
                   <Skeleton.Avatar active size={64} shape={"circle"} />
                 ) : (
                   <Image
@@ -179,14 +179,14 @@ const JobDetail = () => {
                   />
                 )}
                 <Flex className="px-4" vertical>
-                  {false ? (
+                  {jobDetailLoader ? (
                     <Skeleton.Input size="small" active />
                   ) : (
                     <Text className="font-semibold text-gray-shade-1">
                       {jobDetail?.user?.name}
                     </Text>
                   )}
-                  {false ? (
+                  {jobDetailLoader ? (
                     <Skeleton.Input size="small" active className="mt-1" />
                   ) : (
                     <Text className="font-semibold text-gray-shade-1">
@@ -196,11 +196,10 @@ const JobDetail = () => {
                 </Flex>
               </Flex>
 
-              {false ? (
+              {jobDetailLoader ? (
                 <Skeleton.Node
                   active
                   size={164}
-                  // className="!w-[70%]"
                   className="!size-[364px] !w-[80%] mx-2"
                 >
                   <></>
@@ -225,7 +224,7 @@ const JobDetail = () => {
                 title="Job Description"
                 bordered={false}
               >
-                {false ? (
+                {jobDetailLoader ? (
                   <Skeleton active />
                 ) : (
                   <Text className="text-gray-shade-1 font-semibold !w-full">
@@ -243,7 +242,7 @@ const JobDetail = () => {
                 bordered={false}
                 className="my-4 rounded-lg card-head"
               >
-                {false ? (
+                {jobDetailLoader ? (
                   <div className="flex flex-col space-y-4">
                     <Skeleton.Input
                       active

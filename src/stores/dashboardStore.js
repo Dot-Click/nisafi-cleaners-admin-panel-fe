@@ -55,7 +55,6 @@ export const useDashboardStore = create((set) => ({
           recentJobsLoader: false,
         });
       }
-      successMessage(res?.data?.data);
       return true;
     } catch (error) {
       set({

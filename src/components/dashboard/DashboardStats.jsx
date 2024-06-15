@@ -16,25 +16,40 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import { useShallow } from "zustand/react/shallow";
 import { useDashboardStore } from "../../stores/dashboardStore";
-import {
-  capitalizeFirstLetter,
-  formatPrice,
-  getStatusColors,
-} from "../../utils";
+
 import { MapPin } from "lucide-react";
+import RecentJobCard from "./RecentJobCard";
+import JobChart from "./JobChart";
 
 const { Text, Title } = Typography;
 
 const DashboardStats = () => {
   const {
+    //  func
+    fetchRecentJobs,
     fetchJobStats,
+    // data
     totalJobs,
     disputedJobs,
     completedJobs,
+    recentJobs,
+    // loader
     jobStatsLoader,
+    recentJobsLoader,
   } = useDashboardStore(useShallow((state) => state));
-  console.log("disputedJobs......", disputedJobs);
 
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [status, setStatus] = useState("total");
+
+  useEffect(() => {
+    fetchJobStats(selectedYear);
+  }, [selectedYear]);
+
+  useEffect(() => {
+    fetchRecentJobs();
+  }, []);
+
+  console.log("job", recentJobs);
   return (
     <Flex vertical className="dashboard-stats" gap={45}>
       {/* // ? stats ccards */}
@@ -47,12 +62,20 @@ const DashboardStats = () => {
       {/* // ? sales and balance stats */}
       <Flex className="sales-and-balance">
         <Col flex={1}>
-          {false ? (
+          {jobStatsLoader ? (
             <Skeleton.Node active size={164} className="!w-full !h-[380px]">
               <></>
             </Skeleton.Node>
           ) : (
-            <DailySales />
+            <JobChart
+              totalJobs={totalJobs}
+              disputedJobs={disputedJobs}
+              completedJobs={completedJobs}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+              status={status}
+              setStatus={setStatus}
+            />
           )}
         </Col>
       </Flex>
@@ -71,65 +94,28 @@ const DashboardStats = () => {
 
         {/* // ? recent orders cards */}
         <Row className="order-cards">
-          {recentOrders.length > 0 &&
-            recentOrders.slice(0, 4).map((order, index) => {
-              return <OrderCard key={index} order={order} />;
-            })}
+          {recentJobsLoader
+            ? Array.from({ length: 4 }).map((_, index) => (
+                <Col
+                  key={index}
+                  xxl={6}
+                  lg={12}
+                  sm={24}
+                  md={12}
+                  xs={24}
+                  className="order-card"
+                >
+                  <Flex className="inner-card" vertical gap={12}>
+                    <Skeleton active className="!w-full !h-[150px]" />
+                  </Flex>
+                </Col>
+              ))
+            : recentJobs?.map((job, index) => (
+                <RecentJobCard key={index} job={job} />
+              ))}
         </Row>
       </Flex>
     </Flex>
-  );
-};
-
-const OrderCard = ({ order }) => {
-  return (
-    <Col xxl={6} lg={12} sm={24} md={12} xs={24} className="order-card">
-      <Flex className="inner-card" vertical gap={12}>
-        <Flex
-          justify="space-between"
-          gap={10}
-          className="order-status-and-number"
-        >
-          <Text className="order-number">24th July, 2024</Text>
-          <Tag
-            color={getStatusColors("completed")}
-            className="px-4 py-1 font-semibold text-[14px]"
-          >
-            {capitalizeFirstLetter("completed")}
-          </Tag>
-        </Flex>
-        <Text className="customer-name !mb-0 !pb-0">Laundary Expert</Text>
-        {/* {["nisafi", "expert", "laudnary", "washing machine"]?.length > 0 && (
-          <span className="font-semibold text-gray-shade-1 text-md !mb-0">
-            {jobDetail?.tags?.[0]
-              .split(",")
-              .map((i) => "#" + i.trim())
-              .join(" ")}
-          </span>
-        )} */}
-
-        <span className=" text-gray-shade-1 text-md !mt-0 !pt-0">
-          {["nisafi", "expert", "laudnary", "washing machine"].map(
-            (i) => "#" + i.trim()
-          )}
-        </span>
-
-        <Flex align={"center"} gap={5}>
-          <MapPin size={17} className="text-gray-shade-1" />
-          <Text className=" text-[14px] text-gray-shade-1">
-            USA, los Angeles
-          </Text>
-        </Flex>
-        <Flex justify="space-between" align="center">
-          <Text className="font-semibold text-lg text-gray-shade-1">
-            ${377}
-          </Text>
-          <Link to={"#"} className="font-semibold see-all">
-            View Detail
-          </Link>
-        </Flex>
-      </Flex>
-    </Col>
   );
 };
 
@@ -354,139 +340,6 @@ const SalesAndBalance = () => {
         <Title level={3}>Withdraw</Title>
       </Flex>
     </>
-  );
-};
-
-const DailySales = () => {
-  const {
-    fetchJobStats,
-    totalJobs,
-    disputedJobs,
-    completedJobs,
-    jobStatsLoader,
-  } = useDashboardStore(useShallow((state) => state));
-  console.log("disputedJobs......", disputedJobs);
-
-  const [selectedYear, setselectedYear] = useState(new Date().getFullYear());
-
-  const handleStatus = (value) => {
-    console.log("value", value);
-    setstatus(value);
-  };
-  const yearHandler = (date) => {
-    console.log("date", date?.$y);
-    setselectedYear(date?.$y);
-  };
-  useEffect(() => {
-    fetchJobStats(selectedYear);
-  }, [selectedYear]);
-
-  let data = [];
-  if (status === "total") {
-    data = totalJobs?.map((val) => val?.totalJobs) || [];
-  } else if (status === "completed") {
-    data = completedJobs?.map((val) => val?.completedJobs) || [];
-  } else if (status === "disputed") {
-    data = disputedJobs?.map((val) => val?.disputedJobs) || [];
-  }
-  console.log("data", data);
-  // ? chart configuration and data
-  const [chartConfig] = useState({
-    series: [
-      {
-        name: "Jobs",
-        data: data,
-      },
-    ],
-    grid: {
-      padding: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-      },
-    },
-    options: {
-      colors: ["#0BA8D8"],
-      chart: {
-        type: "line",
-      },
-      stroke: {
-        width: 2,
-        curve: "smooth",
-      },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sept",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
-      },
-      yaxis: {
-        labels: {
-          formatter: function (value) {
-            return Math.round(value);
-          },
-        },
-      },
-    },
-  });
-
-  return (
-    <Flex vertical className="daily-sales-stats">
-      <Flex
-        justify="space-between"
-        gap={25}
-        align="flex-start"
-        className="daily-sales-chart-container"
-      >
-        {/* // ? Chart title and sales period date range */}
-        <Flex vertical className="daily-sales-chart-header">
-          <Title level={3}>Job Stats</Title>
-          {/* // ? how many days data filter */}
-          <Row className="w-fit">
-            <Select
-              className="border-[1px] rounded-md "
-              defaultValue={status}
-              onChange={handleStatus}
-              options={[
-                {
-                  value: "total",
-                  label: "Total Jobs",
-                },
-                {
-                  value: "completed",
-                  label: "Completed Jobs",
-                },
-                {
-                  value: "disputed",
-                  label: "Disputed Jobs",
-                },
-              ]}
-            />
-          </Row>
-        </Flex>
-
-        <DatePicker onChange={yearHandler} picker="year" />
-      </Flex>
-
-      {/* // ? the chart */}
-      <ReactApexChart
-        options={chartConfig.options}
-        series={chartConfig.series}
-        type="line"
-        height={340}
-      />
-    </Flex>
   );
 };
 
