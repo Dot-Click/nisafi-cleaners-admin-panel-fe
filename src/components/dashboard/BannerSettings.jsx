@@ -45,7 +45,7 @@ const BannerSettings = () => {
       {bannersLoader
         ? Array.from({ length: 3 }).map((_, index) => (
             <Row key={index} className="w-full">
-              <Skeleton active className="!w-full !h-[150px] mx-4 my-4" />
+              <Skeleton active className="!w-full !h-[120px] mx-4 my-4" />
             </Row>
           ))
         : bannerList?.map((value, index) => (
