@@ -41,7 +41,7 @@ const Settings = () => {
     <Flex className="settings" justify="center">
       <Row className="settings-container">
         <Col span={24} className="settings-container-header"></Col>
-        <Row span={24} className="settings-form-container !w-full  h-[80vh]">
+        <Row span={24} className="settings-form-container !w-full ">
           <Col lg={8} md={10} sm={24} xs={24}>
             <Flex className="image-container">
               <UpdateProfileImage

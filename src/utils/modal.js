@@ -12,23 +12,10 @@ export const showConfirm = (title, desc = null, handleClick, loading) => {
       console.log("Cancel");
     },
     okButtonProps: {
-      style: {
-        backgroundColor: "#6BC3E6",
-        padding: "5px 20px",
-        "&:hover": {
-          color: "#FF0000",
-          borderColor: "#FF0000",
-        },
-      },
+      className: "primary-btn w-fit !px-6",
     },
     cancelButtonProps: {
       className: "cancel-btn",
-      style: {
-        "&:hover": {
-          color: "#FF0000",
-          borderColor: "#FF0000",
-        },
-      },
     },
   });
 };
