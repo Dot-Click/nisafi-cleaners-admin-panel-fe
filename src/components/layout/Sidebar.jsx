@@ -30,7 +30,7 @@ const Sidebar = ({ isOpened, setOpened }) => {
   return (
     <>
       <Row className={`sidebar${isOpened ? " active" : ""}`}>
-        <Flex justify="center" className="my-3 w-100">
+        <Flex justify="center" className="my-1 w-100">
           <GrClose
             className="aside-close-icon"
             size={16}
@@ -76,7 +76,7 @@ const Sidebar = ({ isOpened, setOpened }) => {
               );
             })}
           </Flex>
-          <Link onClick={handleLogoutClick} className="px-3  sidebar-link">
+          <Link onClick={handleLogoutClick} className="px-3 sidebar-link">
             <Flex align="center">
               <Logout />
               <Text className="mx-1 link-name">Logout</Text>

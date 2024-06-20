@@ -1,22 +1,10 @@
-import {
-  Avatar,
-  Button,
-  Col,
-  Flex,
-  Input,
-  Modal,
-  Row,
-  Select,
-  Typography,
-  Upload,
-} from "antd";
+import { Button, Col, Flex, Input, Modal, Row, Typography, Upload } from "antd";
 import React, { useState } from "react";
 import Camera from "../assets/icons/Camera";
 import countries from "../data/countries.json";
 import ImgCrop from "antd-img-crop";
 import { useAuthStore } from "../stores/authStore";
 import { useShallow } from "zustand/react/shallow";
-import { UserRound } from "lucide-react";
 import { baseURL } from "../configs/axiosConfig";
 import { errorMessage } from "../services/helpers";
 import CustomAvatar from "../components/common/CustomAvatar";
@@ -25,14 +13,6 @@ import BannerSettings from "../components/dashboard/BannerSettings";
 const { Title, Text } = Typography;
 
 const Settings = () => {
-  const [values, setValues] = useState({
-    username: "Zubair Arif",
-    email: "zubarif234@gmail.com",
-    phone: 12340000,
-    password: "",
-    country: "United States",
-  });
-
   const [isSelectedProfile, setSelectedProfile] = useState(true);
 
   const { user, loading } = useAuthStore(useShallow((state) => state));
@@ -135,6 +115,11 @@ const UpdateFields = ({
   const [newVal, setNewVal] = useState(fieldValue);
   const { updateProfile, loading } = useAuthStore(useShallow((state) => state));
 
+  const handleCancelEdit = () => {
+    setNewVal(fieldValue);
+    setEditable(false);
+  };
+
   return (
     <Row className="field-row">
       <Col xs={24} lg={16} className="field">
@@ -160,7 +145,7 @@ const UpdateFields = ({
         <Col xs={24} lg={8} className="btns">
           {isEditable ? (
             <>
-              <Button className="grey-btn" onClick={() => setEditable(false)}>
+              <Button className="grey-btn" onClick={handleCancelEdit}>
                 Cancel
               </Button>
               <Button
@@ -324,8 +309,7 @@ const UpdateProfileImage = (props) => {
       uid: "-1",
       name: "user-avatar.png",
       status: "done",
-      url:
-        "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
     },
   ]);
 
@@ -369,6 +353,7 @@ const UpdateProfileImage = (props) => {
           fileList={fileList}
           maxCount={1}
           onChange={onChange}
+          // onModalOk={onChange}
           showUploadList={false}
         ></Upload>
       </ImgCrop>

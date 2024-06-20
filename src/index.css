@@ -50,3 +50,16 @@
   /* color: #0ba8d8 !important; */
   border-color: #0ba8d8 !important;
 }
+
+.hide-tooltip .ant-tooltip {
+  display: none !important;
+}
+.ant-tooltip-inner {
+  display: none !important;
+}
+.ant-upload-list-item-name {
+  color: #6d6868 !important;
+}
+.ant-upload-list-item-error {
+  border-color: #d9d9d9 !important;
+}

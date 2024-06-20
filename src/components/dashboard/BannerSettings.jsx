@@ -69,13 +69,9 @@ const BannerSettings = () => {
 
   const handleChange = (file) => {
     setshowFile(file);
-    setfile(file.file.originFileObj);
+    setfile(file.fileList[0] || null);
   };
 
-  const handleDrop = () => {
-    alert("Destroyed");
-    setfile(null);
-  };
   useEffect(() => {
     console.log("file after setting:", file);
   }, [file]);
@@ -85,16 +81,19 @@ const BannerSettings = () => {
       errorMessage("Please upload a banner image");
       return;
     }
-    const formdata = new FormData();
-    formdata.append("url", values.url);
-    formdata.append("image", file);
 
-    // const res = await uploadBanner(formdata);
-    // if (res) {
-    //   form.resetFields();
-    //   setModalOpen(false);
-    //   fetchBanners();
-    // }
+    console.log("fileleleeee", file);
+    const formdata = new FormData();
+    formdata.append("url", `https://${values.url}`);
+    formdata.append("image", file.originFileObj);
+
+    const res = await uploadBanner(formdata);
+    if (res) {
+      form.resetFields();
+      setModalOpen(false);
+      fetchBanners();
+      setfile(null);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -204,14 +203,12 @@ const BannerSettings = () => {
 
               <Col className="mt-2">
                 <Upload
-                  action={baseURL}
+                  action={""}
                   listType="picture"
-                  className="upload-list-inline"
+                  className="upload-list-inline hide-tooltip"
                   multiple={false}
                   onChange={handleChange}
-                  onRemove={handleDrop}
                   maxCount={1}
-                  // fileList={file ? [file] : []}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
                 </Upload>
