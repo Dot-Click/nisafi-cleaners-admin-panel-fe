@@ -36,6 +36,7 @@ import { useShallow } from "zustand/react/shallow";
 import { jobManagementStore } from "../stores/jobManagementStore";
 import GeneralModal from "../components/Modals/GeneralModal";
 import ChevronDown from "../assets/icons/ChevronDown";
+import CustomAvatar from "../components/common/CustomAvatar";
 
 const images = [
   // "https://placehold.it/310x150",
@@ -53,7 +54,7 @@ const JobDetail = () => {
   const tablet = useTablet();
   const { id } = useParams();
   const [isModalOpened, setModalOpen] = useState(false);
-
+  const [modalImgs, setModalImgs] = useState([]);
   const {
     // func
     fetchSingleJob,
@@ -66,8 +67,6 @@ const JobDetail = () => {
   useEffect(() => {
     fetchSingleJob(id);
   }, []);
-
-  console.log("jobDetail......", jobDetail);
 
   const pow = [
     "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
@@ -377,14 +376,10 @@ const JobDetail = () => {
                   <Row className="my-4" gutter={[16, 16]}>
                     <Col span={24} className="">
                       <Flex className="justify-center items-center flex-col">
-                        <Image
-                          sizes="middle"
-                          className="!size-[96px] mb-4 rounded-full"
-                          fallback={`https://placehold.co/180x180/3A779B/white?text=${capitalizeFirstLetter(
-                            jobDetail?.worker?.name?.charAt(0)
-                          )}`}
-                          src={baseURL + jobDetail?.worker?.profilePic}
-                          preview={false}
+                        <CustomAvatar
+                          name={jobDetail?.worker?.name}
+                          imgUrl={baseURL + jobDetail?.worker?.profilePic}
+                          size={96}
                         />
                         <Title className="capitalize" level={2}>
                           {jobDetail?.worker?.name}
@@ -442,7 +437,10 @@ const JobDetail = () => {
                     </Text>
                     <div>
                       <Link
-                        onClick={() => setModalOpen(true)}
+                        onClick={() => {
+                          setModalImgs(pow);
+                          setModalOpen(true);
+                        }}
                         className="font-semibold"
                         style={{ color: "#1677ff" }}
                       >
@@ -457,52 +455,61 @@ const JobDetail = () => {
                   </Text>
                 </Card>
               ) : (
-                <Card
-                  title={"Dispute detail"}
-                  type="inner"
-                  extra={<ActionComponent />}
-                  className="my-4 rounded-lg card-head"
-                >
-                  <Row justify={"space-between"} gutter={[32, 12]}>
-                    <Col span={12}>
-                      <Title level={5}>Worker</Title>
+                jobDetail?.proofOfWork &&
+                jobDetail?.status === "disputed" && (
+                  <Card
+                    title={"Dispute detail"}
+                    type="inner"
+                    extra={<ActionComponent />}
+                    className="my-4 rounded-lg card-head"
+                  >
+                    <Row justify={"space-between"} gutter={[32, 12]}>
+                      <Col span={12}>
+                        <Title level={5}>Worker</Title>
 
-                      <Row>
-                        <Text>Proof of Work:</Text>
-                        <Text>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Numquam quaerat ratione vel veniam incidunt.
-                        </Text>
+                        <Row>
+                          <Text>Proof of Work:</Text>
+                          <Text>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Numquam quaerat ratione vel veniam incidunt.
+                          </Text>
 
-                        <Link
-                          onClick={() => setModalOpen(true)}
-                          className="font-semibold"
-                          style={{ color: "#1677ff" }}
-                        >
-                          View images
-                        </Link>
-                      </Row>
-                    </Col>
-                    <Col span={12}>
-                      <Title level={5}>Customer</Title>
-                      <Row>
-                        <Text>Reason:</Text>
-                        <Text>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Numquam quaerat ratione vel veniam incidunt.
-                        </Text>
+                          <Link
+                            onClick={() => {
+                              setModalImgs(pow);
+                              setModalOpen(true);
+                            }}
+                            className="font-semibold"
+                            style={{ color: "#1677ff" }}
+                          >
+                            View images
+                          </Link>
+                        </Row>
+                      </Col>
+                      <Col span={12}>
+                        <Title level={5}>Customer</Title>
+                        <Row>
+                          <Text>Reason:</Text>
+                          <Text>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Numquam quaerat ratione vel veniam incidunt.
+                          </Text>
 
-                        <Link
-                          onClick={() => setModalOpen(true)}
-                          className="font-semibold"
-                          style={{ color: "#1677ff" }}
-                        >
-                          View images
-                        </Link>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Card>
+                          <Link
+                            onClick={() => {
+                              setModalImgs(pow);
+                              setModalOpen(true);
+                            }}
+                            className="font-semibold"
+                            style={{ color: "#1677ff" }}
+                          >
+                            View images
+                          </Link>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Card>
+                )
               )}
             </Col>
           </Row>
@@ -518,7 +525,7 @@ const JobDetail = () => {
 
             {/* Images */}
             <Row gutter={[16, 16]}>
-              {pow?.map((img, index) => (
+              {modalImgs?.map((img, index) => (
                 <Col key={index} lg={8} md={8} sm={12} xs={12}>
                   <Image
                     width={150}

@@ -47,6 +47,6 @@
   border-color: #0ba8d8 !important;
 }
 .ant-btn-default:hover {
-  color: #0ba8d8 !important;
+  /* color: #0ba8d8 !important; */
   border-color: #0ba8d8 !important;
 }

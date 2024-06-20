@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import { useShallow } from "zustand/react/shallow";
 import { useDashboardStore } from "../../stores/dashboardStore";
-
 import { MapPin } from "lucide-react";
 import RecentJobCard from "./RecentJobCard";
 import JobChart from "./JobChart";

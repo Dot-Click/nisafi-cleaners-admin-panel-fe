@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Modal } from "antd";
 
 const GeneralModal = ({ open, handleCancel, component }) => {

@@ -146,7 +146,7 @@
 .dashboard-stats-container .daily-sales-stats .daily-sales-chart-container .ant-select-selector span {
   color: #757575;
   font-family: Poppins;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
 }
 .dashboard-stats-container .apexcharts-canvas {
   width: 100% !important;

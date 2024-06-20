@@ -41,7 +41,7 @@ const Settings = () => {
     <Flex className="settings" justify="center">
       <Row className="settings-container">
         <Col span={24} className="settings-container-header"></Col>
-        <Row span={24} className="settings-form-container !w-full ">
+        <Row span={24} className="settings-form-container !w-full min-h-[65vh]">
           <Col lg={8} md={10} sm={24} xs={24}>
             <Flex className="image-container">
               <UpdateProfileImage
@@ -324,7 +324,8 @@ const UpdateProfileImage = (props) => {
       uid: "-1",
       name: "user-avatar.png",
       status: "done",
-      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+      url:
+        "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
     },
   ]);
 

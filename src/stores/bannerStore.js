@@ -1,12 +1,17 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import custAxios, { attachToken } from "../configs/axiosConfig";
+import custAxios, {
+  attachToken,
+  formAxios,
+  attachTokenWithFormAxios,
+} from "../configs/axiosConfig";
 import { errorMessage, successMessage } from "../services/helpers";
 
 export const useBannerStore = create((set) => ({
   bannerList: [],
   bannersLoader: false,
   delbannerLoader: false,
+  uploadbannerLoader: false,
 
   fetchBanners: async () => {
     try {
@@ -37,8 +42,7 @@ export const useBannerStore = create((set) => ({
         delbannerLoader: true,
       });
       attachToken();
-      const res = await custAxios.get(`/admin/banner/${id}`);
-      console.log("res", res?.data?.data);
+      const res = await custAxios.delete(`/admin/banner/${id}`);
       if (res?.data?.success) {
         set({
           delbannerLoader: false,
@@ -49,6 +53,28 @@ export const useBannerStore = create((set) => ({
     } catch (error) {
       set({
         delbannerLoader: false,
+      });
+      console.error(error);
+      errorMessage(error?.response?.data?.message);
+    }
+  },
+  uploadBanner: async (values) => {
+    try {
+      set({
+        uploadbannerLoader: true,
+      });
+      attachTokenWithFormAxios();
+      const res = await formAxios.post(`/admin/banner`, values);
+      if (res?.data?.success) {
+        set({
+          uploadbannerLoader: false,
+        });
+      }
+      successMessage("Banner Uploaded successfully");
+      return true;
+    } catch (error) {
+      set({
+        uploadbannerLoader: false,
       });
       console.error(error);
       errorMessage(error?.response?.data?.message);

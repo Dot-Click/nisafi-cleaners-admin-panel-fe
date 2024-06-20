@@ -112,7 +112,7 @@ const JobChart = ({
           {/* // ? how many days data filter */}
           <Row className="">
             <Select
-              className="border-[1px] rounded-md w-fit"
+              className="border-[1px] rounded-md w-fit !text-sm"
               defaultValue={status}
               onChange={handleStatus}
               options={[
