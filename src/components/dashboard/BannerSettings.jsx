@@ -10,7 +10,6 @@ import {
   Skeleton,
   Form,
   Input,
-  message,
   Upload,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -18,21 +17,19 @@ import { UploadOutlined } from "@ant-design/icons";
 import { useShallow } from "zustand/react/shallow";
 import { useBannerStore } from "../../stores/bannerStore";
 import { Link } from "lucide-react";
-import { avatarUrl, baseURL } from "../../configs/axiosConfig";
+import { baseURL } from "../../configs/axiosConfig";
 import { showConfirm } from "../../utils/modal";
 import GeneralModal from "../Modals/GeneralModal";
-import { errorMessage, warningMessage } from "../../services/helpers";
+import { errorMessage } from "../../services/helpers";
 import { fallImg } from "../../data/data";
 const { Title, Text } = Typography;
 
 const BannerSettings = () => {
   const [isModalOpened, setModalOpen] = useState(false);
   const [form] = Form.useForm();
-  const [file, setfile] = useState(null);
 
-  const [initialValues, setInitialValues] = useState({
-    url: "",
-  });
+  const [file, setfile] = useState(null);
+  const [showFile, setshowFile] = useState([]);
 
   const {
     // func
@@ -71,37 +68,36 @@ const BannerSettings = () => {
   };
 
   const handleChange = (file) => {
+    setshowFile(file);
     setfile(file.file.originFileObj);
-    console.log("file.....................", file);
   };
 
   const handleDrop = () => {
-    setfile();
-    console.log("file.....................", file);
+    alert("Destroyed");
+    setfile(null);
   };
+  useEffect(() => {
+    console.log("file after setting:", file);
+  }, [file]);
 
   const onFinish = async (values) => {
-    console.log("fileeeeeeeeeeeeeeeeeeeeeeeeee", file);
-    console.log("values", values);
-
     if (!file) {
       errorMessage("Please upload a banner image");
-      return; // Prevent form submission if file is not uploaded
+      return;
     }
     const formdata = new FormData();
     formdata.append("url", values.url);
     formdata.append("image", file);
 
-    const res = await uploadBanner(formdata);
-    if (res) {
-      form.resetFields();
-      setModalOpen(false);
-      fetchBanners();
-    }
+    // const res = await uploadBanner(formdata);
+    // if (res) {
+    //   form.resetFields();
+    //   setModalOpen(false);
+    //   fetchBanners();
+    // }
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     return false;
   };
 
@@ -208,12 +204,14 @@ const BannerSettings = () => {
 
               <Col className="mt-2">
                 <Upload
+                  action={baseURL}
                   listType="picture"
                   className="upload-list-inline"
                   multiple={false}
                   onChange={handleChange}
                   onRemove={handleDrop}
                   maxCount={1}
+                  // fileList={file ? [file] : []}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
                 </Upload>

@@ -343,9 +343,6 @@ const UpdateProfileImage = (props) => {
       const formData = new FormData();
       formData.append("image", newFileList[0].originFileObj);
       const res = await updateProfile(formData);
-      console.log("res", res);
-
-      // setImageSrc(base64);
     } else {
       setImageSrc("");
     }
@@ -361,7 +358,6 @@ const UpdateProfileImage = (props) => {
 
   return (
     <label className="display-picture-container" onClick={handleTriggerUpload}>
-      {console.log("imageSrc", imageSrc)}
       <ImgCrop rotationSlider>
         <Upload
           ref={(node) => {

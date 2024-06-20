@@ -18,12 +18,9 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     navigate("/verify-email");
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = (errorInfo) => {};
   return (
     <Row direction="vertical" className="login-form d-block h-100">
       <Image

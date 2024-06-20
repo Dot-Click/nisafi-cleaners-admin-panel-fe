@@ -20,7 +20,6 @@ export const useBannerStore = create((set) => ({
       });
       attachToken();
       const res = await custAxios.get(`/admin/banner`);
-      console.log("res", res?.data?.data);
       if (res?.data?.success) {
         set({
           bannersLoader: false,

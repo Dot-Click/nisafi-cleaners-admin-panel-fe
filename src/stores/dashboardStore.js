@@ -22,7 +22,6 @@ export const useDashboardStore = create((set) => ({
         params: { yearRange },
       });
 
-      console.log("res", res?.data?.data);
       if (res?.data?.success) {
         set({
           jobStatsLoader: false,
@@ -48,7 +47,6 @@ export const useDashboardStore = create((set) => ({
       });
       attachToken();
       const res = await custAxios.get(`/admin/recentjobs`);
-      console.log("res", res?.data?.data);
       if (res?.data?.success) {
         set({
           recentJobs: res?.data?.data,

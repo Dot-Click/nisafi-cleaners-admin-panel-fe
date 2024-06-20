@@ -13,24 +13,28 @@ const ReactCarousel = ({ images }) => {
     }
   };
   return (
-    // className="!h-[600px]"
     <Col span={12} className="min-h-[550px] !object-fill">
       <Carousel
         autoPlay={autoPlay}
         selectedItem={currentSlide}
         onChange={updateCurrentSlide}
         dynamicHeight={false}
-        // dynamicHeight
-        width={"100%"}
+        height={100}
         className="!object-contain"
       >
         {images?.map((image, index) => (
-          <img key={index} src={image} alt={`Slide ${index}`} />
+          <img
+            key={index}
+            src={baseURL + image}
+            alt={`Slide ${index}`}
+            className="!object-contain"
+            width={100}
+            height={100}
+          />
         ))}
       </Carousel>
     </Col>
   );
 };
-// <img key={index} src={baseURL + image} alt={`Slide ${index}`} />
 
 export default ReactCarousel;

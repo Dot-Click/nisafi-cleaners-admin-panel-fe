@@ -17,10 +17,8 @@ const NewPassword = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
   return (
     <Row direction="vertical" className="p-3  d-block h-100">

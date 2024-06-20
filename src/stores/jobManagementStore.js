@@ -9,10 +9,11 @@ import { successMessage, errorMessage } from "../services/helpers";
 
 export const jobManagementStore = create((set) => ({
   jobsList: [],
+  jobDetail: {},
   pagesCount: 0,
   listLoader: false,
   jobDetailLoader: false,
-  jobDetail: {},
+  disputeLoader: false,
 
   fetchJobsList: async (page, search, sort, limit = 10, status) => {
     try {
@@ -62,6 +63,31 @@ export const jobManagementStore = create((set) => ({
     } catch (error) {
       set({
         jobDetailLoader: false,
+      });
+      console.error(error);
+      errorMessage(error?.response?.data?.message);
+    }
+  },
+
+  resolveDispute: async (values) => {
+    try {
+      set({
+        disputeLoader: true,
+      });
+
+      attachToken();
+      const res = await custAxios.put(`/job/resolveDispute`, values);
+
+      if (res?.data?.success) {
+        set({
+          disputeLoader: false,
+        });
+      }
+      successMessage(res?.data?.data?.message);
+      return true;
+    } catch (error) {
+      set({
+        disputeLoader: false,
       });
       console.error(error);
       errorMessage(error?.response?.data?.message);

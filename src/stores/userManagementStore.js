@@ -35,7 +35,6 @@ export const useUserManagementStore = create((set) => ({
         res?.data?.data?.totalUsers / queryParams.limit
       );
 
-      console.log("res", res?.data);
       if (res?.data?.success) {
         set({
           usersLoader: false,
@@ -62,7 +61,6 @@ export const useUserManagementStore = create((set) => ({
 
       attachToken();
       const res = await custAxios.get(`/admin/users/${id}`);
-      console.log("res", res?.data);
       if (res?.data?.success) {
         set({
           userDetailLoader: false,
@@ -87,7 +85,6 @@ export const useUserManagementStore = create((set) => ({
 
       attachToken();
       const res = await custAxios.get(`/admin/approveUser/${id}/${status}`);
-      console.log("res", res?.data);
       if (res?.data?.success) {
         set({
           approvalLoader: false,

@@ -7,18 +7,10 @@ import {
   Card,
   Tag,
   Image,
-  Select,
-  Rate,
   Skeleton,
+  Menu,
 } from "antd";
-import {
-  Calendar,
-  MapPin,
-  Timer,
-  HandCoins,
-  FilePen,
-  Star,
-} from "lucide-react";
+import { Calendar, MapPin, Timer, FilePen, Star } from "lucide-react";
 const { Title, Text } = Typography;
 import ReactCarousel from "../components/common/ReactCarousel";
 import { StarFilled } from "@ant-design/icons";
@@ -35,21 +27,9 @@ import { Link, useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { jobManagementStore } from "../stores/jobManagementStore";
 import GeneralModal from "../components/Modals/GeneralModal";
-import ChevronDown from "../assets/icons/ChevronDown";
 import CustomAvatar from "../components/common/CustomAvatar";
+import { showConfirm } from "../utils/modal";
 
-const images = [
-  // "https://placehold.it/310x150",
-  // "https://placehold.it/310x150",
-  // "https://placehold.it/310x150",
-  // "https://placehold.it/310x150",
-  "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
-  "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
-  "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
-  "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
-  "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
-  "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
-];
 const JobDetail = () => {
   const tablet = useTablet();
   const { id } = useParams();
@@ -58,54 +38,87 @@ const JobDetail = () => {
   const {
     // func
     fetchSingleJob,
+    resolveDispute,
     // data
     jobDetail,
     // loaders
     jobDetailLoader,
+    disputeLoader,
   } = jobManagementStore(useShallow((state) => state));
 
   useEffect(() => {
     fetchSingleJob(id);
   }, []);
 
-  const pow = [
-    "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
-    "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
-    "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
-    "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
-    "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
-    "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
-
-    "https://img.freepik.com/free-vector/realistic-cleaning-products-ad_52683-38718.jpg?t=st=1718290398~exp=1718293998~hmac=b43019beb6857aad93c03ee3d5c5d81bdfd8b184d07ea0af62fd467031c3e9e2&w=900",
-    "https://img.freepik.com/free-vector/washing-machine-advertising-banner-with-realistic-washing-machine-laundry-detergent-images-with-text-clickable-button_1284-33059.jpg?t=st=1718290406~exp=1718294006~hmac=2f01d9b227db2f34594ef65347fd11fa3a8177209f5b0c838e8277c514312162&w=740",
-  ];
-
   const handleCancel = () => {
     setModalOpen(false);
   };
 
+  const disputeHandler = async (resolution) => {
+    const payload = {
+      resolution,
+      jobId: id,
+    };
+    const res = await resolveDispute(payload);
+    if (res) {
+      await fetchSingleJob(id);
+    }
+  };
+
+  const onChangeHandler = (e) => {
+    showConfirm(
+      "Update",
+      "Do you want to resolve the dispute?",
+      () => disputeHandler(e.key),
+      disputeLoader
+    );
+  };
+
+  const items = [
+    {
+      key: "sub1",
+      label: "Resolve dispute",
+      children: [
+        {
+          key: "refund",
+          label: "Refund to client",
+        },
+        {
+          key: "release",
+          label: "Release worker's payment",
+        },
+      ],
+    },
+  ];
+
   const ActionComponent = () => {
     return (
-      <Flex align="center" className="filters" gap={10}>
+      <Flex align="center" className=" " gap={10}>
         {/* // ? sort by filter */}
-        <Flex className="filter" align="center">
-          <Text className="lebal">Resolve</Text>
-          <Select
+        <Flex className="" align="center">
+          <Menu
+            mode="vertical"
+            items={items}
+            onClick={onChangeHandler}
+            className="custom-select px-6 bg-[#E6F5FB] rounded-md"
+            triggerSubMenuAction={"click"}
+          />
+          {/* <Select
             defaultValue={""}
             suffixIcon={<ChevronDown />}
             className="custom-select w-fit"
             options={[
               {
-                value: "desc",
+                value: "refund",
                 label: "Refund to client",
               },
               {
-                value: "asc",
+                value: "release",
                 label: "Release worker's payment",
               },
             ]}
-            onChange={(value) => alert(value)}
-          />
+            onChange={(value) => onChangeHandler(value)}
+          /> */}
         </Flex>
       </Flex>
     );
@@ -160,11 +173,7 @@ const JobDetail = () => {
                 </Flex>
               )}
 
-              <Flex
-                align="center"
-                gap={""}
-                className="my-4 border-0 border-purple-900"
-              >
+              <Flex align="center" className="my-4 border-0 border-purple-900">
                 {jobDetailLoader ? (
                   <Skeleton.Avatar active size={64} shape={"circle"} />
                 ) : (
@@ -204,7 +213,7 @@ const JobDetail = () => {
                   <></>
                 </Skeleton.Node>
               ) : (
-                <ReactCarousel images={images} />
+                <ReactCarousel images={jobDetail?.images} />
               )}
             </Col>
 
@@ -328,36 +337,38 @@ const JobDetail = () => {
                         </Col>
                       )}
 
-                      {jobDetail?.status !== "open" && (
-                        <Col lg={8} md={12} sm={12} xs={24}>
-                          <Flex gap={10}>
-                            <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
-                              <Star size={20} className="text-gray-shade-1" />
+                      {jobDetail?.status !== "open" ||
+                        (jobDetail?.status !== "cancelled" && (
+                          <Col lg={8} md={12} sm={12} xs={24}>
+                            <Flex gap={10}>
+                              <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
+                                <Star size={20} className="text-gray-shade-1" />
+                              </Flex>
+                              <Flex vertical gap={0}>
+                                <Text className="text-black font-bold">
+                                  Rating
+                                </Text>
+                                <Text className="text-gray-shade-1">
+                                  {jobDetail?.review?.rating?.toFixed(1)}
+                                </Text>
+                              </Flex>
                             </Flex>
-                            <Flex vertical gap={0}>
-                              <Text className="text-black font-bold">
-                                Rating
-                              </Text>
-                              <Text className="text-gray-shade-1">
-                                {jobDetail?.review?.rating?.toFixed(1)}
-                              </Text>
-                            </Flex>
-                          </Flex>
-                        </Col>
-                      )}
+                          </Col>
+                        ))}
 
-                      {jobDetail?.status !== "open" && (
-                        <Col span={24}>
-                          <div className="flex flex-col">
-                            <Text className="font-bold text-lg !pb-0 !mb-0 px-3">
-                              Review
-                            </Text>
-                            <Text className="text-gray-shade-1 font-semibold px-3">
-                              {jobDetail?.review?.review}
-                            </Text>
-                          </div>
-                        </Col>
-                      )}
+                      {jobDetail?.status !== "open" ||
+                        (jobDetail?.status !== "cancelled" && (
+                          <Col span={24}>
+                            <div className="flex flex-col">
+                              <Text className="font-bold text-lg !pb-0 !mb-0 px-3">
+                                Review
+                              </Text>
+                              <Text className="text-gray-shade-1 font-semibold px-3">
+                                {jobDetail?.review?.review}
+                              </Text>
+                            </div>
+                          </Col>
+                        ))}
                     </Row>
                   </>
                 )}
@@ -409,7 +420,7 @@ const JobDetail = () => {
                               jobDetail?.worker?.successRate
                             )}
                           >
-                            {jobDetail?.worker?.successRate}%
+                            {jobDetail?.worker?.successRate?.toFixed(2)}%
                           </Tag>
                         </Flex>
                       </Flex>
@@ -463,41 +474,43 @@ const JobDetail = () => {
                     extra={<ActionComponent />}
                     className="my-4 rounded-lg card-head"
                   >
-                    <Row justify={"space-between"} gutter={[32, 12]}>
+                    <Row justify={"space-between"} gutter={[0, 12]}>
                       <Col span={12}>
-                        <Title level={5}>Worker</Title>
+                        <Title level={4}>Worker</Title>
 
-                        <Row>
-                          <Text>Proof of Work:</Text>
-                          <Text>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Numquam quaerat ratione vel veniam incidunt.
+                        <Col>
+                          <Text className="text-gray-shade-1 font-semibold text-[15px]">
+                            Proof of Work:
                           </Text>
+                          <Flex vertical>
+                            <Text>{jobDetail?.proofOfWork?.description}</Text>
 
-                          <Link
-                            onClick={() => {
-                              setModalImgs(pow);
-                              setModalOpen(true);
-                            }}
-                            className="font-semibold"
-                            style={{ color: "#1677ff" }}
-                          >
-                            View images
-                          </Link>
-                        </Row>
+                            <Link
+                              onClick={() => {
+                                setModalImgs(jobDetail?.proofOfWork?.images);
+                                setModalOpen(true);
+                              }}
+                              className="font-semibold"
+                              style={{ color: "#1677ff" }}
+                            >
+                              View images
+                            </Link>
+                          </Flex>
+                        </Col>
                       </Col>
                       <Col span={12}>
-                        <Title level={5}>Customer</Title>
-                        <Row>
-                          <Text>Reason:</Text>
-                          <Text>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Numquam quaerat ratione vel veniam incidunt.
+                        <Title level={4}>Customer</Title>
+                        <Flex vertical>
+                          <Text className="text-gray-shade-1 font-semibold text-[15px]">
+                            Reason:
                           </Text>
-
+                          <Text>{jobDetail?.disputedDetails?.description}</Text>
+                          {console.log("modalImgs", jobDetail?.disputedDetails)}
                           <Link
                             onClick={() => {
-                              setModalImgs(pow);
+                              setModalImgs(
+                                jobDetail?.disputedDetails?.proofOfWork
+                              );
                               setModalOpen(true);
                             }}
                             className="font-semibold"
@@ -505,7 +518,7 @@ const JobDetail = () => {
                           >
                             View images
                           </Link>
-                        </Row>
+                        </Flex>
                       </Col>
                     </Row>
                   </Card>
@@ -521,16 +534,14 @@ const JobDetail = () => {
         handleCancel={handleCancel}
         component={
           <>
-            <Text className="font-bold text-lg">Proof of work</Text>
-
             {/* Images */}
-            <Row gutter={[16, 16]}>
+            <Row gutter={[16, 16]} className="mb-3 mt-8">
               {modalImgs?.map((img, index) => (
                 <Col key={index} lg={8} md={8} sm={12} xs={12}>
                   <Image
                     width={150}
                     height={150}
-                    src={img}
+                    src={baseURL + img}
                     fallback={""}
                     style={{
                       borderRadius: "8px",

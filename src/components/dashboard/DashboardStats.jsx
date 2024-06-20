@@ -48,7 +48,6 @@ const DashboardStats = () => {
     fetchRecentJobs();
   }, []);
 
-  console.log("job", recentJobs);
   return (
     <Flex vertical className="dashboard-stats" gap={45}>
       {/* // ? stats ccards */}
