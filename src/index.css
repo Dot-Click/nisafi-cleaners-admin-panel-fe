@@ -54,7 +54,7 @@
 .hide-tooltip .ant-tooltip {
   display: none !important;
 }
-.ant-tooltip-inner {
+.ant-tooltip-inner {   
   display: none !important;
 }
 .ant-upload-list-item-name {

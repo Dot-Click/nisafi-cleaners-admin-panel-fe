@@ -78,7 +78,7 @@ const DashboardStats = () => {
         </Col>
       </Flex>
 
-      {/* // ? recent orders */}
+      {/* // ? recent jobs */}
       <Flex vertical className="recent-orders-section" gap={15}>
         <Flex justify="space-between" gap={20}>
           <Title level={3}>Recent Jobs</Title>

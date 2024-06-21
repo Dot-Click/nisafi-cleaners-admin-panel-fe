@@ -147,18 +147,20 @@ const JobDetail = () => {
                       <span className="font-bold text-[22px] !mb-0">
                         {jobDetail?.type}
                       </span>
-                      {jobDetail?.tags?.length > 0 && (
-                        <span className="font-semibold text-gray-shade-1 text-md !mb-0">
-                          {jobDetail?.tags?.[0]
-                            .split(",")
-                            .map((i) => "#" + i.trim())
-                            .join(" ")}
-                        </span>
-                      )}
+                      {Array.isArray(jobDetail?.tags) &&
+                        jobDetail?.tags.length > 0 &&
+                        jobDetail?.tags[0].trim() !== "" && (
+                          <span className="font-semibold text-gray-shade-1 text-md !mb-0">
+                            {jobDetail?.tags?.[0]
+                              .split(",")
+                              .map((i) => "#" + i.trim())
+                              .join(" ")}
+                          </span>
+                        )}
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-shade-1 font-semibold">
-                        {getTimeFromNow(JobDetail?.createdAt)}
+                        {getTimeFromNow(jobDetail?.createdAt)}
                       </span>
                     </div>
                   </div>
@@ -177,13 +179,10 @@ const JobDetail = () => {
                 {jobDetailLoader ? (
                   <Skeleton.Avatar active size={64} shape={"circle"} />
                 ) : (
-                  <Image
-                    src={avatarUrl}
-                    fallback={`https://placehold.co/180x180/3A779B/white?text=${capitalizeFirstLetter(
-                      jobDetail?.user?.name?.charAt(0)
-                    )}`}
-                    className="rounded-full !size-16"
-                    preview={false}
+                  <CustomAvatar
+                    imgUrl={jobDetail?.user?.profilePic}
+                    name={jobDetail?.user?.name}
+                    size={48}
                   />
                 )}
                 <Flex className="px-4" vertical>
@@ -236,7 +235,7 @@ const JobDetail = () => {
                   <Skeleton active />
                 ) : (
                   <Text className="text-gray-shade-1 font-semibold !w-full">
-                    {jobDetail?.description}
+                    {capitalizeFirstLetter(jobDetail?.description)}
                   </Text>
                 )}
               </Card>
@@ -337,8 +336,9 @@ const JobDetail = () => {
                         </Col>
                       )}
 
-                      {jobDetail?.status !== "open" ||
-                        (jobDetail?.status !== "cancelled" && (
+                      {jobDetail?.status != "open" &&
+                        jobDetail?.status != "cancelled" &&
+                        jobDetail?.status !== "disputed" && (
                           <Col lg={8} md={12} sm={12} xs={24}>
                             <Flex gap={10}>
                               <Flex className="p-3 bg-[#f9fafb] rounded-full items-center justify-center">
@@ -354,10 +354,11 @@ const JobDetail = () => {
                               </Flex>
                             </Flex>
                           </Col>
-                        ))}
+                        )}
 
-                      {jobDetail?.status !== "open" ||
-                        (jobDetail?.status !== "cancelled" && (
+                      {jobDetail?.status !== "open" &&
+                        jobDetail?.status !== "cancelled" &&
+                        jobDetail?.status !== "disputed" && (
                           <Col span={24}>
                             <div className="flex flex-col">
                               <Text className="font-bold text-lg !pb-0 !mb-0 px-3">
@@ -368,7 +369,7 @@ const JobDetail = () => {
                               </Text>
                             </div>
                           </Col>
-                        ))}
+                        )}
                     </Row>
                   </>
                 )}

@@ -13,10 +13,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Gear from "../../assets/icons/Gear";
 import Bell from "../../assets/icons/Bell";
-import { trimString } from "../../services/helpers";
 import { useAuthStore } from "../../stores/authStore";
 import { useShallow } from "zustand/react/shallow";
-import { UserRound } from "lucide-react";
 import { baseURL } from "../../configs/axiosConfig";
 import CustomAvatar from "../common/CustomAvatar";
 
@@ -94,7 +92,7 @@ const Navbar = ({ isOpened, setOpened }) => {
         {/* // ? avatar and username */}
         <Flex align="center">
           <CustomAvatar
-            size={56}
+            size={48}
             imgUrl={baseURL + user?.userData?.profilePic}
             name={user?.userData?.name}
           />

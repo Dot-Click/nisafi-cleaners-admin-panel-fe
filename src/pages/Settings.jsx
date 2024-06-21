@@ -226,7 +226,7 @@ const PasswordField = () => {
       <Modal
         open={isModalOpened}
         okText={"Update"}
-        okButtonProps={{ className: "save-btn", loading: loading }}
+        okButtonProps={{ className: "primary-btn h-[40px]", loading: loading }}
         cancelButtonProps={{ className: "grey-btn" }}
         onOk={async () => {
           if (
