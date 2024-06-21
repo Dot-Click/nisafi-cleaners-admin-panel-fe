@@ -21,7 +21,7 @@ import {
   getTimeFromNow,
   successRateColors,
 } from "../utils";
-import { avatarUrl, baseURL } from "../configs/axiosConfig";
+import { baseURL } from "../configs/axiosConfig";
 import { useTablet } from "../services/hooks/mediaquery";
 import { Link, useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";

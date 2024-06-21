@@ -23,8 +23,7 @@
 }
 
 .ant-tabs-tab-btn {
-  color: "#6BC3E6" !important;
-  /* other styles */
+  color: "#6BC3E6" !important; 
 }
 
 .card-head .ant-card-head {
@@ -32,8 +31,7 @@
   color: #fff;
   font-size: bold;
 }
-.custom-select .ant-select-selector {
-  /* min-width: auto !important; */
+.custom-select .ant-select-selector { 
   padding: 18px 90px !important;
 }
 
@@ -46,15 +44,14 @@
   color: #0ba8d8 !important;
   border-color: #0ba8d8 !important;
 }
-.ant-btn-default:hover {
-  /* color: #0ba8d8 !important; */
+.ant-btn-default:hover { 
   border-color: #0ba8d8 !important;
 }
 
 .hide-tooltip .ant-tooltip {
   display: none !important;
 }
-.ant-tooltip-inner {   
+.ant-tooltip-inner {
   display: none !important;
 }
 .ant-upload-list-item-name {
