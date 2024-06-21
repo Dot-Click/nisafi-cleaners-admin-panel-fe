@@ -15,23 +15,23 @@ export const useDashboardStore = create((set) => ({
   recentJobsLoader: false,
   generalStatsLoader: false,
 
-  fetchJobStats: async (yearRange = 2024) => {
+  fetchJobStats: async (yearRange) => {
     try {
       set({
         jobStatsLoader: true,
       });
 
       attachToken();
-      const res = await custAxios.get(`/admin/dashboardStats`, {
+      const res = await custAxios.get(`/admin/jobStats`, {
         params: { yearRange },
       });
 
       if (res?.data?.success) {
         set({
           jobStatsLoader: false,
-          totalJobs: res?.data?.data?.totalJobsGraph,
-          disputedJobs: res?.data?.data?.disputedJobsGraph,
-          completedJobs: res?.data?.data?.completedJobsGraph,
+          totalJobs: res?.data?.data?.jobsByMonth,
+          disputedJobs: res?.data?.data?.disputedJobsByMonth,
+          completedJobs: res?.data?.data?.completedJobsByMonth,
         });
       }
       return true;
@@ -50,6 +50,7 @@ export const useDashboardStore = create((set) => ({
         recentJobsLoader: true,
       });
       attachToken();
+
       const res = await custAxios.get(`/admin/recentjobs`);
       if (res?.data?.success) {
         set({
@@ -87,29 +88,6 @@ export const useDashboardStore = create((set) => ({
     } catch (error) {
       set({
         generalStatsLoader: false,
-      });
-      console.error(error);
-      errorMessage(error?.response?.data?.message);
-    }
-  },
-  fetchJobStats1: async () => {
-    try {
-      set({
-        // recentJobsLoader: true,
-      });
-      attachToken();
-      const res = await custAxios.get(`/admin/jobStats`);
-      if (res?.data?.success) {
-        console.log("fetchJobStats", res?.data?.data);
-        set({
-          // recentJobs: res?.data?.data,
-          // recentJobsLoader: false,
-        });
-      }
-      return true;
-    } catch (error) {
-      set({
-        // recentJobsLoader: false,
       });
       console.error(error);
       errorMessage(error?.response?.data?.message);

@@ -49,18 +49,14 @@ const DashboardStats = () => {
   } = useDashboardStore(useShallow((state) => state));
 
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [status, setStatus] = useState("total");
+  const [status, setStatus] = useState("thisYear");
 
   useEffect(() => {
-    fetchJobStats(selectedYear);
-  }, [selectedYear]);
+    fetchJobStats(status);
+  }, [status]);
 
   useEffect(() => {
     fetchRecentJobs();
-  }, []);
-
-  useEffect(() => {
-    fetchJobStats1();
     fetchGeneralStats();
   }, []);
 
@@ -141,8 +137,6 @@ const DashboardStats = () => {
               totalJobs={totalJobs}
               disputedJobs={disputedJobs}
               completedJobs={completedJobs}
-              selectedYear={selectedYear}
-              setSelectedYear={setSelectedYear}
               status={status}
               setStatus={setStatus}
             />

@@ -17,16 +17,43 @@ const JobChart = ({
   totalJobs,
   disputedJobs,
   completedJobs,
-  selectedYear,
-  setSelectedYear,
   status,
   setStatus,
 }) => {
+  const totalStats = totalJobs?.map((i) => ({
+    x: i?.month,
+    y: i?.count,
+  }));
+  const disputedStats = disputedJobs?.map((i) => ({
+    x: i?.month,
+    y: i?.count,
+  }));
+  const completedStats = completedJobs?.map((i) => ({
+    x: i?.month,
+    y: i?.count,
+  }));
+  const dataSet = [
+    // Data for Product A
+    totalStats,
+    disputedStats,
+    completedStats,
+  ];
   const [chartConfig, setChartConfig] = useState({
     series: [
       {
-        name: "Jobs",
-        data: [],
+        name: "Total Jobs",
+        data: dataSet[0],
+        color: "#59B2DE",
+      },
+      {
+        name: "Completed Jobs",
+        data: dataSet[1],
+        color: "#DA9747",
+      },
+      {
+        name: "Disputed Jobs",
+        data: dataSet[2],
+        color: "red",
       },
     ],
     options: {
@@ -64,40 +91,15 @@ const JobChart = ({
     },
   });
 
-  const updateChartData = () => {
-    let data = [];
-    if (status === "total") {
-      data = totalJobs?.map((val) => val?.totalJobs) || [];
-    } else if (status === "completed") {
-      data = completedJobs?.map((val) => val?.completedJobs) || [];
-    } else if (status === "disputed") {
-      data = disputedJobs?.map((val) => val?.disputedJobs) || [];
-    }
-
-    setChartConfig((prevConfig) => ({
-      ...prevConfig,
-      series: [
-        {
-          name: "Jobs",
-          data: data,
-        },
-      ],
-    }));
-  };
-
-  useEffect(() => {
-    updateChartData();
-  }, [totalJobs, disputedJobs, completedJobs, status, selectedYear]);
-
-  const handleStatus = (value) => {
-    console.log("value", value);
-    setStatus(value);
-  };
   const yearHandler = (date) => {
     console.log("date", date?.$y);
     setSelectedYear(date?.year());
   };
 
+  const handleStatus = (value) => {
+    console.log("value", value);
+    setStatus(value);
+  };
   return (
     <Flex vertical className="daily-sales-stats">
       <Flex
@@ -106,41 +108,34 @@ const JobChart = ({
         align="flex-start"
         className="daily-sales-chart-container"
       >
-        {/* // ? Chart title and sales period date range */}
-        <Flex vertical className="daily-sales-chart-header">
-          <Title level={3}>Job Stats</Title>
-          {/* // ? how many days data filter */}
-          <Row className="">
-            <Select
-              className="border-[1px] rounded-md w-fit !text-sm"
-              defaultValue={status}
-              onChange={handleStatus}
-              options={[
-                {
-                  value: "total",
-                  label: "Total Jobs",
-                },
-                {
-                  value: "completed",
-                  label: "Completed Jobs",
-                },
-                {
-                  value: "disputed",
-                  label: "Disputed Jobs",
-                },
-              ]}
-            />
-          </Row>
-        </Flex>
-
-        <DatePicker onChange={yearHandler} picker="year" />
+        <Row className="">
+          <Select
+            className="border-[1px] rounded-md w-fit !text-sm"
+            defaultValue={status}
+            onChange={handleStatus}
+            options={[
+              {
+                value: "thisYear",
+                label: "This Year",
+              },
+              {
+                value: "lastYear",
+                label: "Last Year",
+              },
+              {
+                value: "last3Year",
+                label: "Last 3 Year",
+              },
+            ]}
+          />
+        </Row>
       </Flex>
 
       {/* // ? the chart */}
       <ReactApexChart
         options={chartConfig.options}
         series={chartConfig.series}
-        type="line"
+        type="area"
         height={340}
       />
     </Flex>
