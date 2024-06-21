@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const baseURL = "https://nisafi-staging.up.railway.app";
-// export const baseURL = "http://192.168.100.16:8002";
- 
+// export const baseURL = "https://nisafi-staging.up.railway.app";
+export const baseURL = "http://192.168.100.16:8002";
+
 // axios instance for json data
 const custAxios = axios.create({
   baseURL: baseURL,

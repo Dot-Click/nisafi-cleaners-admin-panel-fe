@@ -1,45 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
-import {
-  Col,
-  Flex,
-  Input,
-  Modal,
-  Row,
-  Select,
-  Tag,
-  Typography,
-  Tabs,
-} from "antd";
+import { Col, Flex, Input, Modal, Row, Select, Tag, Typography } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import ChevronDown from "../assets/icons/ChevronDown";
-import NestedTable from "../components/table/NestedTable";
-import CustomAvatar from "../components/common/CustomAvatar";
-import { baseURL } from "../configs/axiosConfig";
-import { useShallow } from "zustand/react/shallow";
-import { useUserManagementStore } from "../stores/userManagementStore";
-import { formatPrice } from "../utils";
 
 const { Text } = Typography;
 
 const PaymentDetails = () => {
   const [record, setRecord] = useState(null);
-  const [role, setrole] = useState("worker");
-  const [filter, setFilter] = useState("desc");
-  const [activeTab, setActiveTab] = useState("1");
   const [isDetailsModalOpened, setDetailsModalOpen] = useState(false);
 
-  const {
-    // func
-    fetchPaymentDetail,
-    // data
-    paymentList,
-    // loaders
-    payementListLoader,
-  } = useUserManagementStore(useShallow((state) => state));
-
-  console.log("paymentList", paymentList);
   const handleViewDetails = (data) => {
     try {
       setRecord(data);
@@ -47,9 +18,6 @@ const PaymentDetails = () => {
     } catch (error) {
       console.error(error);
     }
-  };
-  const handleSort = (value) => {
-    setFilter(value);
   };
 
   const handleCloseDetailsModal = () => {
@@ -60,64 +28,70 @@ const PaymentDetails = () => {
       console.error(error);
     }
   };
-  const handleTabChange = (key) => {
-    if (key === "1") {
-      setrole("worker");
-    } else {
-      setrole("client");
-    }
-    // setCurrentPage(1);
-    setFilter("desc");
-    setActiveTab(key);
-  };
-  const handleSearch = async (e) => {
-    console.log(e.target.value);
-  };
-
-  const onChange = async (e) => {
-    if (e.target.value === "") {
-      console.log("onChange Run");
-    }
-  };
-
-  useEffect(() => {
-    fetchPaymentDetail(role);
-  }, [role]);
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (_, { user }) => (
-        <Flex gap={10} align="center" className="w-[150px]">
-          <CustomAvatar
-            size={40}
-            imgUrl={baseURL + user?.profilePic}
-            name={user?.name}
-          />
-
-          <Text>{user?.name}</Text>
-        </Flex>
+      title: "Transaction ID",
+      dataIndex: "transactionId",
+      key: "transactionId",
+    },
+    {
+      title: "Customer Name",
+      dataIndex: "customerName",
+      key: "customerName",
+    },
+    {
+      title: "Worker Name",
+      dataIndex: "workerName",
+      key: "workerName",
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+      render: (_, { amount }) => (
+        <Text className="amount">${amount?.toFixed(2)}</Text>
       ),
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      render: (_, { user }) => <Text>{user?.email}</Text>,
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+      render: (_, { date }) => (
+        <Text className="date">{moment(date).format("YYYY-MM-DD")}</Text>
+      ),
     },
     {
-      title: "No of Transations",
-      dataIndex: "transactions",
-      key: "transactions",
-      render: (_, { transactions }) => <Text>{transactions?.length}</Text>,
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_, { status }) => (
+        <Tag
+          color={
+            status === "Cancelled"
+              ? "red"
+              : status === "Paid"
+              ? "green"
+              : "gold"
+          }
+          key={status}
+          className="status"
+        >
+          {status}
+        </Tag>
+      ),
     },
     {
-      title: "Balance",
-      dataIndex: "balance",
-      key: "balance",
-      render: (_, { balance }) => <Text>{formatPrice(balance)}</Text>,
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Text
+          onClick={() => handleViewDetails(record)}
+          className="cursor-pointer d-flex text-center view-details-btn"
+        >
+          View Detail
+        </Text>
+      ),
     },
   ];
 
@@ -174,83 +148,67 @@ const PaymentDetails = () => {
     },
   ];
 
-  const handleExpandedRowsChange = (expendedRows) => {
-    console.log("Expanded rows changed:", expendedRows);
-  };
-
-  const FiltersComponents = () => {
-    return (
+  return (
+    <Row className=" d-block user-management-container payment-details-container">
       <Row className="search-box" justify="space-between">
         <Input
           className="search-input"
           size="large"
           placeholder="Search..."
-          onPressEnter={handleSearch}
-          onChange={onChange}
           prefix={<SearchOutlined />}
         />
 
+        {/* // ? filters */}
         <Flex align="center" className="filters" gap={10}>
           {/* // ? sort by filter */}
           <Flex className="filter" align="center">
             <Text className="lebal">Sort By:</Text>
             <Select
-              defaultValue={filter}
-              onChange={handleSort}
+              defaultValue="newest"
               suffixIcon={<ChevronDown />}
               options={[
                 {
-                  value: "desc",
+                  value: "newest",
                   label: "Newest",
                 },
                 {
-                  value: "asc",
+                  value: "oldest",
                   label: "Oldest",
+                },
+              ]}
+            />
+          </Flex>
+
+          {/* // ? sort by filter */}
+          <Flex className="filter" align="center">
+            <Text className="lebal">Status:</Text>
+            <Select
+              defaultValue="all"
+              suffixIcon={<ChevronDown />}
+              options={[
+                {
+                  value: "all",
+                  label: "All",
+                },
+                {
+                  value: "in escrow",
+                  label: "In Escrow",
+                },
+                {
+                  value: "paid",
+                  label: "Paid",
+                },
+                {
+                  value: "cancelled",
+                  label: "Cancelled",
                 },
               ]}
             />
           </Flex>
         </Flex>
       </Row>
-    );
-  };
 
-  return (
-    <Row className=" d-block user-management-container payment-details-container">
-      <Tabs
-        defaultActiveKey="1"
-        activeKey={activeTab}
-        onChange={handleTabChange}
-        className="px-4"
-        tabBarStyle={{
-          color: "red !important",
-        }}
-        style={{
-          color: "red !important",
-        }}
-        popupClassName="text-red-500"
-      >
-        <Tabs.TabPane tab={<span className="flex gap-2">Worker</span>} key="1">
-          <FiltersComponents />
-
-          <NestedTable
-            columns={columns}
-            data={paymentList}
-            // expandedRowRender={expandedRowRender}
-          />
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={<span className="flex gap-2">Customer</span>}
-          key="2"
-        >
-          <FiltersComponents />
-          <NestedTable
-            columns={columns}
-            data={paymentList}
-            // expandedRowRender={expandedRowRender}
-          />
-        </Tabs.TabPane>
-      </Tabs>
+      <GeneralTable columns={columns} data={data} />
 
       <PaymentDetailModal
         opened={isDetailsModalOpened}

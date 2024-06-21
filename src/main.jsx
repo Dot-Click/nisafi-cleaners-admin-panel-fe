@@ -7,8 +7,7 @@ import { Toaster } from "sonner";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <App>
     <Toaster richColors />
-    <App />
-  </React.StrictMode>
+  </App>
 );

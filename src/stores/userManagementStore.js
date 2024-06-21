@@ -10,11 +10,14 @@ import { successMessage, errorMessage } from "../services/helpers";
 export const useUserManagementStore = create((set) => ({
   userDetail: {},
   userList: [],
+  paymentList: [],
+
   pagesCount: 0,
   // loaders
   usersLoader: false,
   userDetailLoader: false,
   approvalLoader: false,
+  payementListLoader: false,
 
   fetchUsers: async (role, page, search, sort) => {
     try {
@@ -95,6 +98,36 @@ export const useUserManagementStore = create((set) => ({
     } catch (error) {
       set({
         approvalLoader: false,
+      });
+      console.error(error);
+      errorMessage(error?.response?.data?.message);
+    }
+  },
+
+  fetchPaymentDetail: async (role) => {
+    try {
+      set({
+        payementListLoader: true,
+      });
+
+      const queryParams = {
+        role,
+      };
+      attachToken();
+      const res = await custAxios.get(`/admin/getWallets`, {
+        params: queryParams,
+      });
+      console.log("ressss", res?.data?.data);
+      if (res?.data?.success) {
+        set({
+          payementListLoader: false,
+          paymentList: res?.data?.data,
+        });
+      }
+      return true;
+    } catch (error) {
+      set({
+        payementListLoader: false,
       });
       console.error(error);
       errorMessage(error?.response?.data?.message);

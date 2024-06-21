@@ -40,14 +40,14 @@ const Settings = () => {
                 type={isSelectedProfile ? "primary" : "dashed"}
                 className={`${isSelectedProfile ? "primary-btn" : ""} w-[80%]`}
               >
-                profile setting
+                Profile settings
               </Button>
               <Button
                 onClick={() => setSelectedProfile(false)}
                 type={!isSelectedProfile ? "primary" : "dashed"}
                 className={`${!isSelectedProfile ? "primary-btn" : ""} w-[80%]`}
               >
-                banner setting
+                Banner settings
               </Button>
             </Flex>
           </Col>
@@ -309,7 +309,8 @@ const UpdateProfileImage = (props) => {
       uid: "-1",
       name: "user-avatar.png",
       status: "done",
-      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+      url:
+        "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
     },
   ]);
 
