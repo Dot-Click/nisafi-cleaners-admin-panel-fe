@@ -27,14 +27,22 @@ const DashboardStats = () => {
     //  func
     fetchRecentJobs,
     fetchJobStats,
+    fetchJobStats1,
+    fetchGeneralStats,
     // data
     totalJobs,
     disputedJobs,
     completedJobs,
     recentJobs,
+
+    totalJobsCount,
+    totalWorkersCount,
+    totalClientsCount,
+
     // loader
     jobStatsLoader,
     recentJobsLoader,
+    generalStatsLoader,
   } = useDashboardStore(useShallow((state) => state));
 
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -48,13 +56,21 @@ const DashboardStats = () => {
     fetchRecentJobs();
   }, []);
 
+  useEffect(() => {
+    fetchJobStats1();
+    fetchGeneralStats();
+  }, []);
+
   return (
     <Flex vertical className="dashboard-stats" gap={45}>
       {/* // ? stats ccards */}
       <Row className="stats-cards">
-        {dashboardStats?.map((stat, i) => {
+        {/* {dashboardStats?.map((stat, i) => {
           return <StatCard stat={stat} key={i} />;
-        })}
+          })} */}
+        <StatCard stat={totalJobsCount} />
+        <StatCard stat={totalWorkersCount} />
+        <StatCard stat={totalClientsCount} />
       </Row>
 
       {/* // ? sales and balance stats */}
@@ -114,134 +130,6 @@ const DashboardStats = () => {
         </Row>
       </Flex>
     </Flex>
-  );
-};
-
-const StatCard = ({ stat }) => {
-  const difference = stat?.data - stat?.previousData;
-  const [chartConfig] = useState({
-    series: [
-      {
-        name: stat?.title,
-        data: stat?.chartData,
-      },
-    ],
-    options: {
-      colors: [
-        difference > 20 ? "#0CCB93" : difference < 0 ? "#F56060" : "#0BA8D8",
-      ],
-      chart: {
-        type: "line",
-        toolbar: {
-          show: false,
-        },
-        width: 80,
-        height: 70,
-      },
-      tooltip: {
-        fixed: {
-          enabled: false,
-        },
-        marker: {
-          show: false,
-        },
-      },
-      grid: {
-        padding: {
-          left: 0,
-          right: 0,
-        },
-        show: true,
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      xaxis: {
-        show: false,
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        labels: {
-          show: false,
-        },
-      },
-      stroke: {
-        width: [1, 2, 3],
-        curve: "smooth",
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "light",
-          gradientToColors: [
-            difference > 20
-              ? "#0CCB93"
-              : difference < 0
-              ? "#F56060"
-              : "#0BA8D8",
-          ],
-          shadeIntensity: 1,
-          type: "horizontal",
-          opacityFrom: 0.5,
-          opacityTo: 1,
-          stops: [0, 100, 100, 100],
-        },
-      },
-    },
-  });
-
-  return (
-    <Col
-      flex={1}
-      className={`stats-card ${
-        difference > 20 ? "green" : difference < 0 ? "red" : "blue"
-      }`}
-    >
-      <Flex justify="space-between" className="w-100">
-        <Flex vertical>
-          <Title level={2}>
-            {stat?.type === "revenue" ? "$" : ""}
-            {stat?.data}
-          </Title>
-          <Text>{stat?.title}</Text>
-        </Flex>
-
-        <Flex className="icon" justify="center" align="center">
-          <stat.icon
-            fill={
-              difference > 20
-                ? "#0CCB93"
-                : difference < 0
-                ? "#F56060"
-                : "#0BA8D8"
-            }
-          />
-        </Flex>
-      </Flex>
-
-      <ReactApexChart
-        options={chartConfig?.options}
-        series={chartConfig?.series}
-        type="line"
-        height={70}
-        width={80}
-      />
-    </Col>
   );
 };
 

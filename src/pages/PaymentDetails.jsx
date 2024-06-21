@@ -121,63 +121,6 @@ const PaymentDetails = () => {
     },
   ];
 
-  const data = [
-    {
-      transactionId: "TRX123456789",
-      transactionNote: "Cloth Washing",
-      customerName: "Jane Doe",
-      workerName: "John Doe",
-      amount: 100,
-      releaseDate: new Date(),
-      date: new Date(),
-      status: "In Escrow",
-    },
-    {
-      transactionId: "TRX123456789",
-      transactionNote: "Dry Clean",
-      customerName: "Jane Smith",
-      workerName: "Smith Black",
-      amount: 100,
-      releaseDate: new Date(),
-      date: new Date(),
-      status: "Paid",
-    },
-    {
-      transactionId: "TRX123456789",
-      transactionNote: "Deep Clean",
-      customerName: "Johnson Brown",
-      workerName: "Loki Wright",
-      amount: 100,
-      releaseDate: new Date(),
-      date: new Date(),
-      status: "Cancelled",
-    },
-    {
-      transactionId: "TRX123456789",
-      transactionNote: "Cloth Washing",
-      customerName: "Jane Doe",
-      workerName: "John Doe",
-      amount: 100,
-      releaseDate: new Date(),
-      date: new Date(),
-      status: "Paid",
-    },
-    {
-      transactionId: "TRX123456789",
-      transactionNote: "Cloth Washing",
-      customerName: "Jane Doe",
-      workerName: "John Doe",
-      amount: 100,
-      releaseDate: new Date(),
-      date: new Date(),
-      status: "Paid",
-    },
-  ];
-
-  const handleExpandedRowsChange = (expendedRows) => {
-    console.log("Expanded rows changed:", expendedRows);
-  };
-
   const FiltersComponents = () => {
     return (
       <Row className="search-box" justify="space-between">
@@ -189,28 +132,6 @@ const PaymentDetails = () => {
           onChange={onChange}
           prefix={<SearchOutlined />}
         />
-
-        <Flex align="center" className="filters" gap={10}>
-          {/* // ? sort by filter */}
-          <Flex className="filter" align="center">
-            <Text className="lebal">Sort By:</Text>
-            <Select
-              defaultValue={filter}
-              onChange={handleSort}
-              suffixIcon={<ChevronDown />}
-              options={[
-                {
-                  value: "desc",
-                  label: "Newest",
-                },
-                {
-                  value: "asc",
-                  label: "Oldest",
-                },
-              ]}
-            />
-          </Flex>
-        </Flex>
       </Row>
     );
   };
@@ -236,7 +157,7 @@ const PaymentDetails = () => {
           <NestedTable
             columns={columns}
             data={paymentList}
-            // expandedRowRender={expandedRowRender}
+            loading={payementListLoader}
           />
         </Tabs.TabPane>
         <Tabs.TabPane
@@ -247,7 +168,7 @@ const PaymentDetails = () => {
           <NestedTable
             columns={columns}
             data={paymentList}
-            // expandedRowRender={expandedRowRender}
+            loading={payementListLoader}
           />
         </Tabs.TabPane>
       </Tabs>
