@@ -19,6 +19,9 @@ import { useDashboardStore } from "../../stores/dashboardStore";
 import { MapPin } from "lucide-react";
 import RecentJobCard from "./RecentJobCard";
 import JobChart from "./JobChart";
+import StatsCard from "./StatsCard";
+import { FaUserTie, FaBriefcase, FaUserAstronaut } from "react-icons/fa";
+import { statsColorHandler } from "../../utils/index";
 
 const { Text, Title } = Typography;
 
@@ -65,12 +68,65 @@ const DashboardStats = () => {
     <Flex vertical className="dashboard-stats" gap={45}>
       {/* // ? stats ccards */}
       <Row className="stats-cards">
-        {/* {dashboardStats?.map((stat, i) => {
-          return <StatCard stat={stat} key={i} />;
-          })} */}
-        <StatCard stat={totalJobsCount} />
-        <StatCard stat={totalWorkersCount} />
-        <StatCard stat={totalClientsCount} />
+        {false ? (
+          <Flex className="w-full">
+            <Skeleton active className="  h-[150px] ">
+              <Col
+                xxl={6}
+                lg={12}
+                sm={24}
+                md={12}
+                xs={24}
+                flex={1}
+                className={`stats-card `}
+              ></Col>
+            </Skeleton>
+            <Skeleton active className="  h-[150px] ">
+              <Col
+                xxl={6}
+                lg={12}
+                sm={24}
+                md={12}
+                xs={24}
+                flex={1}
+                className={`stats-card `}
+              ></Col>
+            </Skeleton>
+            <Skeleton active className="  h-[150px] ">
+              <Col
+                xxl={6}
+                lg={12}
+                sm={24}
+                md={12}
+                xs={24}
+                flex={1}
+                className={`stats-card `}
+              ></Col>
+            </Skeleton>
+          </Flex>
+        ) : (
+          <>
+            <StatsCard
+              type={"jobs"}
+              title={"Total Job Posts"}
+              count={totalJobsCount}
+              icon={<FaBriefcase fill={statsColorHandler("jobs")} />}
+            />
+            <StatsCard
+              type={"workers"}
+              title={"Total Workers"}
+              count={totalWorkersCount}
+              Icon1={Worker}
+              icon={<FaUserTie fill={statsColorHandler("workers")} />}
+            />
+            <StatsCard
+              type={"revenue"}
+              title={"Total Clients"}
+              count={totalClientsCount}
+              icon={<FaUserAstronaut fill={statsColorHandler("revenue")} />}
+            />
+          </>
+        )}
       </Row>
 
       {/* // ? sales and balance stats */}

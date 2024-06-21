@@ -28,6 +28,7 @@
   border-width: 1px;
   border-style: solid;
   font-family: Poppins;
+  height: 150px;
 }
 .dashboard-stats-container .stats-cards .stats-card .icon {
   width: 40px;
