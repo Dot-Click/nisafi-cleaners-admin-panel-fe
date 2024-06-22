@@ -85,3 +85,29 @@ export const workerStatusColorHandler = (status) => {
       break;
   }
 };
+
+export const checkRole = (message) => {
+  const split = message.split(" ");
+  let role;
+  if (split[1] === "client,") {
+    role = "client";
+  } else {
+    role = "worker";
+  }
+  return role;
+};
+
+export const notifcationUrlHandler = (type, link) => {
+  switch (type) {
+    case "job":
+      return `/dashboard/jobs/details/${link}`;
+
+    case "idDocs":
+      return `/dashboard/user/worker-info/${link}`;
+    case "register":
+      return `/dashboard/user/management`;
+
+    default:
+      break;
+  }
+};

@@ -117,11 +117,10 @@ export const useUserManagementStore = create((set) => ({
       const res = await custAxios.get(`/admin/getWallets`, {
         params: queryParams,
       });
-      console.log("ressss", res?.data?.data);
       if (res?.data?.success) {
         set({
           payementListLoader: false,
-          paymentList: res?.data?.data,
+          paymentList: res?.data?.data?.wallets,
         });
       }
       return true;

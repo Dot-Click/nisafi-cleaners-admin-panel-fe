@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Flex,
@@ -10,13 +10,15 @@ import {
   Button,
 } from "antd";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Gear from "../../assets/icons/Gear";
 import Bell from "../../assets/icons/Bell";
 import { useAuthStore } from "../../stores/authStore";
 import { useShallow } from "zustand/react/shallow";
 import { baseURL } from "../../configs/axiosConfig";
 import CustomAvatar from "../common/CustomAvatar";
+import { useDashboardStore } from "../../stores/dashboardStore";
+import { checkRole, getTimeFromNow, notifcationUrlHandler } from "../../utils";
 
 const { Text } = Typography;
 
@@ -58,6 +60,8 @@ const Navbar = ({ isOpened, setOpened }) => {
     },
   ];
 
+  const { unReadCount } = useDashboardStore(useShallow((state) => state));
+  console.log(unReadCount, "from nav");
   useEffect(() => {
     const pageTitle = pagesName.find((val) => val.path === pathname);
     if (pageTitle && pageTitle.label) {
@@ -110,7 +114,9 @@ const Navbar = ({ isOpened, setOpened }) => {
               placement="bottom"
             >
               <Flex className="cursor-pointer">
-                <Bell />
+                <Badge count={unReadCount} overflowCount={10} offset={[0, -8]}>
+                  <Bell />
+                </Badge>
               </Flex>
             </Popover>
             <Gear />
@@ -122,121 +128,69 @@ const Navbar = ({ isOpened, setOpened }) => {
 };
 
 const NotificationsPopover = () => {
-  const onChange = (key) => {
-    // console.log(key);
-  };
+  const navigate = useNavigate();
+  const {
+    //  func
+    fetchNotifications,
+    fetchUnreadCount,
+    // data
+    notifications,
+    unReadCount,
 
-  const RequestNotification = () => {
-    return (
-      <Flex vertical className="request-notifications" gap={10}>
-        <Text className="notifications-time">Today</Text>
-        <Flex
-          className="request-notification unread"
-          gap={8}
-          align="flex-start"
-        >
-          <Avatar
-            size={56}
-            src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
-          />
+    // loader
+    notificationLoader,
+  } = useDashboardStore(useShallow((state) => state));
 
-          <Flex vertical gap={10} className="notification-content">
-            <Flex vertical>
-              <Flex className="username-and-timestamp" gap={6}>
-                <Text className="username">John Doe</Text>
-                <Text className="notification-timestamp">9:30 am</Text>
-              </Flex>
-              <Text className="notification-description">
-                John Doe requested to register account.
-              </Text>
-            </Flex>
-            <Flex justify="space-between" gap={8} className="link-and-btns">
-              <Flex className="btns" gap={6}>
-                <Button className="primary-btn">Accept</Button>
-                <Button className="danger-btn">Reject</Button>
-              </Flex>
-              <Link
-                to={""}
-                className="d-flex justify-content-center text-center view-details-btn"
-              >
-                View Detail
-              </Link>
-            </Flex>
-          </Flex>
-        </Flex>
-      </Flex>
-    );
-  };
-
-  const GeneralNotification = () => {
-    return (
-      <Flex vertical className="request-notifications" gap={10}>
-        <Text className="notifications-time">Today</Text>
-        {[1, 2, 3]?.map((item) => (
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+  return (
+    <Flex
+      vertical
+      className="request-notifications notification-tabs  max-h-[300px] overflow-y-auto px-1"
+      gap={10}
+    >
+      {!notificationLoader &&
+        notifications?.map((item, index) => (
           <Flex
-            className={`request-notification${item !== 3 ? " unread" : ""}`}
+            onClick={() => {
+              const url = notifcationUrlHandler(item?.type, item?.link);
+              const state =
+                item?.type === "register"
+                  ? { role: checkRole(item?.message), link: item?.link }
+                  : null;
+              navigate(url, { state });
+            }}
+            className={`cursor-pointer hover:bg-[#f0f0f0] w-96 p-2 bg-[#fafafa] request-notification${
+              index === 2 ? " unread" : ""
+            }`}
             gap={8}
-            key={item}
+            key={index}
             align="flex-start"
           >
-            <Avatar
-              size={56}
-              src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
-            />
+            {/* <Avatar
+            size={56}
+            src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
+          /> */}
 
-            <Flex vertical gap={10} className="notification-content">
+            <Flex vertical gap={10} className="notification-content ">
               <Flex vertical>
                 <Flex className="username-and-timestamp" gap={6}>
-                  <Text className="username">Transaction Update</Text>
-                  <Text className="notification-timestamp">9:30 am</Text>
+                  <Text className="username font-bold text-[14px]">
+                    {item?.title}
+                  </Text>
+                  <Text className="notification-timestamp opacity-50 font-semibold">
+                    {getTimeFromNow(item?.createdAt)}
+                  </Text>
                 </Flex>
                 <Text className="notification-description">
-                  John Doe has made a transaction.
+                  {item?.message}
                 </Text>
-              </Flex>
-              <Flex justify="flex-end" className="link-and-btns">
-                <Link
-                  to={""}
-                  className="d-flex justify-content-center text-center view-details-btn"
-                >
-                  View Detail
-                </Link>
               </Flex>
             </Flex>
           </Flex>
         ))}
-      </Flex>
-    );
-  };
-
-  const items = [
-    {
-      key: "1",
-      label: (
-        <Badge count={2} offset={[15, 8]}>
-          General{" "}
-        </Badge>
-      ),
-      children: <GeneralNotification />,
-    },
-    {
-      key: "2",
-      label: (
-        <Badge count={1} offset={[15, 8]}>
-          Request{" "}
-        </Badge>
-      ),
-      children: <RequestNotification />,
-    },
-  ];
-
-  return (
-    <Tabs
-      defaultActiveKey="2"
-      items={items}
-      onChange={onChange}
-      className="notification-tabs"
-    />
+    </Flex>
   );
 };
 

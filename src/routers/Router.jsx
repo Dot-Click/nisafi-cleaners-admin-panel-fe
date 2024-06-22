@@ -18,38 +18,10 @@ import AdminRoute from "./AdminRoute";
 import JobDetail from "../pages/JobDetail";
 import { useShallow } from "zustand/react/shallow";
 import { useAuthStore } from "../stores/authStore";
+import { successMessage } from "../services/helpers";
+import { useDashboardStore } from "../stores/dashboardStore";
 
 const Router = () => {
-  const { isAuthenticated, socket, user } = useAuthStore(
-    useShallow((state) => state)
-  );
-
-  useEffect(() => {
-    console.log("isAuth", isAuthenticated);
-    console.log("user", user);
-    console.log("socket", socket);
-    if (isAuthenticated && user) {
-      socket.emit("join", user?.userData?._id);
-      console.log("Here");
-      socket.on("reconnect", () => {
-        if (isAuthenticated) {
-          socket.emit("join", user?.userData?._id);
-        }
-      });
-    }
-
-    //  socket.on("notification", (notification) => {
-    //    if (user?.role === "admin") {
-    //      successMessage("Notification recieved!");
-    //    }
-    //    dispatch(getNewNotification(notification));
-    //  });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, [isAuthenticated]);
-
   return (
     <Routes>
       {/* Default Layout routes */}

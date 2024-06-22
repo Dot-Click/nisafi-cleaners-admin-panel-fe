@@ -3,94 +3,153 @@ import { devtools } from "zustand/middleware";
 import custAxios, { formAxios, attachToken } from "../configs/axiosConfig";
 import { errorMessage } from "../services/helpers";
 
-export const useDashboardStore = create((set) => ({
-  totalJobsCount: 0,
-  totalWorkersCount: 0,
-  totalClientsCount: 0,
-  totalJobs: [],
-  completedJobs: [],
-  disputedJobs: [],
-  recentJobs: [],
-  jobStatsLoader: false,
-  recentJobsLoader: false,
-  generalStatsLoader: false,
+export const useDashboardStore = create(
+  devtools((set) => ({
+    totalJobsCount: 0,
+    totalWorkersCount: 0,
+    totalClientsCount: 0,
+    unReadCount: 0,
+    totalJobs: [],
+    completedJobs: [],
+    disputedJobs: [],
+    recentJobs: [],
+    notifications: [],
+    jobStatsLoader: false,
+    recentJobsLoader: false,
+    generalStatsLoader: false,
+    notificationLoader: false,
 
-  fetchJobStats: async (yearRange) => {
-    try {
-      set({
-        jobStatsLoader: true,
-      });
+    fetchJobStats: async (yearRange) => {
+      try {
+        set({
+          jobStatsLoader: true,
+        });
 
-      attachToken();
-      const res = await custAxios.get(`/admin/jobStats`, {
-        params: { yearRange },
-      });
+        attachToken();
+        const res = await custAxios.get(`/admin/jobStats`, {
+          params: { yearRange },
+        });
 
-      if (res?.data?.success) {
+        if (res?.data?.success) {
+          set({
+            jobStatsLoader: false,
+            totalJobs: res?.data?.data?.jobsByMonth,
+            disputedJobs: res?.data?.data?.disputedJobsByMonth,
+            completedJobs: res?.data?.data?.completedJobsByMonth,
+          });
+        }
+        return true;
+      } catch (error) {
         set({
           jobStatsLoader: false,
-          totalJobs: res?.data?.data?.jobsByMonth,
-          disputedJobs: res?.data?.data?.disputedJobsByMonth,
-          completedJobs: res?.data?.data?.completedJobsByMonth,
         });
+        console.error(error);
+        errorMessage(error?.response?.data?.message);
       }
-      return true;
-    } catch (error) {
-      set({
-        jobStatsLoader: false,
-      });
-      console.error(error);
-      errorMessage(error?.response?.data?.message);
-    }
-  },
+    },
 
-  fetchRecentJobs: async () => {
-    try {
-      set({
-        recentJobsLoader: true,
-      });
-      attachToken();
-
-      const res = await custAxios.get(`/admin/recentjobs`);
-      if (res?.data?.success) {
+    fetchRecentJobs: async () => {
+      try {
         set({
-          recentJobs: res?.data?.data,
+          recentJobsLoader: true,
+        });
+        attachToken();
+
+        const res = await custAxios.get(`/admin/recentjobs`);
+        if (res?.data?.success) {
+          set({
+            recentJobs: res?.data?.data,
+            recentJobsLoader: false,
+          });
+        }
+        return true;
+      } catch (error) {
+        set({
           recentJobsLoader: false,
         });
+        console.error(error);
+        errorMessage(error?.response?.data?.message);
       }
-      return true;
-    } catch (error) {
-      set({
-        recentJobsLoader: false,
-      });
-      console.error(error);
-      errorMessage(error?.response?.data?.message);
-    }
-  },
+    },
 
-  fetchGeneralStats: async () => {
-    try {
-      set({
-        generalStatsLoader: true,
-      });
-      attachToken();
-      const res = await custAxios.get(`/admin/generalStats`);
-      if (res?.data?.success) {
-        console.log("fetchGeneralStats", res?.data?.data);
+    fetchGeneralStats: async () => {
+      try {
         set({
-          totalJobsCount: res?.data?.data?.totalJobs,
-          totalWorkersCount: res?.data?.data?.totalWorkers,
-          totalClientsCount: res?.data?.data?.totalClients,
+          generalStatsLoader: true,
+        });
+        attachToken();
+        const res = await custAxios.get(`/admin/generalStats`);
+        if (res?.data?.success) {
+          console.log("fetchGeneralStats", res?.data?.data);
+          set({
+            totalJobsCount: res?.data?.data?.totalJobs,
+            totalWorkersCount: res?.data?.data?.totalWorkers,
+            totalClientsCount: res?.data?.data?.totalClients,
+            generalStatsLoader: false,
+          });
+        }
+        return true;
+      } catch (error) {
+        set({
           generalStatsLoader: false,
         });
+        console.error(error);
+        errorMessage(error?.response?.data?.message);
       }
-      return true;
-    } catch (error) {
-      set({
-        generalStatsLoader: false,
-      });
-      console.error(error);
-      errorMessage(error?.response?.data?.message);
-    }
-  },
-}));
+    },
+
+    fetchNotifications: async () => {
+      try {
+        set({
+          notificationLoader: true,
+        });
+        attachToken();
+        const res = await custAxios.get(`/notification`);
+        if (res?.data?.success) {
+          console.log("notifications............", res?.data?.data);
+          set({
+            notifications: res?.data?.data,
+            unReadCount: 0,
+            notificationLoader: false,
+          });
+        }
+        return true;
+      } catch (error) {
+        set({
+          notificationLoader: false,
+        });
+        console.error(error);
+        errorMessage(error?.response?.data?.message);
+      }
+    },
+    fetchUnreadCount: async () => {
+      try {
+        set({
+          notificationLoader: true,
+        });
+        attachToken();
+        const res = await custAxios.get(`/notification/unread-count`);
+        if (res?.data?.success) {
+          console.log("notifications unread............", res?.data?.data);
+          set({
+            unReadCount: res?.data?.data,
+            notificationLoader: false,
+          });
+        }
+        return true;
+      } catch (error) {
+        set({
+          notificationLoader: false,
+        });
+        console.error(error);
+        errorMessage(error?.response?.data?.message);
+      }
+    },
+
+    handleNotificationCount: () => {
+      set((state) => ({
+        unReadCount: state.unReadCount + 1,
+      }));
+    },
+  }))
+);

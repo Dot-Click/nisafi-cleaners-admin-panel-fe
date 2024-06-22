@@ -15,7 +15,7 @@ const { Search } = Input;
 import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
 import ChevronDown from "../assets/icons/ChevronDown";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { baseURL } from "../configs/axiosConfig";
@@ -25,6 +25,10 @@ import staticMethods from "antd/es/notification";
 
 const { Text } = Typography;
 const UserManagement = () => {
+  const location = useLocation();
+  const locationState = location.state;
+
+  console.log("location", location.state);
   const [isModalOpened, setModalOpen] = useState(false);
   const [role, setrole] = useState("worker");
   const [activeTab, setActiveTab] = useState("1");
@@ -80,6 +84,14 @@ const UserManagement = () => {
   const handleSort = (value) => {
     setFilter(value);
   };
+  useEffect(() => {
+    if (locationState?.link && locationState?.role) {
+      setrole(locationState?.role);
+      fetchUsers(locationState?.role, 1, locationState?.link, filter);
+    } else {
+      fetchUsers(role, currentPage, "", filter);
+    }
+  }, [role, filter]);
 
   // const handleSearch = async (value, event) => {
   //   event.preventDefault();
@@ -102,10 +114,6 @@ const UserManagement = () => {
       await fetchUsers(role, currentPage, e.target.value, filter);
     }
   };
-
-  useEffect(() => {
-    fetchUsers(role, currentPage, "", filter);
-  }, [role, filter]);
 
   const custCols = [
     {
