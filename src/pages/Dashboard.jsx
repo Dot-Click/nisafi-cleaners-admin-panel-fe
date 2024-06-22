@@ -10,7 +10,7 @@ const Dashboard = () => {
       align="flex-start"
       className="dashboard-container w-full"
     >
-      <Col span={24} className="dashboard-stats-container border-2">
+      <Col span={24} className="dashboard-stats-container">
         <DashboardStats />
       </Col>
     </Flex>

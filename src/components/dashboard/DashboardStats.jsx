@@ -63,66 +63,49 @@ const DashboardStats = () => {
   return (
     <Flex vertical className="dashboard-stats" gap={45}>
       {/* // ? stats ccards */}
-      <Row className="stats-cards">
-        {false ? (
-          <Flex className="w-full">
-            <Skeleton active className="  h-[150px] ">
-              <Col
-                xxl={6}
-                lg={12}
-                sm={24}
-                md={12}
-                xs={24}
-                flex={1}
-                className={`stats-card `}
-              ></Col>
-            </Skeleton>
-            <Skeleton active className="  h-[150px] ">
-              <Col
-                xxl={6}
-                lg={12}
-                sm={24}
-                md={12}
-                xs={24}
-                flex={1}
-                className={`stats-card `}
-              ></Col>
-            </Skeleton>
-            <Skeleton active className="  h-[150px] ">
-              <Col
-                xxl={6}
-                lg={12}
-                sm={24}
-                md={12}
-                xs={24}
-                flex={1}
-                className={`stats-card `}
-              ></Col>
-            </Skeleton>
-          </Flex>
-        ) : (
-          <>
-            <StatsCard
-              type={"jobs"}
-              title={"Total Job Posts"}
-              count={totalJobsCount}
-              icon={<FaBriefcase fill={statsColorHandler("jobs")} />}
-            />
-            <StatsCard
-              type={"workers"}
-              title={"Total Workers"}
-              count={totalWorkersCount}
-              Icon1={Worker}
-              icon={<FaUserTie fill={statsColorHandler("workers")} />}
-            />
-            <StatsCard
-              type={"revenue"}
-              title={"Total Clients"}
-              count={totalClientsCount}
-              icon={<FaUserAstronaut fill={statsColorHandler("revenue")} />}
-            />
-          </>
-        )}
+
+      <Row className="stats-cards w-full">
+        {[
+          {
+            type: "jobs",
+            title: "Total Job Posts",
+            count: totalJobsCount,
+            icon: FaBriefcase,
+          },
+          {
+            type: "workers",
+            title: "Total Workers",
+            count: totalWorkersCount,
+            icon: FaUserAstronaut,
+          },
+          {
+            type: "revenue",
+            title: "Total Clients",
+            count: totalClientsCount,
+            icon: FaUserTie,
+          },
+        ]?.map(({ type, title, count, icon: Icon }) => (
+          <Col
+            key={type}
+            xxl={6}
+            lg={12}
+            sm={24}
+            md={12}
+            xs={24}
+            flex={1}
+            className={`stats-card py-4 ${statsColorHandler(type)}`}
+          >
+            {generalStatsLoader ? (
+              <Skeleton active className="h-[150px]" />
+            ) : (
+              <StatsCard 
+                title={title}
+                count={count}
+                icon={<Icon fill={statsColorHandler(type)} />}
+              />
+            )}
+          </Col>
+        ))}
       </Row>
 
       {/* // ? sales and balance stats */}

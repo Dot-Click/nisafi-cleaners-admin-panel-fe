@@ -213,7 +213,6 @@ const UserManagement = () => {
       key: "createdAt",
       render: (_, createdAt) => <Text>{formatDate(createdAt)}</Text>,
     },
-    // color={role === "worker" ? "magenta" : "gold"}
     {
       title: "Actions",
       key: "action",
@@ -224,46 +223,6 @@ const UserManagement = () => {
         >
           View Detail
         </Button>
-        // {/* <Dropdown
-        //   menu={{
-        //     items: [
-        //       {
-        //         key: "1",
-        //         label: (
-        //           <Text
-        //             onClick={() => hanldeViewDetails(record)}
-        //             className="d-flex justify-content-center text-center view-details-btn"
-        //           >
-        //             View Detail
-        //           </Text>
-        //         ),
-        //       },
-        //       {
-        //         key: "2",
-        //         label: <Button className="primary-btn">Accept</Button>,
-        //       },
-        //       {
-        //         key: "3",
-        //         label: <Button className="danger-btn">Reject</Button>,
-        //       },
-        //     ],
-        //   }}
-        // >
-        //   <svg
-        //     className="cursor-pointer"
-        //     xmlns="http://www.w3.org/2000/svg"
-        //     width="7"
-        //     height="22"
-        //     fill="none"
-        //     viewBox="0 0 7 22"
-        //   >
-        //     <path
-        //       fill="#000"
-        //       fillOpacity="0.53"
-        //       d="M3.143 22a3.143 3.143 0 100-6.286 3.143 3.143 0 000 6.286zM3.143 14.143a3.143 3.143 0 100-6.286 3.143 3.143 0 000 6.286zM3.143 6.286a3.143 3.143 0 100-6.286 3.143 3.143 0 000 6.286z"
-        //     ></path>
-        //   </svg>
-        // </Dropdown> */}
       ),
     },
   ];
@@ -307,18 +266,20 @@ const UserManagement = () => {
 
   const PaginationComponent = () => {
     return (
-      <div className="py-4 flex flex-wrap flex-1 items-center justify-center my-6">
-        <Pagination
-          total={pagesCount}
-          pageSize={10}
-          showQuickJumper={false}
-          showTitle={false}
-          showSizeChanger={false}
-          responsive
-          current={currentPage}
-          onChange={(page, pageSize) => paginationHandler(page, pageSize)}
-        />
-      </div>
+      pagesCount > 1 && (
+        <div className="py-4 flex flex-wrap flex-1 items-center justify-center my-6">
+          <Pagination
+            total={pagesCount}
+            pageSize={10}
+            showQuickJumper={false}
+            showTitle={false}
+            showSizeChanger={false}
+            responsive
+            current={currentPage}
+            onChange={(page, pageSize) => paginationHandler(page, pageSize)}
+          />
+        </div>
+      )
     );
   };
 
