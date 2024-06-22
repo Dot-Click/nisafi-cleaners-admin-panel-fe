@@ -1,6 +1,7 @@
 import { Table, Tag, Typography } from "antd";
 import GeneralTable from "./GeneralTable";
 import { formatDate, formatPrice } from "../../utils";
+import { Link } from "react-router-dom";
 const { Text } = Typography;
 
 const NestedTable = ({ columns, data, loading }) => {
@@ -9,7 +10,9 @@ const NestedTable = ({ columns, data, loading }) => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      render: (_, { amount }) => <Text>{formatPrice(amount)}</Text>,
+      render: (_, { amount }) => (
+        <Text className="font-semibold">{formatPrice(amount)}</Text>
+      ),
     },
     {
       title: "Transaction Type",
@@ -75,6 +78,19 @@ const NestedTable = ({ columns, data, loading }) => {
       dataIndex: "creator",
       key: "creator",
       render: (_, { job }) => <Text>{job?.type}</Text>,
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_, { job }) => (
+        <Link
+          to={`/dashboard/jobs/details/${job?._id}`}
+          className="view-details-btn"
+        >
+          View Detail
+        </Link>
+      ),
     },
   ];
 

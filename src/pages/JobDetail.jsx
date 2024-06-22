@@ -448,10 +448,10 @@ const JobDetail = () => {
                     <div>
                       <Link
                         onClick={() => {
-                          setModalImgs(pow);
+                          setModalImgs(jobDetail?.proofOfWork?.images);
                           setModalOpen(true);
                         }}
-                        className="font-semibold"
+                        className="font-semibold capitalize"
                         style={{ color: "#1677ff" }}
                       >
                         View images
@@ -512,7 +512,7 @@ const JobDetail = () => {
                               );
                               setModalOpen(true);
                             }}
-                            className="font-semibold"
+                            className="font-semibold capitalize"
                             style={{ color: "#1677ff" }}
                           >
                             View images
@@ -536,12 +536,19 @@ const JobDetail = () => {
             {/* Images */}
             <Row gutter={[16, 16]} className="mb-3 mt-8">
               {modalImgs?.map((img, index) => (
-                <Col key={index} lg={8} md={8} sm={12} xs={12}>
+                <Col
+                  key={index}
+                  lg={8}
+                  md={8}
+                  sm={12}
+                  xs={24}
+                  className="space-x-4 mx-4 mb-3"
+                >
                   <Image
                     width={150}
                     height={150}
                     src={baseURL + img}
-                    fallback={""}
+                    fallback="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.webp"
                     style={{
                       borderRadius: "8px",
                       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

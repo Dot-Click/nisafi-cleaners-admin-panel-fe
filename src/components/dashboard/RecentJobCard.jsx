@@ -22,9 +22,9 @@ const RecentJobCard = ({ job }) => {
           </Text>
           <Tag
             color={getStatusColors(job?.status)}
-            className="px-4 py-1 font-semibold text-[14px]"
+            className="px-4 py-1 font-semibold text-[14px] capitalize"
           >
-            {capitalizeFirstLetter(job?.status)}
+            {job?.status}
           </Tag>
         </Flex>
         <Text className="customer-name !mb-0 !pb-0">{job?.type}</Text>

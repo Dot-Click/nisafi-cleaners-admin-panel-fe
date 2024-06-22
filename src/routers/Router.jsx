@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../components/auth/Login";
@@ -16,9 +16,39 @@ import JobManagement from "../pages/JobManagement";
 import AuthRoute from "./AuthRoute";
 import AdminRoute from "./AdminRoute";
 import JobDetail from "../pages/JobDetail";
+import { useShallow } from "zustand/react/shallow";
+import { useAuthStore } from "../stores/authStore";
 
 const Router = () => {
-  // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
+  const { isAuthenticated, socket, user } = useAuthStore(
+    useShallow((state) => state)
+  );
+
+  useEffect(() => {
+    console.log("isAuth", isAuthenticated);
+    console.log("user", user);
+    console.log("socket", socket);
+    if (isAuthenticated && user) {
+      socket.emit("join", user?.userData?._id);
+      console.log("Here");
+      socket.on("reconnect", () => {
+        if (isAuthenticated) {
+          socket.emit("join", user?.userData?._id);
+        }
+      });
+    }
+
+    //  socket.on("notification", (notification) => {
+    //    if (user?.role === "admin") {
+    //      successMessage("Notification recieved!");
+    //    }
+    //    dispatch(getNewNotification(notification));
+    //  });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [isAuthenticated]);
 
   return (
     <Routes>

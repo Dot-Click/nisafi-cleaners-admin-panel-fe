@@ -62,14 +62,24 @@ export const getStatusColors = (status) => {
 export const statsColorHandler = (type) => {
   switch (type) {
     case "jobs":
-      // return "#0CCB93";
       return "green";
     case "workers":
-      // return "#F56060";
       return "red";
     case "revenue":
-      // return "#0BA8D8";
       return "blue";
+
+    default:
+      break;
+  }
+};
+export const workerStatusColorHandler = (status) => {
+  switch (status) {
+    case "pending":
+      return "orange";
+    case "approved":
+      return "green";
+    case "cancelled":
+      return "red";
 
     default:
       break;

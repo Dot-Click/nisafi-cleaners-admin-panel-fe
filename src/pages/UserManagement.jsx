@@ -9,7 +9,9 @@ import {
   Typography,
   Tabs,
   Pagination,
+  Tag,
 } from "antd";
+const { Search } = Input;
 import { SearchOutlined } from "@ant-design/icons";
 import UserDetailsModal from "../components/layout/UserDetailsModal";
 import ChevronDown from "../assets/icons/ChevronDown";
@@ -17,8 +19,9 @@ import { useNavigate } from "react-router-dom";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { baseURL } from "../configs/axiosConfig";
-import { formatDate } from "../utils";
+import { formatDate, workerStatusColorHandler } from "../utils";
 import CustomAvatar from "../components/common/CustomAvatar";
+import staticMethods from "antd/es/notification";
 
 const { Text } = Typography;
 const UserManagement = () => {
@@ -28,6 +31,8 @@ const UserManagement = () => {
   const [record, setRecord] = useState(null);
   const [filter, setFilter] = useState("desc");
   const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState("");
+
   const {
     // func
     fetchUsers,
@@ -76,13 +81,24 @@ const UserManagement = () => {
     setFilter(value);
   };
 
-  const handleSearch = async (e) => {
-    await fetchUsers(role, currentPage, e.target.value, "");
-  };
+  // const handleSearch = async (value, event) => {
+  //   event.preventDefault();
+  //   setInputValue(value);
+  //   console.log("values........", value);
+  //   console.log("event........", event);
+  //   await fetchUsers(role, currentPage, value, "");
+  // };
 
-  const onChange = async (e) => {
-    if (e.target.value === "") {
-      console.log("onChange Run");
+  // const onChange = async (e) => {
+  //   if (e.target.value === "") {
+  //     console.log("onChange Run");
+  //     // setInputValue(e.target.value);
+  //     await fetchUsers(role, currentPage, e.target.value, filter);
+  //   }
+  // };
+
+  const handleSearch = async (e) => {
+    if (e.keyCode === 13) {
       await fetchUsers(role, currentPage, e.target.value, filter);
     }
   };
@@ -119,60 +135,6 @@ const UserManagement = () => {
       key: "createdAt",
       render: (_, createdAt) => <Text>{formatDate(createdAt)}</Text>,
     },
-
-    {
-      title: "Actions",
-      key: "action",
-      render: (_, record) => (
-        <Button
-          onClick={() => hanldeViewDetails(record)}
-          className="primary-btn"
-        >
-          View Detail
-        </Button>
-
-        // {/* <Dropdown
-        //   menu={{
-        //     items: [
-        //       {
-        //         key: "1",
-        //         label: (
-        //           <Text
-        //             onClick={() => hanldeViewDetails(record)}
-        //             className="d-flex justify-content-center text-center view-details-btn"
-        //           >
-        //             View Detail
-        //           </Text>
-        //         ),
-        //       },
-        //       {
-        //         key: "2",
-        //         label: <Button className="primary-btn">Accept</Button>,
-        //       },
-        //       {
-        //         key: "3",
-        //         label: <Button className="danger-btn">Reject</Button>,
-        //       },
-        //     ],
-        //   }}
-        // >
-        //   <svg
-        //     className="cursor-pointer"
-        //     xmlns="http://www.w3.org/2000/svg"
-        //     width="7"
-        //     height="22"
-        //     fill="none"
-        //     viewBox="0 0 7 22"
-        //   >
-        //     <path
-        //       fill="#000"
-        //       fillOpacity="0.53"
-        //       d="M3.143 22a3.143 3.143 0 100-6.286 3.143 3.143 0 000 6.286zM3.143 14.143a3.143 3.143 0 100-6.286 3.143 3.143 0 000 6.286zM3.143 6.286a3.143 3.143 0 100-6.286 3.143 3.143 0 000 6.286z"
-        //     ></path>
-        //   </svg>
-        // </Dropdown> */}
-      ),
-    },
   ];
   const workerCols = [
     {
@@ -202,9 +164,17 @@ const UserManagement = () => {
       key: "experience",
     },
     {
-      title: "Qualification",
-      dataIndex: "qualification",
-      key: "qualification",
+      title: "Status",
+      dataIndex: "adminApproval",
+      key: "adminApproval",
+      render: (_, { adminApproval }) => (
+        <Tag
+          color={workerStatusColorHandler(adminApproval)}
+          className="capitalize"
+        >
+          {adminApproval}
+        </Tag>
+      ),
     },
     {
       title: "Registration Date",
@@ -229,14 +199,120 @@ const UserManagement = () => {
   const FiltersComponents = () => {
     return (
       <Row className="search-box" justify="space-between">
-        <Input
+        {/* <Input
           className="search-input"
           size="large"
           placeholder="Search..."
           onPressEnter={handleSearch}
           onChange={onChange}
           prefix={<SearchOutlined />}
-        />
+          // value={inputValue}
+          allowClear={false}
+        /> */}
+
+        {/* <Search
+          placeholder="input search text"
+          allowClear
+          enterButton="Search"
+          size="large"
+          // value={inputValue}
+          onInput={(e) => setInputValue(e.target.value)}
+          // onChange={(e) => setInputValue(e.target.value)}
+          onSearch={handleSearch}
+        /> */}
+
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              class="w-4 h-4 text-gray-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            onKeyDown={handleSearch}
+            onChange={(e) =>
+              e.target.value === "" &&
+              fetchUsers(role, currentPage, e.target.value, filter)
+            }
+            type="text"
+            id="simple-search "
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg   block w-full ps-10 p-2.5 focus:ring-red-500 focus:border-red-500  "
+            placeholder="Search..."
+          />
+        </div>
+        {/* <button
+            type="submit"
+            class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 primary-btn !w-fit"
+          >
+            <svg
+              class="w-4 h-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+            <span class="sr-only">Search</span>
+          </button> */}
+
+        {/* <form class="max-w-md">
+          <label
+            for="default-search"
+            class="mb-2 text-sm font-medium text-gray-900 sr-only"
+          >
+            Search
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg
+                class="w-4 h-4 text-gray-500"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="default-search"
+              class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Search....."
+              required
+            />
+            <button
+              type="submit"
+              class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 primary-btn !w-fit"
+            >
+              Search
+            </button>
+          </div>
+        </form> */}
 
         <Flex align="center" className="filters" gap={10}>
           {/* // ? sort by filter */}

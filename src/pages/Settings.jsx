@@ -1,5 +1,5 @@
 import { Button, Col, Flex, Input, Modal, Row, Typography, Upload } from "antd";
-import  { useState } from "react";
+import { useState } from "react";
 import Camera from "../assets/icons/Camera";
 import countries from "../data/countries.json";
 import ImgCrop from "antd-img-crop";
@@ -9,6 +9,7 @@ import { baseURL } from "../configs/axiosConfig";
 import { errorMessage } from "../services/helpers";
 import CustomAvatar from "../components/common/CustomAvatar";
 import BannerSettings from "../components/dashboard/BannerSettings";
+import { capitalizeFirstLetter } from "../utils";
 
 const { Title, Text } = Typography;
 
@@ -38,14 +39,18 @@ const Settings = () => {
               <Button
                 onClick={() => setSelectedProfile(true)}
                 type={isSelectedProfile ? "primary" : "dashed"}
-                className={`${isSelectedProfile ? "primary-btn" : ""} w-[80%]`}
+                className={`capitalize ${
+                  isSelectedProfile ? "primary-btn" : ""
+                } w-[80%]`}
               >
                 Profile settings
               </Button>
               <Button
                 onClick={() => setSelectedProfile(false)}
                 type={!isSelectedProfile ? "primary" : "dashed"}
-                className={`${!isSelectedProfile ? "primary-btn" : ""} w-[80%]`}
+                className={`capitalize ${
+                  !isSelectedProfile ? "primary-btn" : ""
+                } w-[80%]`}
               >
                 Banner settings
               </Button>
@@ -62,7 +67,9 @@ const Settings = () => {
             {isSelectedProfile ? (
               <>
                 <Flex vertical className="name-plate">
-                  <Title level={3}>{user?.userData?.name}</Title>
+                  <Title level={3}>
+                    {capitalizeFirstLetter(user?.userData?.name)}
+                  </Title>
                   <Text>
                     Take full control of your account, update your profile.
                   </Text>
@@ -309,8 +316,7 @@ const UpdateProfileImage = (props) => {
       uid: "-1",
       name: "user-avatar.png",
       status: "done",
-      url:
-        "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
     },
   ]);
 

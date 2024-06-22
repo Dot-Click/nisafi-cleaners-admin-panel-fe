@@ -3,17 +3,23 @@ import { devtools } from "zustand/middleware";
 import custAxios, {
   attachToken,
   attachTokenWithFormAxios,
+  baseURL,
   formAxios,
 } from "../configs/axiosConfig";
 import { successMessage, errorMessage } from "../services/helpers";
+import { io } from "socket.io-client";
 
 export const useAuthStore = create((set) => {
   const userData = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
+  const socket = io(baseURL);
+  socket.connect();
+
   return {
     user: token && userData ? { token: token, userData: userData } : null,
     isAuthenticated: token ? true : false,
     loading: false,
+    socket: socket,
 
     login: async (values) => {
       try {

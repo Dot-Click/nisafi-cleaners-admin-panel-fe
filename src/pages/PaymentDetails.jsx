@@ -8,6 +8,7 @@ import { baseURL } from "../configs/axiosConfig";
 import { useShallow } from "zustand/react/shallow";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { formatPrice } from "../utils";
+import { Link } from "react-router-dom";
 
 const { Text } = Typography;
 
@@ -34,7 +35,7 @@ const PaymentDetails = () => {
   //   } catch (error) {
   //     console.error(error);
   //   }
-  // }; 
+  // };
 
   const handleCloseDetailsModal = () => {
     try {
@@ -50,7 +51,7 @@ const PaymentDetails = () => {
     } else {
       setrole("client");
     }
-    // setCurrentPage(1); 
+    // setCurrentPage(1);
     setActiveTab(key);
   };
   const handleSearch = async (e) => {
@@ -72,17 +73,27 @@ const PaymentDetails = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (_, { user }) => (
-        <Flex gap={10} align="center" className="w-[150px]">
-          <CustomAvatar
-            size={40}
-            imgUrl={baseURL + user?.profilePic}
-            name={user?.name}
-          />
+      render: (_, { user }) => {
+        const content = (
+          <Flex gap={10} align="center" className="w-[150px]">
+            <CustomAvatar
+              size={40}
+              imgUrl={baseURL + user?.profilePic}
+              name={user?.name}
+            />
 
-          <Text>{user?.name}</Text>
-        </Flex>
-      ),
+            <Text className={role === "worker" ? `view-details-btn` : ""}>
+              {user?.name}
+            </Text>
+          </Flex>
+        );
+
+        return role === "worker" ? (
+          <Link to={`/dashboard/user/worker-info/${user?._id}`}>{content}</Link>
+        ) : (
+          content
+        );
+      },
     },
     {
       title: "Email",
@@ -100,7 +111,9 @@ const PaymentDetails = () => {
       title: "Balance",
       dataIndex: "balance",
       key: "balance",
-      render: (_, { balance }) => <Text>{formatPrice(balance)}</Text>,
+      render: (_, { balance }) => (
+        <Text className="font-semibold">{formatPrice(balance)}</Text>
+      ),
     },
   ];
 
@@ -119,6 +132,22 @@ const PaymentDetails = () => {
     );
   };
 
+  const PaginationComponent = () => {
+    return (
+      <div className="py-4 flex flex-wrap flex-1 items-center justify-center my-6">
+        <Pagination
+          total={pagesCount}
+          pageSize={10}
+          showQuickJumper={false}
+          showTitle={false}
+          showSizeChanger={false}
+          responsive
+          current={currentPage}
+          onChange={(page, pageSize) => paginationHandler(page, pageSize)}
+        />
+      </div>
+    );
+  };
   return (
     <Row className=" d-block user-management-container payment-details-container">
       <Tabs

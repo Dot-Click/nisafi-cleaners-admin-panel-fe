@@ -11,6 +11,7 @@ import { formatDateString } from "../utils";
 import { Pagination } from "antd";
 import CustomAvatar from "../components/common/CustomAvatar";
 import { baseURL } from "../configs/axiosConfig";
+import useDebounce from "../services/hooks/useDebounce";
 
 const tabList = [
   {
@@ -43,7 +44,9 @@ const JobManagement = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(tabList[0].key);
   const [sort, setSort] = useState("desc");
-  const [search, setSearch] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const {
@@ -134,13 +137,18 @@ const JobManagement = () => {
           size="large"
           placeholder="Search..."
           prefix={<SearchOutlined />}
-          defaultValue={search}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              setSearch(e.target.value);
-            }
+          // defaultValue={search}
+          // onKeyDown={(e) => {
+          //   if (e.key === "Enter") {
+          //     setSearch(e.target.value);
+          //   }
+          // }}
+          // onChange={(e) => e.target.value === "" && setSearch("")}
+          value={searchValue}
+          onChange={(e) => {
+            const { value } = e.target;
+            setSearchValue(value);
           }}
-          onChange={(e) => e.target.value === "" && setSearch("")}
         />
 
         {/* // ? filters */}
@@ -189,11 +197,11 @@ const JobManagement = () => {
   };
 
   async function fetchData() {
-    await fetchJobsList(1, search, sort, 10, activeTab);
+    await fetchJobsList(1, debouncedSearch, sort, 10, activeTab);
   }
   useEffect(() => {
     fetchData();
-  }, [activeTab, sort, search]);
+  }, [activeTab, sort, debouncedSearch]);
 
   return (
     <Row className=" d-block user-management-container">
