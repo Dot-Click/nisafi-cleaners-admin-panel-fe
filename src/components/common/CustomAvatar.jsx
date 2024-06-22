@@ -1,5 +1,4 @@
 import { Image } from "antd";
-import React from "react";
 
 const CustomAvatar = ({ name, imgUrl, size, className }) => {
   return (

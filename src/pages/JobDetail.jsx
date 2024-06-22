@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Flex,
   Row,
@@ -22,7 +22,6 @@ import {
   successRateColors,
 } from "../utils";
 import { baseURL } from "../configs/axiosConfig";
-import { useTablet } from "../services/hooks/mediaquery";
 import { Link, useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { jobManagementStore } from "../stores/jobManagementStore";
@@ -31,7 +30,6 @@ import CustomAvatar from "../components/common/CustomAvatar";
 import { showConfirm } from "../utils/modal";
 
 const JobDetail = () => {
-  const tablet = useTablet();
   const { id } = useParams();
   const [isModalOpened, setModalOpen] = useState(false);
   const [modalImgs, setModalImgs] = useState([]);

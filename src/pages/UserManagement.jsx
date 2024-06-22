@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
 import {
   Button,
-  Dropdown,
   Flex,
   Input,
   Row,
@@ -18,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { baseURL } from "../configs/axiosConfig";
-import { capitalizeFirstLetter, formatDate } from "../utils";
+import { formatDate } from "../utils";
 import CustomAvatar from "../components/common/CustomAvatar";
 
 const { Text } = Typography;
@@ -58,7 +57,7 @@ const UserManagement = () => {
   };
   const [currentPage, setCurrentPage] = useState(1);
 
-  const paginationHandler = (page, pageSize) => {
+  const paginationHandler = (page) => {
     setCurrentPage(page);
   };
 

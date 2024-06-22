@@ -1,23 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
-import {
-  Button,
-  Avatar,
-  Flex,
-  Input,
-  Row,
-  Select,
-  Typography,
-  Tabs,
-} from "antd";
+import { Button, Flex, Input, Row, Select, Typography, Tabs } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import UserDetailsModal from "../components/layout/UserDetailsModal";
-import { userData, jobsData } from "../data/data";
 import ChevronDown from "../assets/icons/ChevronDown";
-import { UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
-import { WashingMachine } from "lucide-react";
 import { jobManagementStore } from "../stores/jobManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { formatDateString } from "../utils";

@@ -1,6 +1,4 @@
-import React from "react";
 import { Col, Flex } from "antd";
-import DashboardStatsAside from "../components/dashboard/DashboardStatsAside";
 import DashboardStats from "../components/dashboard/DashboardStats";
 
 const Dashboard = () => {

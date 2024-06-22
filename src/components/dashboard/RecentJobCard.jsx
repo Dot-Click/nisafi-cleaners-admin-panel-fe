@@ -1,4 +1,3 @@
-import React from "react";
 import { Col, Flex, Tag, Typography } from "antd";
 import { MapPin } from "lucide-react";
 import {

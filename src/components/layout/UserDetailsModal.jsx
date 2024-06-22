@@ -1,5 +1,4 @@
 import { Button, Col, Flex, Image, Modal, Row, Typography } from "antd";
-import React from "react";
 import { Link } from "react-router-dom";
 import pdfImage from "/images/icons/pdf.png";
 import Download from "../../assets/icons/Download";

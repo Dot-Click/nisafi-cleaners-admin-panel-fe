@@ -1,5 +1,4 @@
 import { Flex, Image, Row, Typography } from "antd";
-import React, { useState } from "react";
 import logo from "/images/logos/logo.png";
 import { sidebar } from "../../data/data";
 import { Link, useLocation, useNavigate } from "react-router-dom";

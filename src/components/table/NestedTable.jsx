@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { Badge, Dropdown, Space, Table, Tag, Typography } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Table, Tag, Typography } from "antd";
 import GeneralTable from "./GeneralTable";
 import { formatDate, formatPrice } from "../../utils";
 const { Text } = Typography;

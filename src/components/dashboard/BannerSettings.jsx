@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   Row,
@@ -95,11 +95,7 @@ const BannerSettings = () => {
       setfile(null);
     }
   };
-
-  const onFinishFailed = (errorInfo) => {
-    return false;
-  };
-
+ 
   return (
     <>
       <Row className="min-h-0">
@@ -177,8 +173,7 @@ const BannerSettings = () => {
                 maxWidth: "500px",
                 width: "100%",
               }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
+              onFinish={onFinish} 
               autoComplete="off"
             >
               <Col className="flex-1 !m-0">

@@ -1,4 +1,3 @@
-import React from "react";
 import pagenotfound from "../assets/404.png";
 import { Link } from "react-router-dom";
 import { Flex, Image, Button, Row, Col } from "antd";

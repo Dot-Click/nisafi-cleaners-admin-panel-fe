@@ -1,5 +1,5 @@
 import { Button, Col, Flex, Input, Modal, Row, Typography, Upload } from "antd";
-import React, { useState } from "react";
+import  { useState } from "react";
 import Camera from "../assets/icons/Camera";
 import countries from "../data/countries.json";
 import ImgCrop from "antd-img-crop";

@@ -1,14 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  Col,
-  DatePicker,
-  Flex,
-  Row,
-  Select,
-  Skeleton,
-  Tag,
-  Typography,
-} from "antd";
+import { useState } from "react";
+import { Flex, Row, Select, Typography } from "antd";
 import ReactApexChart from "react-apexcharts";
 
 const { Text, Title } = Typography;

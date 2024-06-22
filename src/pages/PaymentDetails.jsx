@@ -1,19 +1,7 @@
-import React, { useEffect, useState } from "react";
-import GeneralTable from "../components/table/GeneralTable";
-import {
-  Col,
-  Flex,
-  Input,
-  Modal,
-  Row,
-  Select,
-  Tag,
-  Typography,
-  Tabs,
-} from "antd";
+import { useEffect, useState } from "react";
+import { Col, Flex, Input, Modal, Row, Tag, Typography, Tabs } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-import ChevronDown from "../assets/icons/ChevronDown";
 import NestedTable from "../components/table/NestedTable";
 import CustomAvatar from "../components/common/CustomAvatar";
 import { baseURL } from "../configs/axiosConfig";
@@ -26,7 +14,6 @@ const { Text } = Typography;
 const PaymentDetails = () => {
   const [record, setRecord] = useState(null);
   const [role, setrole] = useState("worker");
-  const [filter, setFilter] = useState("desc");
   const [activeTab, setActiveTab] = useState("1");
   const [isDetailsModalOpened, setDetailsModalOpen] = useState(false);
 
@@ -40,17 +27,14 @@ const PaymentDetails = () => {
   } = useUserManagementStore(useShallow((state) => state));
 
   console.log("paymentList", paymentList);
-  const handleViewDetails = (data) => {
-    try {
-      setRecord(data);
-      setDetailsModalOpen(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleSort = (value) => {
-    setFilter(value);
-  };
+  // const handleViewDetails = (data) => {
+  //   try {
+  //     setRecord(data);
+  //     setDetailsModalOpen(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }; 
 
   const handleCloseDetailsModal = () => {
     try {
@@ -66,8 +50,7 @@ const PaymentDetails = () => {
     } else {
       setrole("client");
     }
-    // setCurrentPage(1);
-    setFilter("desc");
+    // setCurrentPage(1); 
     setActiveTab(key);
   };
   const handleSearch = async (e) => {

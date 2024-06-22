@@ -1,36 +1,21 @@
-import {
-  Col,
-  DatePicker,
-  Flex,
-  Row,
-  Select,
-  Skeleton,
-  Tag,
-  Typography,
-} from "antd";
-import React, { useEffect, useState } from "react";
-import { dashboardStats, recentOrders } from "../../data/data";
-import ReactApexChart from "react-apexcharts";
-import ArrowTiltDown from "../../assets/icons/ArrowTiltDown";
+import { Col, Flex, Row, Skeleton, Typography } from "antd";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import { useShallow } from "zustand/react/shallow";
 import { useDashboardStore } from "../../stores/dashboardStore";
-import { MapPin } from "lucide-react";
 import RecentJobCard from "./RecentJobCard";
 import JobChart from "./JobChart";
 import StatsCard from "./StatsCard";
 import { FaUserTie, FaBriefcase, FaUserAstronaut } from "react-icons/fa";
 import { statsColorHandler } from "../../utils/index";
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const DashboardStats = () => {
   const {
     //  func
     fetchRecentJobs,
     fetchJobStats,
-    fetchJobStats1,
     fetchGeneralStats,
     // data
     totalJobs,
@@ -98,7 +83,7 @@ const DashboardStats = () => {
             {generalStatsLoader ? (
               <Skeleton active className="h-[150px]" />
             ) : (
-              <StatsCard 
+              <StatsCard
                 title={title}
                 count={count}
                 icon={<Icon fill={statsColorHandler(type)} />}
@@ -163,102 +148,6 @@ const DashboardStats = () => {
         </Row>
       </Flex>
     </Flex>
-  );
-};
-
-const SalesAndBalance = () => {
-  const [chartConfig] = useState({
-    series: [
-      {
-        name: "Outlet Balance",
-        data: [22, 13, 20, 23, 19, 26, 16],
-      },
-    ],
-    options: {
-      colors: ["#DC447F"],
-      chart: {
-        type: "line",
-        toolbar: {
-          show: false,
-        },
-      },
-      tooltip: {
-        fixed: {
-          enabled: false,
-        },
-        marker: {
-          show: false,
-        },
-      },
-      grid: {
-        padding: {
-          left: 0,
-          right: 0,
-        },
-        show: true,
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      xaxis: {
-        show: false,
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        labels: {
-          show: false,
-        },
-      },
-      stroke: {
-        width: 2,
-        curve: "smooth",
-      },
-    },
-  });
-
-  return (
-    <>
-      <Flex
-        vertical
-        className="upper-container"
-        justify="center"
-        align="center"
-      >
-        <Title level={4}>Outlet Balance</Title>
-        <ReactApexChart
-          options={chartConfig?.options}
-          series={chartConfig?.series}
-          type="line"
-          height={130}
-          width={150}
-        />
-        <Title level={5}>$3219,37</Title>
-        <Flex gap={10}>
-          <Flex justify="center" align="center" className="profit-loss-icon">
-            <ArrowTiltDown />
-          </Flex>{" "}
-          <Text>-7% from yesterday</Text>
-        </Flex>
-      </Flex>
-      <Flex className="lower-container" justify="center" align="center">
-        <Title level={3}>Withdraw</Title>
-      </Flex>
-    </>
   );
 };
 

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Typography, Row, Col, Flex, Select, Progress, Image } from "antd";
+import { useState } from "react";
+import { Typography, Flex, Select, Progress } from "antd";
 import ReactApexChart from "react-apexcharts";
 const { Text, Title } = Typography;
 
