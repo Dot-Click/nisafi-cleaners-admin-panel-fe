@@ -246,3 +246,6 @@ body {
   width: 10px !important;
   height: 10px !important;
 }
+.ant-tabs-tab-btn {
+  color: #0ba8d8 !important;
+}

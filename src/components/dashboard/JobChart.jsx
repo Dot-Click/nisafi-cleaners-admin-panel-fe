@@ -34,17 +34,18 @@ const JobChart = ({
       {
         name: "Total Jobs",
         data: dataSet[0],
-        color: "#59B2DE",
+        color: "#1FB1DE",
       },
       {
         name: "Completed Jobs",
         data: dataSet[1],
-        color: "#DA9747",
+        color: "#28A745",
       },
       {
         name: "Disputed Jobs",
         data: dataSet[2],
-        color: "red",
+        // color: "#6d6868",
+        color: "#DC3545",
       },
     ],
     options: {

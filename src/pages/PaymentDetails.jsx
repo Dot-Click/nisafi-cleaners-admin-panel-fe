@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { Col, Flex, Input, Modal, Row, Tag, Typography, Tabs } from "antd";
+import {
+  Col,
+  Flex,
+  Input,
+  Modal,
+  Row,
+  Tag,
+  Typography,
+  Tabs,
+  Pagination,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import NestedTable from "../components/table/NestedTable";
@@ -17,12 +27,15 @@ const PaymentDetails = () => {
   const [role, setrole] = useState("worker");
   const [activeTab, setActiveTab] = useState("1");
   const [isDetailsModalOpened, setDetailsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     // func
     fetchPaymentDetail,
     // data
     paymentList,
+    pagesCount,
+
     // loaders
     payementListLoader,
   } = useUserManagementStore(useShallow((state) => state));
@@ -51,7 +64,7 @@ const PaymentDetails = () => {
     } else {
       setrole("client");
     }
-    // setCurrentPage(1);
+    setCurrentPage(1);
     setActiveTab(key);
   };
   const handleSearch = async (e) => {
@@ -65,8 +78,8 @@ const PaymentDetails = () => {
   };
 
   useEffect(() => {
-    fetchPaymentDetail(role);
-  }, [role]);
+    fetchPaymentDetail(role, currentPage, "");
+  }, [role, currentPage]);
 
   const columns = [
     {
@@ -143,7 +156,7 @@ const PaymentDetails = () => {
           showSizeChanger={false}
           responsive
           current={currentPage}
-          onChange={(page, pageSize) => paginationHandler(page, pageSize)}
+          onChange={(page, pageSize) => setCurrentPage(page)}
         />
       </div>
     );
@@ -171,6 +184,7 @@ const PaymentDetails = () => {
             data={paymentList}
             loading={payementListLoader}
           />
+          <PaginationComponent />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={<span className="flex gap-2">Customer</span>}
@@ -182,6 +196,7 @@ const PaymentDetails = () => {
             data={paymentList}
             loading={payementListLoader}
           />
+          <PaginationComponent />
         </Tabs.TabPane>
       </Tabs>
 

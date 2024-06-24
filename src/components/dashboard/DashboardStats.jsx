@@ -33,7 +33,6 @@ const DashboardStats = () => {
     generalStatsLoader,
   } = useDashboardStore(useShallow((state) => state));
 
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [status, setStatus] = useState("thisYear");
 
   useEffect(() => {

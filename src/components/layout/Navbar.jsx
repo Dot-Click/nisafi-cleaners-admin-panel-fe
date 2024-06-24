@@ -119,7 +119,9 @@ const Navbar = ({ isOpened, setOpened }) => {
                 </Badge>
               </Flex>
             </Popover>
-            <Gear />
+            <Link to={"/dashboard/settings"} className="cursor-pointer">
+              <Gear />
+            </Link>
           </Flex>
         </Flex>
       </Flex>
@@ -144,52 +146,74 @@ const NotificationsPopover = () => {
   useEffect(() => {
     fetchNotifications();
   }, []);
+  const messages = [
+    {
+      title: "New Job Added",
+      message: "Ali Rehman has posted new job",
+      read: true,
+      createdAt: "2024-06-22T12:09:24.338+00:00",
+      link: "6676bef41d4d3c3d94955d7d",
+      type: "job",
+    },
+    {
+      title: "Payment requested",
+      message: "Ali Rehman has requested for payment",
+      read: false,
+      createdAt: "2024-06-22T12:09:24.338+00:00",
+      link: "6676bef41d4d3c3d94955d7d",
+      type: "job",
+    },
+    {
+      title: "Payment requested",
+      message: "Ali Rehman has requested for payment",
+      read: true,
+      createdAt: "2024-06-22T12:09:24.338+00:00",
+      link: "6676bef41d4d3c3d94955d7d",
+      type: "job",
+    },
+  ];
   return (
     <Flex
       vertical
       className="request-notifications notification-tabs  max-h-[300px] overflow-y-auto px-1"
       gap={10}
     >
-      {!notificationLoader &&
-        notifications?.map((item, index) => (
-          <Flex
-            onClick={() => {
-              const url = notifcationUrlHandler(item?.type, item?.link);
-              const state =
-                item?.type === "register"
-                  ? { role: checkRole(item?.message), link: item?.link }
-                  : null;
-              navigate(url, { state });
-            }}
-            className={`cursor-pointer hover:bg-[#f0f0f0] w-96 p-2 bg-[#fafafa] request-notification${
-              index === 2 ? " unread" : ""
-            }`}
-            gap={8}
-            key={index}
-            align="flex-start"
-          >
-            {/* <Avatar
-            size={56}
-            src="https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs"
-          /> */}
-
-            <Flex vertical gap={10} className="notification-content ">
-              <Flex vertical>
-                <Flex className="username-and-timestamp" gap={6}>
-                  <Text className="username font-bold text-[14px]">
-                    {item?.title}
-                  </Text>
-                  <Text className="notification-timestamp opacity-50 font-semibold">
-                    {getTimeFromNow(item?.createdAt)}
-                  </Text>
-                </Flex>
-                <Text className="notification-description">
-                  {item?.message}
+      {/* {!notificationLoader &&
+        notifications?.map((item, index) => ( */}
+      {messages?.map((item, index) => (
+        <Flex
+          onClick={() => {
+            const url = notifcationUrlHandler(item?.type, item?.link);
+            const state =
+              item?.type === "register"
+                ? { role: checkRole(item?.message), link: item?.link }
+                : null;
+            navigate(url, { state });
+          }}
+          className={`cursor-pointer hover:bg-[#f0f0f0] rounded-md w-96 p-2  request-notification border-b-2 ${
+            item?.read ? "bg-[#fafafa]" : "bg-[#ebe9e9]"
+          }`}
+          gap={8}
+          key={index}
+          align="flex-start"
+        >
+          {/* Avatar here 👇 */}
+          <Flex vertical gap={10} className="notification-content ">
+            <Flex vertical>
+              <Flex className="username-and-timestamp" gap={6}>
+                {!item?.read && <Badge size={"small"} status="success" />}
+                <Text className="username font-bold text-[14px]">
+                  {item?.title}
+                </Text>
+                <Text className="notification-timestamp opacity-50 font-semibold">
+                  {getTimeFromNow(item?.createdAt)}
                 </Text>
               </Flex>
+              <Text className="notification-description">{item?.message}</Text>
             </Flex>
           </Flex>
-        ))}
+        </Flex>
+      ))}
     </Flex>
   );
 };
