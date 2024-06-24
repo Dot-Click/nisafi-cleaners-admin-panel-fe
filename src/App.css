@@ -150,12 +150,15 @@ body {
 }
 
 .primary-btn {
-  background: linear-gradient(93.71deg, #0ba8d8 0%, #008db8 116.94%);
+  background: linear-gradient(93.71deg, #0ba8d8 0%, #008db8 116.94%) !important;
   box-shadow: 0px 8.95px 11.19px 0px #00000008;
   font-family: Poppins;
   color: #fff;
   width: 120px;
   border: none;
+}
+.primary-btn:active {
+  background: linear-gradient(93.71deg, #0ba8d8 0%, #008db8 116.94%) !important;
 }
 
 .primary-btn:hover {
