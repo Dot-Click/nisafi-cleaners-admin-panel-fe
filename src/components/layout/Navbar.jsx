@@ -147,30 +147,30 @@ const NotificationsPopover = () => {
     fetchNotifications();
   }, []);
   const messages = [
-    {
-      title: "New Job Added",
-      message: "Ali Rehman has posted new job",
-      read: true,
-      createdAt: "2024-06-22T12:09:24.338+00:00",
-      link: "6676bef41d4d3c3d94955d7d",
-      type: "job",
-    },
-    {
-      title: "Payment requested",
-      message: "Ali Rehman has requested for payment",
-      read: false,
-      createdAt: "2024-06-22T12:09:24.338+00:00",
-      link: "6676bef41d4d3c3d94955d7d",
-      type: "job",
-    },
-    {
-      title: "Payment requested",
-      message: "Ali Rehman has requested for payment",
-      read: true,
-      createdAt: "2024-06-22T12:09:24.338+00:00",
-      link: "6676bef41d4d3c3d94955d7d",
-      type: "job",
-    },
+    // {
+    //   title: "New Job Added",
+    //   message: "Ali Rehman has posted new job",
+    //   read: true,
+    //   createdAt: "2024-06-22T12:09:24.338+00:00",
+    //   link: "6676bef41d4d3c3d94955d7d",
+    //   type: "job",
+    // },
+    // {
+    //   title: "Payment requested",
+    //   message: "Ali Rehman has requested for payment",
+    //   read: false,
+    //   createdAt: "2024-06-22T12:09:24.338+00:00",
+    //   link: "6676bef41d4d3c3d94955d7d",
+    //   type: "job",
+    // },
+    // {
+    //   title: "Payment requested",
+    //   message: "Ali Rehman has requested for payment",
+    //   read: true,
+    //   createdAt: "2024-06-22T12:09:24.338+00:00",
+    //   link: "6676bef41d4d3c3d94955d7d",
+    //   type: "job",
+    // },
   ];
   return (
     <Flex
@@ -178,42 +178,48 @@ const NotificationsPopover = () => {
       className="request-notifications notification-tabs  max-h-[300px] overflow-y-auto px-1"
       gap={10}
     >
-      {/* {!notificationLoader &&
-        notifications?.map((item, index) => ( */}
-      {messages?.map((item, index) => (
-        <Flex
-          onClick={() => {
-            const url = notifcationUrlHandler(item?.type, item?.link);
-            const state =
-              item?.type === "register"
-                ? { role: checkRole(item?.message), link: item?.link }
-                : null;
-            navigate(url, { state });
-          }}
-          className={`cursor-pointer hover:bg-[#f0f0f0] rounded-md w-96 p-2  request-notification border-b-2 ${
-            item?.read ? "bg-[#fafafa]" : "bg-[#ebe9e9]"
-          }`}
-          gap={8}
-          key={index}
-          align="flex-start"
-        >
-          {/* Avatar here 👇 */}
-          <Flex vertical gap={10} className="notification-content ">
-            <Flex vertical>
-              <Flex className="username-and-timestamp" gap={6}>
-                {!item?.read && <Badge size={"small"} status="success" />}
-                <Text className="username font-bold text-[14px]">
-                  {item?.title}
-                </Text>
-                <Text className="notification-timestamp opacity-50 font-semibold">
-                  {getTimeFromNow(item?.createdAt)}
+      {notifications?.length > 0 ? (
+        notifications?.map((item, index) => (
+          <Flex
+            onClick={() => {
+              const url = notifcationUrlHandler(item?.type, item?.link);
+              const state =
+                item?.type === "register"
+                  ? { role: checkRole(item?.message), link: item?.link }
+                  : null;
+              navigate(url, { state });
+            }}
+            className={`cursor-pointer hover:bg-[#f0f0f0] rounded-md w-96 p-2  request-notification border-b-2 ${
+              item?.read ? "bg-[#fafafa]" : "bg-[#ebe9e9]"
+            }`}
+            gap={8}
+            key={index}
+            align="flex-start"
+          >
+            {/* Avatar here 👇 */}
+            <Flex vertical gap={10} className="notification-content ">
+              <Flex vertical>
+                <Flex className="username-and-timestamp" gap={6}>
+                  {!item?.read && <Badge size={"small"} status="success" />}
+                  <Text className="username font-bold text-[14px]">
+                    {item?.title}
+                  </Text>
+                  <Text className="notification-timestamp opacity-50 font-semibold">
+                    {getTimeFromNow(item?.createdAt)}
+                  </Text>
+                </Flex>
+                <Text className="notification-description">
+                  {item?.message}
                 </Text>
               </Flex>
-              <Text className="notification-description">{item?.message}</Text>
             </Flex>
           </Flex>
-        </Flex>
-      ))}
+        ))
+      ) : (
+        <Text className="text-gray-shade-1 font-semibold text-[16px] py-2 text-center">
+          Notifications not found
+        </Text>
+      )}
     </Flex>
   );
 };
