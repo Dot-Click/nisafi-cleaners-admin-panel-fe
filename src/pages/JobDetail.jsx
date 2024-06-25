@@ -124,7 +124,25 @@ const JobDetail = () => {
 
   return (
     <>
-      <Flex className="settings" justify="center">
+      <Flex className="settings" justify="center" vertical>
+        <Link
+          to={-1}
+          className="welcome-text back-text d-flex align-items-center pb-2"
+        >
+          {" "}
+          <svg
+            className="me-1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            width={20}
+          >
+            <path
+              d="M10.1 23a1 1 0 000-1.41L5.5 17h23.55a1 1 0 000-2H5.53l4.57-4.57A1 1 0 008.68 9l-6.36 6.37a.9.9 0 000 1.27L8.68 23a1 1 0 001.42 0z"
+              data-name="Layer 2"
+            ></path>
+          </svg>
+          Back
+        </Link>
         <Row className="settings-container">
           <Row
             justify={"space-between"}
@@ -504,7 +522,6 @@ const JobDetail = () => {
                             Reason:
                           </Text>
                           <Text>{jobDetail?.disputedDetails?.description}</Text>
-                          {console.log("modalImgs", jobDetail?.disputedDetails)}
                           <Link
                             onClick={() => {
                               setModalImgs(

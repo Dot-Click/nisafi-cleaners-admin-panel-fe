@@ -39,8 +39,7 @@ const PaymentDetails = () => {
     // loaders
     payementListLoader,
   } = useUserManagementStore(useShallow((state) => state));
-
-  console.log("paymentList", paymentList);
+ 
   // const handleViewDetails = (data) => {
   //   try {
   //     setRecord(data);
@@ -73,7 +72,6 @@ const PaymentDetails = () => {
 
   const onChange = async (e) => {
     if (e.target.value === "") {
-      console.log("onChange Run");
     }
   };
 

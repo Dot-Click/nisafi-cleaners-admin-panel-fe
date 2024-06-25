@@ -72,17 +72,12 @@ const BannerSettings = () => {
     setfile(file.fileList[0] || null);
   };
 
-  useEffect(() => {
-    console.log("file after setting:", file);
-  }, [file]);
-
   const onFinish = async (values) => {
     if (!file) {
       errorMessage("Please upload a banner image");
       return;
     }
 
-    console.log("fileleleeee", file);
     const formdata = new FormData();
     formdata.append("url", `https://${values.url}`);
     formdata.append("image", file.originFileObj);
@@ -95,7 +90,7 @@ const BannerSettings = () => {
       setfile(null);
     }
   };
- 
+
   return (
     <>
       <Row className="min-h-0">
@@ -122,7 +117,7 @@ const BannerSettings = () => {
                       label: "Home Banner",
                       label: (
                         <Flex justify="space-between" align="center">
-                          <Text>Home Banner</Text>
+                          <Text>Banner {index + 1}</Text>
                           <Flex justify="" align="center" gap={10}>
                             <Link size={16} className="see-all" />
                             <Text className="see-all">{value?.url}</Text>
@@ -173,7 +168,7 @@ const BannerSettings = () => {
                 maxWidth: "500px",
                 width: "100%",
               }}
-              onFinish={onFinish} 
+              onFinish={onFinish}
               autoComplete="off"
             >
               <Col className="flex-1 !m-0">

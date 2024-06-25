@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  Input,
-  Space,
-  Checkbox,
-  Typography,
-  Flex,
-  Row,
-} from "antd";
+import { Button, Form, Input, Space, Image, Typography, Flex, Row } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
@@ -27,9 +18,13 @@ const VerifyEmail = () => {
     console.log("onChange:", text);
   };
   return (
-    <Row direction="vertical" className="p-3  d-block h-100">
-      <Text className="brand-name">Nisafi cleaners</Text>
-      <Flex vertical justify="center" align="center" className="h-100">
+    <Row direction="vertical" className="login-form d-block h-100">
+      <Image
+        src="/images/logos/logo-text.png"
+        preview={false}
+        className="brand-name"
+      />
+      <Flex vertical justify="center" align="center" className="form-container">
         <Form
           name="basic"
           layout="vertical"

@@ -59,7 +59,6 @@ const JobManagement = () => {
     listLoader,
   } = jobManagementStore(useShallow((state) => state));
 
-  console.log("jobsList", jobsList);
 
   const handleTabChange = (key) => {
     setActiveTab(key);

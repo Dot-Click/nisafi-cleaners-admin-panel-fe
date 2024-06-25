@@ -28,7 +28,6 @@ const UserManagement = () => {
   const location = useLocation();
   const locationState = location.state;
 
-  console.log("location", location.state);
   const [isModalOpened, setModalOpen] = useState(false);
   const [role, setrole] = useState("worker");
   const [activeTab, setActiveTab] = useState("1");
@@ -207,16 +206,19 @@ const UserManagement = () => {
   const FiltersComponents = () => {
     return (
       <Row className="search-box" justify="space-between">
-        {/* <Input
+        <Input
           className="search-input"
           size="large"
           placeholder="Search..."
           onPressEnter={handleSearch}
-          onChange={onChange}
+          // onChange={onChange}
+          onChange={(e) =>
+            e.target.value === "" && fetchUsers(role, currentPage, "", filter)
+          }
           prefix={<SearchOutlined />}
           // value={inputValue}
           allowClear={false}
-        /> */}
+        />
 
         {/* <Search
           placeholder="input search text"
@@ -229,7 +231,7 @@ const UserManagement = () => {
           onSearch={handleSearch}
         /> */}
 
-        <div class="relative">
+        {/* <div class="relative">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
               class="w-4 h-4 text-gray-500"
@@ -258,7 +260,7 @@ const UserManagement = () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg   block w-full ps-10 p-2.5 focus:ring-red-500 focus:border-red-500  "
             placeholder="Search..."
           />
-        </div>
+        </div> */}
         {/* <button
             type="submit"
             class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 primary-btn !w-fit"

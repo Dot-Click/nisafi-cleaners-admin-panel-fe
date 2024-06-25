@@ -84,12 +84,10 @@ const JobChart = ({
   });
 
   const yearHandler = (date) => {
-    console.log("date", date?.$y);
     setSelectedYear(date?.year());
   };
 
   const handleStatus = (value) => {
-    console.log("value", value);
     setStatus(value);
   };
   return (

@@ -10,6 +10,7 @@ import { errorMessage } from "../services/helpers";
 import CustomAvatar from "../components/common/CustomAvatar";
 import BannerSettings from "../components/dashboard/BannerSettings";
 import { capitalizeFirstLetter } from "../utils";
+import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -19,7 +20,25 @@ const Settings = () => {
   const { user, loading } = useAuthStore(useShallow((state) => state));
 
   return (
-    <Flex className="settings" justify="center">
+    <Flex className="settings" justify="center" vertical>
+      <Link
+        to={-1}
+        className="welcome-text back-text d-flex align-items-center pb-2"
+      >
+        {" "}
+        <svg
+          className="me-1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          width={20}
+        >
+          <path
+            d="M10.1 23a1 1 0 000-1.41L5.5 17h23.55a1 1 0 000-2H5.53l4.57-4.57A1 1 0 008.68 9l-6.36 6.37a.9.9 0 000 1.27L8.68 23a1 1 0 001.42 0z"
+            data-name="Layer 2"
+          ></path>
+        </svg>{" "}
+        Back
+      </Link>
       <Row className="settings-container">
         <Col span={24} className="settings-container-header"></Col>
         <Row span={24} className="settings-form-container !w-full min-h-[65vh]">
@@ -316,7 +335,8 @@ const UpdateProfileImage = (props) => {
       uid: "-1",
       name: "user-avatar.png",
       status: "done",
-      url: "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
+      url:
+        "https://media.licdn.com/dms/image/D4D03AQFPflFXxVxifQ/profile-displayphoto-shrink_400_400/0/1690117687492?e=2147483647&v=beta&t=VUNjbhuZImdvC-PCz_fpwh-Q3c0hZfHR0O_L9rLvVvs",
     },
   ]);
 

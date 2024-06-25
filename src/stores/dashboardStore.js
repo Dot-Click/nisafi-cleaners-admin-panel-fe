@@ -80,7 +80,6 @@ export const useDashboardStore = create(
         attachToken();
         const res = await custAxios.get(`/admin/generalStats`);
         if (res?.data?.success) {
-          console.log("fetchGeneralStats", res?.data?.data);
           set({
             totalJobsCount: res?.data?.data?.totalJobs,
             totalWorkersCount: res?.data?.data?.totalWorkers,
@@ -106,7 +105,6 @@ export const useDashboardStore = create(
         attachToken();
         const res = await custAxios.get(`/notification`);
         if (res?.data?.success) {
-          console.log("notifications............", res?.data?.data);
           set({
             notifications: res?.data?.data,
             unReadCount: 0,
@@ -130,7 +128,6 @@ export const useDashboardStore = create(
         attachToken();
         const res = await custAxios.get(`/notification/unread-count`);
         if (res?.data?.success) {
-          console.log("notifications unread............", res?.data?.data);
           set({
             unReadCount: res?.data?.data,
             notificationLoader: false,

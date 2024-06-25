@@ -46,7 +46,7 @@ const Sidebar = ({ isOpened, setOpened }) => {
         <Flex
           vertical
           justify="space-between"
-          style={{ height: "68vh", width: "100%" }}
+          style={{ height: "75vh", width: "100%" }}
         >
           <Flex vertical>
             {sidebar?.map((val, i) => {

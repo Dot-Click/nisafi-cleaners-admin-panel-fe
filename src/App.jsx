@@ -26,7 +26,6 @@ function App() {
     }
     socket.on("notification", (notification) => {
       if (user?.userData?.role === "admin") {
-        console.log("notifiafa", unReadCount);
         successMessage("Notification received!");
         handleNotificationCount();
 

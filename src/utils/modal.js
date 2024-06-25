@@ -8,9 +8,7 @@ export const showConfirm = (title, desc = null, handleClick, loading) => {
     content: desc,
     onOk: handleClick,
     loading,
-    onCancel() {
-      console.log("Cancel");
-    },
+    onCancel() {},
     okButtonProps: {
       className: "primary-btn w-fit !px-6",
     },

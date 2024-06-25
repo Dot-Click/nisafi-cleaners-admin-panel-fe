@@ -90,11 +90,9 @@ const JobChart = ({
   }, [totalJobs, disputedJobs, completedJobs, status, selectedYear]);
 
   const handleStatus = (value) => {
-    console.log("value", value);
     setStatus(value);
   };
   const yearHandler = (date) => {
-    console.log("date", date?.$y);
     setSelectedYear(date?.year());
   };
 

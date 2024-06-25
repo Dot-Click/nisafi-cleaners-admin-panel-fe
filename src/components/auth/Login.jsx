@@ -55,7 +55,6 @@ const Login = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    // console.log("Failed:", errorInfo);
     return false;
   };
 
@@ -91,7 +90,7 @@ const Login = () => {
           <Flex vertical style={{ marginBottom: "50px" }}>
             <Text className="welcome-heading d-block">Welcome</Text>
             <Text className="welcome-text d-block">
-              Login into your account
+              Login to your account
             </Text>
           </Flex>
           <Text className="login-lable">Email here</Text>

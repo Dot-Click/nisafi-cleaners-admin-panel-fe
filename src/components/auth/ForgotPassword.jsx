@@ -70,7 +70,8 @@ const ForgotPassword = () => {
             </Link>
             <Text className="welcome-heading d-block">Forgot Password!</Text>
             <Text className="welcome-text d-block">
-              Enter email here , We send you the verification code
+              Please enter your email address, and we will send you a code to
+              reset your password.
             </Text>
           </Flex>
           <Text className="login-lable">Email here</Text>
@@ -99,8 +100,8 @@ const ForgotPassword = () => {
               span: 24,
             }}
           >
-            <Button htmlType="submit" className="w-100 login-btn">
-              SEND CODE
+            <Button htmlType="submit" className="w-100 login-btn uppercase">
+              Continue
             </Button>
           </Form.Item>
         </Form>

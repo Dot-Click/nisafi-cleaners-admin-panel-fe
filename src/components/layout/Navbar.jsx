@@ -61,7 +61,6 @@ const Navbar = ({ isOpened, setOpened }) => {
   ];
 
   const { unReadCount } = useDashboardStore(useShallow((state) => state));
-  console.log(unReadCount, "from nav");
   useEffect(() => {
     const pageTitle = pagesName.find((val) => val.path === pathname);
     if (pageTitle && pageTitle.label) {
@@ -101,7 +100,7 @@ const Navbar = ({ isOpened, setOpened }) => {
             name={user?.userData?.name}
           />
 
-          <Tooltip title={user?.userData?.name} className="username-tooltip">
+          <Tooltip title={user?.userData?.name} className="" placement="bottom">
             <Text className="user-name px-2">{user?.userData?.name}</Text>
           </Tooltip>
         </Flex>

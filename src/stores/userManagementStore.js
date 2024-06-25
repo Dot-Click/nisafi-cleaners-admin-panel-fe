@@ -120,7 +120,6 @@ export const useUserManagementStore = create((set) => ({
       const res = await custAxios.get(`/admin/getWallets`, {
         params: queryParams,
       });
-      console.log("res?.data?.data", res?.data?.data);
       const pagesCount = Math.ceil(
         res?.data?.data?.totalWalletCount / queryParams?.limit
       );
