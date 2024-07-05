@@ -8,8 +8,6 @@ const AuthRoute = ({ Component }) => {
   if (isAuthenticated) {
     if (role === "admin") {
       return <Navigate to="/dashboard" />;
-    } else {
-      return <Navigate to="/" />;
     }
   } else {
     return <Component />;

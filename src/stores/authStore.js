@@ -46,14 +46,21 @@ export const useAuthStore = create((set) => {
               userData: res?.data?.data?.user,
             },
           });
-          localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
-          localStorage.setItem("token", res?.data?.data?.token);
-          successMessage(res?.data?.data?.message);
-          return true;
+          if (res?.data?.data?.user?.role === "admin") {
+            localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
+            localStorage.setItem("token", res?.data?.data?.token);
+            successMessage(res?.data?.data?.message);
+            return true;
+          } else {
+            return errorMessage(
+              "Only admin role is authorize to access dashboard resource"
+            );
+          }
         }
       } catch (error) {
-        set({ loading: false, isAuthenticated: false });
+        console.log("erorroro", error.response?.data?.message);
         errorMessage(error?.response?.data?.message);
+        set({ loading: false, isAuthenticated: false });
       }
     },
     updateProfile: async (values) => {

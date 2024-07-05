@@ -12,6 +12,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import { useAuthStore } from "../../stores/authStore";
+import { errorMessage, successMessage } from "../../services/helpers";
 
 const { Text } = Typography;
 
@@ -43,15 +44,16 @@ const Login = () => {
   }, []);
 
   const onFinish = async (values) => {
-    if (values.remember) {
-      localStorage.setItem("email", values?.email);
-      localStorage.setItem("password", window.btoa(values.password));
-      localStorage.setItem("remember", values?.remember);
-    }
-    const res = await login(values);
-    if (res) {
-      navigate("/dashboard");
-    }
+    errorMessage("eROROR mESSAGE");
+    // const res = await login(values);
+    // if (res) {
+    //   if (values.remember) {
+    //     localStorage.setItem("email", values?.email);
+    //     localStorage.setItem("password", window.btoa(values.password));
+    //     localStorage.setItem("remember", values?.remember);
+    //   }
+    //   navigate("/dashboard");
+    // }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -89,9 +91,7 @@ const Login = () => {
         >
           <Flex vertical style={{ marginBottom: "50px" }}>
             <Text className="welcome-heading d-block">Welcome</Text>
-            <Text className="welcome-text d-block">
-              Login to your account
-            </Text>
+            <Text className="welcome-text d-block">Login to your account</Text>
           </Flex>
           <Text className="login-lable">Email here</Text>
           <Form.Item
@@ -183,6 +183,10 @@ const Login = () => {
             </Button>
           </Form.Item>
         </Form>
+
+        <Button onClick={() => successMessage("Checking")}>
+          CHeck Toaster
+        </Button>
       </Flex>
     </Row>
   );

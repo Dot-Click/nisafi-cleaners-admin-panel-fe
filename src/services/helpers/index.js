@@ -2,6 +2,7 @@ import { toast } from "sonner";
 
 //? success
 export const successMessage = (msg) => {
+  console.log("messbajdadada", msg);
   toast.success(msg, {
     duration: 2000,
   });
@@ -28,5 +29,3 @@ export const trimString = (string, length = 10) => {
 
   return string;
 };
-
-
