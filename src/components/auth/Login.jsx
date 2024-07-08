@@ -44,16 +44,15 @@ const Login = () => {
   }, []);
 
   const onFinish = async (values) => {
-    errorMessage("eROROR mESSAGE");
-    // const res = await login(values);
-    // if (res) {
-    //   if (values.remember) {
-    //     localStorage.setItem("email", values?.email);
-    //     localStorage.setItem("password", window.btoa(values.password));
-    //     localStorage.setItem("remember", values?.remember);
-    //   }
-    //   navigate("/dashboard");
-    // }
+    const res = await login(values);
+    if (res) {
+      if (values.remember) {
+        localStorage.setItem("email", values?.email);
+        localStorage.setItem("password", window.btoa(values.password));
+        localStorage.setItem("remember", values?.remember);
+      }
+      navigate("/dashboard");
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -183,10 +182,6 @@ const Login = () => {
             </Button>
           </Form.Item>
         </Form>
-
-        <Button onClick={() => successMessage("Checking")}>
-          CHeck Toaster
-        </Button>
       </Flex>
     </Row>
   );
