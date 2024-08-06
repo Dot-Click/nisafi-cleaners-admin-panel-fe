@@ -564,7 +564,7 @@ const JobDetail = () => {
                   <Image
                     width={150}
                     height={150}
-                    src={baseURL + img}
+                    src={img}
                     fallback="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.webp"
                     style={{
                       borderRadius: "8px",

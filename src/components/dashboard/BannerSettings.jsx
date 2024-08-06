@@ -129,7 +129,7 @@ const BannerSettings = () => {
                           <Image
                             className="!size-[96px]"
                             preview={true}
-                            src={baseURL + value?.image}
+                            src={value?.image}
                             fallback={fallImg}
                           />
                           <Button

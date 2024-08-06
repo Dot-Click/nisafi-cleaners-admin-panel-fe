@@ -183,7 +183,7 @@ const WorkerInfo = () => {
                     <Image
                       preview={false}
                       size={"large"}
-                      src={baseURL + userDetail?.profilePic}
+                      src={userDetail?.profilePic}
                       fallback={`https://placehold.co/180x180/6BC3E6/white?text=${capitalizeFirstLetter(
                         userDetail?.name?.charAt(0)
                       )}`}
@@ -220,7 +220,7 @@ const WorkerInfo = () => {
                     </Col>
                     <Col lg={16} md={13} sm={13} xs={18}>
                       <Progress
-                        percent={userDetail?.successRate}
+                        percent={userDetail?.successRate.toString()[0]}
                         status="active"
                         strokeColor="#87D068"
                       />

@@ -94,12 +94,8 @@ const Navbar = ({ isOpened, setOpened }) => {
       >
         {/* // ? avatar and username */}
         <Flex align="center">
-          <CustomAvatar
-            size={48}
-            imgUrl={baseURL + user?.userData?.profilePic}
-            name={user?.userData?.name}
-          />
-
+          <CustomAvatar size={48} imgUrl={user?.userData?.profilePic} />
+          {console.log("user.user.profilePic", user.userData.profilePic)}
           <Tooltip title={user?.userData?.name} className="" placement="bottom">
             <Text className="user-name px-2">{user?.userData?.name}</Text>
           </Tooltip>
