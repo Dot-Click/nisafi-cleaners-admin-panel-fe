@@ -85,7 +85,7 @@ const DashboardStats = () => {
               <StatsCard
                 title={title}
                 count={count}
-                icon={<Icon fill={statsColorHandler(type)} />}
+                icon={<Icon size={22} fill={statsColorHandler(type)} />}
               />
             )}
           </Col>

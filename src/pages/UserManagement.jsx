@@ -20,7 +20,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { useShallow } from "zustand/react/shallow";
 import { baseURL } from "../configs/axiosConfig";
-import { formatDate, workerStatusColorHandler } from "../utils";
+import {
+  formatDate,
+  formatDateString,
+  workerStatusColorHandler,
+} from "../utils";
 import CustomAvatar from "../components/common/CustomAvatar";
 import staticMethods from "antd/es/notification";
 import { RotateCcw } from "lucide-react";
@@ -111,11 +115,15 @@ const UserManagement = () => {
   // };
 
   const handleSearch = async (e) => {
-    // if (e.keyCode === 13) {
-    await fetchUsers(role, currentPage, e.target.value, filter);
-    // }
+    setTimeout(() => {
+      fetchUsers(role, currentPage, e.target.value, filter);
+    }, 1000);
   };
-
+  const handleSearchOnEnter = async (e) => {
+    if (e.keyCode === 13) {
+      await fetchUsers(role, currentPage, e.target.value, filter);
+    }
+  };
   const custCols = [
     {
       title: "Username",
@@ -147,7 +155,7 @@ const UserManagement = () => {
       title: "JoinAt",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (_, createdAt) => <Text>{formatDate(createdAt)}</Text>,
+      render: (_, createdAt) => <Text>{formatDateString(createdAt)}</Text>,
     },
   ];
   const workerCols = [
@@ -176,11 +184,17 @@ const UserManagement = () => {
       title: "Profession",
       dataIndex: "profession",
       key: "profession",
+      render: (_, { profession }) => (
+        <Text>{profession ? profession : "N/A"}</Text>
+      ),
     },
     {
       title: "Experience",
       dataIndex: "experience",
       key: "experience",
+      render: (_, { experience }) => (
+        <Text>{experience ? experience : "N/A"}</Text>
+      ),
     },
     {
       title: "Status",
@@ -199,7 +213,7 @@ const UserManagement = () => {
       title: "Registration Date",
       dataIndex: `createdAt`,
       key: "createdAt",
-      render: (_, createdAt) => <Text>{formatDate(createdAt)}</Text>,
+      render: (_, createdAt) => <Text>{formatDateString(createdAt)}</Text>,
     },
     {
       title: "Actions",
@@ -229,9 +243,14 @@ const UserManagement = () => {
             //   e.target.value === "" && fetchUsers(role, currentPage, "", filter)
             // }
             prefix={<SearchOutlined />}
-            // value={inputValue}
-            // allowClear={false}
           />
+          {/* <Search
+            className="search-input"
+            placeholder="Search here"
+            allowClear
+            onChange={handleSearch}
+            onKeyDown={handleSearchOnEnter}
+          /> */}
         </Flex>
 
         <Flex align="center" className="filters" gap={10}>
