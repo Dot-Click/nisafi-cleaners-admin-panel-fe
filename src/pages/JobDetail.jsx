@@ -406,8 +406,9 @@ const JobDetail = () => {
                       <Flex className="justify-center items-center flex-col">
                         <CustomAvatar
                           name={jobDetail?.worker?.name}
-                          imgUrl={baseURL + jobDetail?.worker?.profilePic}
+                          imgUrl={jobDetail?.worker?.profilePic}
                           size={96}
+                          className={"aspect-square bg-slate-200"}
                         />
                         <Title className="capitalize" level={2}>
                           {jobDetail?.worker?.name}
@@ -499,42 +500,57 @@ const JobDetail = () => {
                           <Text className="text-gray-shade-1 font-semibold text-[15px]">
                             Proof of Work:
                           </Text>
-                          <Flex vertical>
-                            <Text>{jobDetail?.proofOfWork?.description}</Text>
 
-                            <Link
-                              onClick={() => {
-                                setModalImgs(jobDetail?.proofOfWork?.images);
-                                setModalOpen(true);
-                              }}
-                              className="font-semibold"
-                              style={{ color: "#1677ff" }}
-                            >
-                              View images
-                            </Link>
-                          </Flex>
-                        </Col>
-                      </Col>
-                      <Col span={12}>
-                        <Title level={4}>Customer</Title>
-                        <Flex vertical>
-                          <Text className="text-gray-shade-1 font-semibold text-[15px]">
-                            Reason:
+                          <Text className="block mb-5">
+                            {jobDetail?.proofOfWork?.description}
                           </Text>
-                          <Text>{jobDetail?.disputedDetails?.description}</Text>
+                          <Text className="text-gray-shade-1 font-semibold text-[15px]">
+                            Email:
+                          </Text>
+
+                          <Text className="block">
+                            {jobDetail?.worker?.email}
+                          </Text>
+
                           <Link
                             onClick={() => {
-                              setModalImgs(
-                                jobDetail?.disputedDetails?.proofOfWork
-                              );
+                              setModalImgs(jobDetail?.proofOfWork?.images);
                               setModalOpen(true);
                             }}
-                            className="font-semibold capitalize"
+                            className="font-semibold"
                             style={{ color: "#1677ff" }}
                           >
                             View images
                           </Link>
-                        </Flex>
+                        </Col>
+                      </Col>
+                      <Col span={12}>
+                        <Title level={4}>Customer</Title>
+
+                        <Text className="text-gray-shade-1 font-semibold text-[15px]">
+                          Reason:
+                        </Text>
+                        <Text className="block mb-5">
+                          {jobDetail?.disputedDetails?.description}
+                        </Text>
+                        <Text className="text-gray-shade-1 font-semibold text-[15px] ">
+                          Refund email :
+                        </Text>
+                        <Text className="block">
+                          {jobDetail?.disputedDetails?.paypalEmail}
+                        </Text>
+                        <Link
+                          onClick={() => {
+                            setModalImgs(
+                              jobDetail?.disputedDetails?.proofOfWork
+                            );
+                            setModalOpen(true);
+                          }}
+                          className="font-semibold capitalize"
+                          style={{ color: "#1677ff" }}
+                        >
+                          View images
+                        </Link>
                       </Col>
                     </Row>
                   </Card>

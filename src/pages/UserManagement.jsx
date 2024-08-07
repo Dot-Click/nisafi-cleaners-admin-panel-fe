@@ -10,6 +10,7 @@ import {
   Tabs,
   Pagination,
   Tag,
+  Tooltip,
 } from "antd";
 const { Search } = Input;
 import { SearchOutlined } from "@ant-design/icons";
@@ -22,6 +23,7 @@ import { baseURL } from "../configs/axiosConfig";
 import { formatDate, workerStatusColorHandler } from "../utils";
 import CustomAvatar from "../components/common/CustomAvatar";
 import staticMethods from "antd/es/notification";
+import { RotateCcw } from "lucide-react";
 
 const { Text } = Typography;
 const UserManagement = () => {
@@ -109,9 +111,9 @@ const UserManagement = () => {
   // };
 
   const handleSearch = async (e) => {
-    if (e.keyCode === 13) {
-      await fetchUsers(role, currentPage, e.target.value, filter);
-    }
+    // if (e.keyCode === 13) {
+    await fetchUsers(role, currentPage, e.target.value, filter);
+    // }
   };
 
   const custCols = [
@@ -120,8 +122,13 @@ const UserManagement = () => {
       dataIndex: "name",
       key: "name",
       render: (_, { name, profilePic }) => (
-        <Flex gap={10} align="center" className="w-[150px]">
-          <CustomAvatar size={40} imgUrl={baseURL + profilePic} name={name} />
+        <Flex gap={10} align="center">
+          <CustomAvatar
+            size={40}
+            imgUrl={profilePic}
+            name={name}
+            className={"aspect-square bg-slate-200"}
+          />
           <Text>{name}</Text>
         </Flex>
       ),
@@ -150,7 +157,12 @@ const UserManagement = () => {
       key: "name",
       render: (_, { name, profilePic }) => (
         <Flex gap={10} align="center" className="w-[150px]">
-          <CustomAvatar size={40} imgUrl={baseURL + profilePic} name={name} />
+          <CustomAvatar
+            size={40}
+            imgUrl={profilePic}
+            name={name}
+            className={"aspect-square bg-slate-200"}
+          />
           <Text>{name}</Text>
         </Flex>
       ),
@@ -206,123 +218,21 @@ const UserManagement = () => {
   const FiltersComponents = () => {
     return (
       <Row className="search-box" justify="space-between">
-        <Input
-          className="search-input"
-          size="large"
-          placeholder="Search..."
-          onPressEnter={handleSearch}
-          // onChange={onChange}
-          onChange={(e) =>
-            e.target.value === "" && fetchUsers(role, currentPage, "", filter)
-          }
-          prefix={<SearchOutlined />}
-          // value={inputValue}
-          allowClear={false}
-        />
-
-        {/* <Search
-          placeholder="input search text"
-          allowClear
-          enterButton="Search"
-          size="large"
-          // value={inputValue}
-          onInput={(e) => setInputValue(e.target.value)}
-          // onChange={(e) => setInputValue(e.target.value)}
-          onSearch={handleSearch}
-        /> */}
-
-        {/* <div class="relative">
-          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg
-              class="w-4 h-4 text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
-          </div>
-          <input
-            onKeyDown={handleSearch}
-            onChange={(e) =>
-              e.target.value === "" &&
-              fetchUsers(role, currentPage, e.target.value, filter)
-            }
-            type="text"
-            id="simple-search "
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg   block w-full ps-10 p-2.5 focus:ring-red-500 focus:border-red-500  "
+        <Flex align="center" gap={5}>
+          <Input
+            className="search-input"
+            size="large"
             placeholder="Search..."
+            onPressEnter={handleSearch}
+            // onChange={onChange}
+            // onChange={(e) =>
+            //   e.target.value === "" && fetchUsers(role, currentPage, "", filter)
+            // }
+            prefix={<SearchOutlined />}
+            // value={inputValue}
+            // allowClear={false}
           />
-        </div> */}
-        {/* <button
-            type="submit"
-            class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 primary-btn !w-fit"
-          >
-            <svg
-              class="w-4 h-4"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
-            <span class="sr-only">Search</span>
-          </button> */}
-
-        {/* <form class="max-w-md">
-          <label
-            for="default-search"
-            class="mb-2 text-sm font-medium text-gray-900 sr-only"
-          >
-            Search
-          </label>
-          <div class="relative">
-            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                class="w-4 h-4 text-gray-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-            <input
-              type="search"
-              id="default-search"
-              class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Search....."
-              required
-            />
-            <button
-              type="submit"
-              class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 primary-btn !w-fit"
-            >
-              Search
-            </button>
-          </div>
-        </form> */}
+        </Flex>
 
         <Flex align="center" className="filters" gap={10}>
           {/* // ? sort by filter */}
@@ -344,6 +254,12 @@ const UserManagement = () => {
               ]}
             />
           </Flex>
+          <Tooltip title="Reload Table">
+            <RotateCcw
+              onClick={() => fetchUsers(role, currentPage, "", filter)}
+              className="text-white cursor-pointer  "
+            />
+          </Tooltip>
         </Flex>
       </Row>
     );

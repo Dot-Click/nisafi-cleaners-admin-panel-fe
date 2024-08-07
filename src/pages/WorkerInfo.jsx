@@ -192,10 +192,10 @@ const WorkerInfo = () => {
                   )}
 
                   <Row className="w-full" align="center" justify="center">
-                    <Col>
+                    <Col lg={24} md={24} sm={24}>
                       <Text
                         level={4}
-                        className="text-center pt-2 text-lg font-bold"
+                        className="capitalize text-center pt-2 text-lg font-bold block "
                       >
                         {userDetail?.name}
                       </Text>
@@ -208,19 +208,24 @@ const WorkerInfo = () => {
                       align="center"
                       gap="10"
                     >
-                      <Rate
-                        disabled
-                        defaultValue={userDetail?.avgRating}
-                        style={{
-                          fontSize: 16,
-                          marginRight: 10,
-                        }}
-                      />
-                      <Text>{userDetail?.avgRating?.toFixed(1)}</Text>
+                      {userDetail?.avgRating && (
+                        <>
+                          <Rate
+                            disabled
+                            defaultValue={userDetail?.avgRating}
+                            style={{
+                              fontSize: 16,
+                              marginRight: 10,
+                            }}
+                            className=""
+                          />
+                          <Text>{userDetail?.avgRating?.toFixed(1)}</Text>
+                        </>
+                      )}
                     </Col>
                     <Col lg={16} md={13} sm={13} xs={18}>
                       <Progress
-                        percent={userDetail?.successRate.toString()[0]}
+                        percent={userDetail?.successRate?.toFixed(0)}
                         status="active"
                         strokeColor="#87D068"
                       />
@@ -318,6 +323,7 @@ const WorkerInfo = () => {
                       )}
                     </Flex>
                   </Col>
+
                   <Col gap={"large"} lg={24} md={12} sm={12} xs={24}>
                     <Flex
                       className="bg-[#f9fafb] px-4 py-1 rounded-lg min-w-[200px]"
@@ -333,7 +339,7 @@ const WorkerInfo = () => {
                         />
                       ) : (
                         <Text className="text-gray-shade-1 font-semibold">
-                          {userDetail?.address}
+                          {userDetail?.address || "Nil"}
                         </Text>
                       )}
                     </Flex>
@@ -463,7 +469,7 @@ const WorkerInfo = () => {
                           key={index}
                           title={doc?.documentTitle}
                           documentName={doc?.filename}
-                          documentURL={baseURL + doc}
+                          documentURL={doc}
                           fileSize={doc?.size}
                         />
                       ))

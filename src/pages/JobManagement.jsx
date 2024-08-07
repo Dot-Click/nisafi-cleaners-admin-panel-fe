@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import GeneralTable from "../components/table/GeneralTable";
-import { Button, Flex, Input, Row, Select, Typography, Tabs } from "antd";
+import {
+  Button,
+  Flex,
+  Input,
+  Row,
+  Select,
+  Typography,
+  Tabs,
+  Tooltip,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import ChevronDown from "../assets/icons/ChevronDown";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +21,7 @@ import { Pagination } from "antd";
 import CustomAvatar from "../components/common/CustomAvatar";
 import { baseURL } from "../configs/axiosConfig";
 import useDebounce from "../services/hooks/useDebounce";
+import { RotateCcw } from "lucide-react";
 
 const tabList = [
   {
@@ -59,7 +69,6 @@ const JobManagement = () => {
     listLoader,
   } = jobManagementStore(useShallow((state) => state));
 
-
   const handleTabChange = (key) => {
     setActiveTab(key);
     setSort("desc");
@@ -72,11 +81,7 @@ const JobManagement = () => {
       key: "user",
       render: (_, { user }) => (
         <Flex gap={10} align="center" className="w-[150px]">
-          <CustomAvatar
-            size={40}
-            imgUrl={baseURL + user.profileImage}
-            name={user.name}
-          />
+          <CustomAvatar size={40} imgUrl={user.profileImage} name={user.name} />
           <Text>{user.name}</Text>
         </Flex>
       ),
@@ -171,6 +176,14 @@ const JobManagement = () => {
               onChange={(value) => setSort(value)}
             />
           </Flex>
+          <Tooltip title="Reload Table">
+            <RotateCcw
+              onClick={() =>
+                fetchJobsList(1, debouncedSearch, sort, 10, activeTab)
+              }
+              className="text-white cursor-pointer  "
+            />
+          </Tooltip>
         </Flex>
       </Row>
     );

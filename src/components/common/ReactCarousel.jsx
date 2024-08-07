@@ -33,7 +33,7 @@ const ReactCarousel = ({ images }) => {
         {images?.map((image, index) => (
           <img
             key={index}
-            src={baseURL + image}
+            src={image}
             alt={`Slide ${index}`}
             className="!object-contain"
             width={100}

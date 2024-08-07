@@ -8,6 +8,7 @@ import {
   Tabs,
   Badge,
   Button,
+  Spin,
 } from "antd";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -93,11 +94,17 @@ const Navbar = ({ isOpened, setOpened }) => {
         className="profile-box py-4 px-0"
       >
         {/* // ? avatar and username */}
-        <Flex align="center">
-          <CustomAvatar size={48} imgUrl={user?.userData?.profilePic} />
-          {console.log("user.user.profilePic", user.userData.profilePic)}
-          <Tooltip title={user?.userData?.name} className="" placement="bottom">
-            <Text className="user-name px-2">{user?.userData?.name}</Text>
+        <Flex align="center" className="hidden md:flex">
+          <CustomAvatar
+            size={48}
+            imgUrl={user?.userData?.profilePic}
+            className={"aspect-square bg-slate-200"}
+          />
+
+          <Tooltip title={user?.userData?.name} placement="bottom">
+            <Text className="capitalize user-name px-2">
+              {user?.userData?.name}
+            </Text>
           </Tooltip>
         </Flex>
         <Flex className="px-4">
@@ -127,53 +134,24 @@ const Navbar = ({ isOpened, setOpened }) => {
 const NotificationsPopover = () => {
   const navigate = useNavigate();
   const {
-    //  func
     fetchNotifications,
     fetchUnreadCount,
-    // data
     notifications,
     unReadCount,
-
-    // loader
     notificationLoader,
   } = useDashboardStore(useShallow((state) => state));
 
   useEffect(() => {
     fetchNotifications();
   }, []);
-  const messages = [
-    // {
-    //   title: "New Job Added",
-    //   message: "Ali Rehman has posted new job",
-    //   read: true,
-    //   createdAt: "2024-06-22T12:09:24.338+00:00",
-    //   link: "6676bef41d4d3c3d94955d7d",
-    //   type: "job",
-    // },
-    // {
-    //   title: "Payment requested",
-    //   message: "Ali Rehman has requested for payment",
-    //   read: false,
-    //   createdAt: "2024-06-22T12:09:24.338+00:00",
-    //   link: "6676bef41d4d3c3d94955d7d",
-    //   type: "job",
-    // },
-    // {
-    //   title: "Payment requested",
-    //   message: "Ali Rehman has requested for payment",
-    //   read: true,
-    //   createdAt: "2024-06-22T12:09:24.338+00:00",
-    //   link: "6676bef41d4d3c3d94955d7d",
-    //   type: "job",
-    // },
-  ];
+
   return (
     <Flex
       vertical
       className="request-notifications notification-tabs  max-h-[300px] overflow-y-auto px-1"
       gap={10}
     >
-      {notifications?.length > 0 ? (
+      {!notificationLoader && notifications?.length > 0 ? (
         notifications?.map((item, index) => (
           <Flex
             onClick={() => {
@@ -210,6 +188,10 @@ const NotificationsPopover = () => {
             </Flex>
           </Flex>
         ))
+      ) : notificationLoader ? (
+        <Flex justify="center" className="my-10">
+          <Spin tip="Loading" size="large" />
+        </Flex>
       ) : (
         <Text className="text-gray-shade-1 font-semibold text-[16px] py-2 text-center">
           Notifications not found

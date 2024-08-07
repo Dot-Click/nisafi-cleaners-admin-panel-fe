@@ -80,7 +80,7 @@ const DashboardStats = () => {
             className={`stats-card py-4 ${statsColorHandler(type)}`}
           >
             {generalStatsLoader ? (
-              <Skeleton active className="h-[150px]" />
+              <Skeleton.Button active size="large" />
             ) : (
               <StatsCard
                 title={title}

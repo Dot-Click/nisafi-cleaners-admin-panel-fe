@@ -9,6 +9,7 @@ import {
   Typography,
   Tabs,
   Pagination,
+  Tooltip,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -19,6 +20,7 @@ import { useShallow } from "zustand/react/shallow";
 import { useUserManagementStore } from "../stores/userManagementStore";
 import { formatPrice } from "../utils";
 import { Link } from "react-router-dom";
+import { RotateCcw } from "lucide-react";
 
 const { Text } = Typography;
 
@@ -39,7 +41,7 @@ const PaymentDetails = () => {
     // loaders
     payementListLoader,
   } = useUserManagementStore(useShallow((state) => state));
- 
+
   // const handleViewDetails = (data) => {
   //   try {
   //     setRecord(data);
@@ -89,8 +91,9 @@ const PaymentDetails = () => {
           <Flex gap={10} align="center" className="w-[150px]">
             <CustomAvatar
               size={40}
-              imgUrl={baseURL + user?.profilePic}
+              imgUrl={user?.profilePic}
               name={user?.name}
+              className={"aspect-square bg-slate-200"}
             />
 
             <Text className={role === "worker" ? `view-details-btn` : ""}>
@@ -130,7 +133,8 @@ const PaymentDetails = () => {
 
   const FiltersComponents = () => {
     return (
-      <Row className="search-box" justify="space-between">
+      <Row className="search-box items-center" justify="space-between">
+        {/* <Flex align="center" justify="space-between"> */}
         <Input
           className="search-input"
           size="large"
@@ -139,6 +143,13 @@ const PaymentDetails = () => {
           onChange={onChange}
           prefix={<SearchOutlined />}
         />
+        <Tooltip title="Reload Table">
+          <RotateCcw
+            onClick={() => fetchPaymentDetail(role, currentPage, "")}
+            className="text-white cursor-pointer  "
+          />
+        </Tooltip>
+        {/* </Flex> */}
       </Row>
     );
   };
@@ -182,7 +193,7 @@ const PaymentDetails = () => {
             data={paymentList}
             loading={payementListLoader}
           />
-          <PaginationComponent />
+          {/* <PaginationComponent /> */}
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={<span className="flex gap-2">Customer</span>}
@@ -194,7 +205,7 @@ const PaymentDetails = () => {
             data={paymentList}
             loading={payementListLoader}
           />
-          <PaginationComponent />
+          {/* <PaginationComponent /> */}
         </Tabs.TabPane>
       </Tabs>
 

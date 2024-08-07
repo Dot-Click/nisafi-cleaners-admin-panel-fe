@@ -21,6 +21,14 @@
 :root {
   --primary: "#6BC3E6";
 }
+body::-webkit-scrollbar {
+  background-color: rgb(118, 118, 118);
+  width: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #00b4df;
+  width: 10px;
+}
 
 .ant-tabs-tab-btn {
   color: "#6BC3E6" !important;
