@@ -29,7 +29,8 @@ const JobChart = ({
     disputedStats,
     completedStats,
   ];
-  const [chartConfig, setChartConfig] = useState({
+
+  const options = {
     series: [
       {
         name: "Total Jobs",
@@ -48,40 +49,62 @@ const JobChart = ({
         color: "#DC3545",
       },
     ],
-    options: {
-      colors: ["#0BA8D8"],
-      chart: {
-        type: "line",
+    colors: ["#0BA8D8"],
+    chart: {
+      type: "area",
+      stacked: false,
+      fontFamily: "Raleway, sans-serif",
+      zoom: {
+        enabled: false,
       },
-      stroke: {
-        width: 2,
-        curve: "smooth",
+    },
+    grid: {
+      show: true,
+    },
+    markers: {
+      size: 0,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shadeIntensity: 1,
+        inverseColors: false,
+        opacityFrom: 0.45,
+        opacityTo: 0.05,
+        stops: [20, 100, 100, 100],
       },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sept",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
-      },
-      yaxis: {
-        labels: {
-          formatter: function (value) {
-            return Math.round(value);
-          },
+    },
+    stroke: {
+      width: 2,
+      curve: "smooth",
+    },
+    xaxis: {
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+    },
+    yaxis: {
+      labels: {
+        formatter: function (value) {
+          return Math.round(value);
         },
       },
     },
-  });
+  };
 
   const yearHandler = (date) => {
     setSelectedYear(date?.year());
@@ -123,11 +146,12 @@ const JobChart = ({
 
       {/* // ? the chart */}
       <ReactApexChart
-        options={chartConfig.options}
-        series={chartConfig.series}
+        options={options}
+        series={options.series}
         type="area"
         height={340}
       />
+      <div id="html-dist"></div>
     </Flex>
   );
 };
