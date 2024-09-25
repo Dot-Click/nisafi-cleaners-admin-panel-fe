@@ -478,9 +478,7 @@ const JobDetail = () => {
                     </div>
                   </Flex>
                   <Text>
-                    {jobDetail?.proofOfWork?.description}
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vero eligendi quod assumenda.
+                    {capitalizeFirstLetter(jobDetail?.proofOfWork?.description)}
                   </Text>
                 </Card>
               ) : (
@@ -578,13 +576,13 @@ const JobDetail = () => {
                   className="space-x-4 mx-4 mb-3"
                 >
                   <Image
-                    width={150}
-                    height={150}
                     src={img}
                     fallback="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.webp"
                     style={{
                       borderRadius: "8px",
                       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      objectFit: "cover",
+                      aspectRatio: "1/1",
                     }}
                   />
                 </Col>
