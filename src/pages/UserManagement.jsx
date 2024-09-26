@@ -96,9 +96,7 @@ const UserManagement = () => {
     } else {
       fetchUsers(role, currentPage, "", filter);
     }
-  }, [role, filter]);
-
-   
+  }, [role, filter, locationState]);
 
   const handleSearch = async (e) => {
     setTimeout(() => {
@@ -141,7 +139,7 @@ const UserManagement = () => {
       title: "JoinAt",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (_, createdAt) => <Text>{formatDateString(createdAt)}</Text>,
+      render: (_, { createdAt }) => <Text>{formatDateString(createdAt)}</Text>,
     },
   ];
   const workerCols = [
@@ -199,7 +197,7 @@ const UserManagement = () => {
       title: "Registration Date",
       dataIndex: `createdAt`,
       key: "createdAt",
-      render: (_, createdAt) => <Text>{formatDateString(createdAt)}</Text>,
+      render: (_, { createdAt }) => <Text>{formatDateString(createdAt)}</Text>,
     },
     {
       title: "Actions",
