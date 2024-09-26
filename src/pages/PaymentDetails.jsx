@@ -69,7 +69,6 @@ const PaymentDetails = () => {
     setActiveTab(key);
   };
   const handleSearch = async (e) => {
-    console.log(e.target.value);
   };
 
   const onChange = async (e) => {

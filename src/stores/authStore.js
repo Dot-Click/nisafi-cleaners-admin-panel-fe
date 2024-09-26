@@ -58,7 +58,7 @@ export const useAuthStore = create((set) => {
           }
         }
       } catch (error) {
-        console.log("erorroro", error.response?.data?.message);
+        console.error(error.response?.data?.message);
         errorMessage(error?.response?.data?.message);
         set({ loading: false, isAuthenticated: false });
       }

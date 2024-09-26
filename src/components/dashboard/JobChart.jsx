@@ -11,7 +11,6 @@ const JobChart = ({
   status,
   setStatus,
 }) => {
-  console.log(totalJobs, disputedJobs, completedJobs);
   const totalStats = totalJobs?.map((i) => ({
     x: i?.month,
     y: i?.count,

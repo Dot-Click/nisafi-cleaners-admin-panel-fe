@@ -98,21 +98,7 @@ const UserManagement = () => {
     }
   }, [role, filter]);
 
-  // const handleSearch = async (value, event) => {
-  //   event.preventDefault();
-  //   setInputValue(value);
-  //   console.log("values........", value);
-  //   console.log("event........", event);
-  //   await fetchUsers(role, currentPage, value, "");
-  // };
-
-  // const onChange = async (e) => {
-  //   if (e.target.value === "") {
-  //     console.log("onChange Run");
-  //     // setInputValue(e.target.value);
-  //     await fetchUsers(role, currentPage, e.target.value, filter);
-  //   }
-  // };
+   
 
   const handleSearch = async (e) => {
     setTimeout(() => {

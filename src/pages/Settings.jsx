@@ -342,7 +342,6 @@ const UpdateProfileImage = (props) => {
 
   const onChange = async ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    console.log("newFileList", newFileList);
     if (newFileList.length > 0 && newFileList[0].originFileObj) {
       let imageUrl;
       const reader = new FileReader();
