@@ -139,7 +139,6 @@ export const useDashboardStore = create(
           notificationLoader: false,
         });
         console.error(error);
-        errorMessage(error?.response?.data?.message);
       }
     },
 

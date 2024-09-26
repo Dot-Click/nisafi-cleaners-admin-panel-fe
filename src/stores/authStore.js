@@ -94,17 +94,15 @@ export const useAuthStore = create((set) => {
       try {
         set({
           loading: true,
-          isAuthenticated: false,
         });
         attachToken();
-        const res = await custAxios.post(`/auth/forgot-password`, values);
+        const res = await custAxios.post(`/auth/forgotPassword`, values);
 
         if (res?.data?.success) {
           set({
             loading: false,
-            isAuthenticated: true,
           });
-          successMessage(res?.data?.message);
+          successMessage(res?.data?.data);
           return true;
         }
       } catch (error) {
@@ -119,14 +117,10 @@ export const useAuthStore = create((set) => {
       });
       try {
         attachToken();
-        const res = await custAxios.put("/auth/resetPassword", {
-          email: values.email,
-          passwordResetToken: values.passwordResetToken,
-          password: values.password,
-        });
+        const res = await custAxios.put("/auth/resetPassword", values);
         if (res?.data?.success) {
-          set({ loading: false, isAuthenticated: false });
-          successMessage(res?.data?.message);
+          set({ loading: false });
+          successMessage(res?.data?.data);
           return true;
         }
       } catch (error) {

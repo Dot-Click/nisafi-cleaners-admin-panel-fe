@@ -11,14 +11,20 @@ import {
   Image,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
+import { useAuthStore } from "../../stores/authStore";
 
 const { Text } = Typography;
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const { forgot, loading } = useAuthStore(useShallow((state) => state));
 
-  const onFinish = (values) => {
-    navigate("/verify-email");
+  const onFinish = async (values) => {
+    const res = await forgot(values);
+    if (res) {
+      navigate("/verify-email", { state: values });
+    }
   };
   const onFinishFailed = (errorInfo) => {};
   return (
@@ -100,7 +106,11 @@ const ForgotPassword = () => {
               span: 24,
             }}
           >
-            <Button htmlType="submit" className="w-100 login-btn uppercase">
+            <Button
+              loading={loading}
+              htmlType="submit"
+              className="w-100 login-btn uppercase"
+            >
               Continue
             </Button>
           </Form.Item>

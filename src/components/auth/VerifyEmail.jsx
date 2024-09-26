@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, Space, Image, Typography, Flex, Row } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { errorMessage } from "../../services/helpers";
 
 const { Text } = Typography;
 
 const VerifyEmail = () => {
+  const location = useLocation();
+  const [token, setToken] = useState(null);
+  const email = location.state?.email;
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    navigate("/new-password");
+    if (!email) {
+      return errorMessage("Email not found, went something wrong try again!");
+    }
+    navigate("/new-password", {
+      state: { email: email, passwordResetToken: Number(token) },
+    });
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   const onChange = (text) => {
-    console.log("onChange:", text);
+    setToken(text);
   };
   return (
     <Row direction="vertical" className="login-form d-block h-100">
@@ -84,6 +92,7 @@ const VerifyEmail = () => {
                 className="login-input w-100"
                 // {...onChange}
                 onChange={onChange}
+                value={token}
               />
             </Flex>
           </Form.Item>

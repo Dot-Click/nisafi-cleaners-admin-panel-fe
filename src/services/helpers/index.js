@@ -2,7 +2,6 @@ import { toast } from "sonner";
 
 //? success
 export const successMessage = (msg) => {
-  console.log("messbajdadada", msg);
   toast.success(msg, {
     duration: 2000,
   });

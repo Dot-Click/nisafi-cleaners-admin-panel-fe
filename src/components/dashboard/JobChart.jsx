@@ -11,6 +11,7 @@ const JobChart = ({
   status,
   setStatus,
 }) => {
+  console.log(totalJobs, disputedJobs, completedJobs);
   const totalStats = totalJobs?.map((i) => ({
     x: i?.month,
     y: i?.count,
@@ -26,8 +27,8 @@ const JobChart = ({
   const dataSet = [
     // Data for Product A
     totalStats,
-    disputedStats,
     completedStats,
+    disputedStats,
   ];
 
   const options = {
@@ -136,8 +137,8 @@ const JobChart = ({
                 label: "Last Year",
               },
               {
-                value: "last3Year",
-                label: "Last 3 Year",
+                value: "last3Years",
+                label: "Last 3 Years",
               },
             ]}
           />

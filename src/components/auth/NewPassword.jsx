@@ -1,13 +1,32 @@
 import React from "react";
 import { Button, Form, Input, Space, Image, Typography, Flex, Row } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { errorMessage } from "../../services/helpers";
+import { useShallow } from "zustand/react/shallow";
+import { useAuthStore } from "../../stores/authStore";
 
 const { Text } = Typography;
 
 const NewPassword = () => {
   const [form] = Form.useForm();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = location.state;
+  const { reset, loading } = useAuthStore(useShallow((state) => state));
 
-  const onFinish = (values) => {};
+  const onFinish = async (values) => {
+    if (!state) {
+      return errorMessage("Went something wrong try again");
+    }
+    const payload = {
+      ...values,
+      ...state,
+    };
+    const res = await reset(payload);
+    if (res) {
+      navigate("/");
+    }
+  };
   const onFinishFailed = (errorInfo) => {};
   return (
     <Row direction="vertical" className="login-form d-block h-100">
@@ -117,7 +136,11 @@ const NewPassword = () => {
               span: 24,
             }}
           >
-            <Button htmlType="submit" className="w-100 login-btn">
+            <Button
+              loading={loading}
+              htmlType="submit"
+              className="w-100 login-btn"
+            >
               CHANGE PASSWORD
             </Button>
           </Form.Item>

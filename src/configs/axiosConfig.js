@@ -2,7 +2,7 @@ import axios from "axios";
 
 // export const baseURL = "https://nisafi-staging.up.railway.app";
 export const baseURL = "https://backed-fe-production.up.railway.app";
-// export const baseURL = "http://192.168.100.16:8002";
+// export const baseURL = "http://localhost:8001";
 
 // axios instance for json data
 const custAxios = axios.create({
