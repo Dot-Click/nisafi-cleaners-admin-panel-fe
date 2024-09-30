@@ -30,7 +30,8 @@ const Login = () => {
 
   useEffect(() => {
     const rememberedEmail = localStorage.getItem("email");
-    const rememberedPassword = window.atob(localStorage.getItem("password"));
+    // const rememberedPassword = window.atob(localStorage.getItem("password"));
+    const rememberedPassword = "";
     const rememberChecked = localStorage.getItem("remember") === "true";
 
     if (rememberChecked && rememberedEmail && rememberedPassword) {
@@ -48,7 +49,7 @@ const Login = () => {
     if (res) {
       if (values.remember) {
         localStorage.setItem("email", values?.email);
-        localStorage.setItem("password", window.btoa(values.password));
+        // localStorage.setItem("password", window.btoa(values.password));
         localStorage.setItem("remember", values?.remember);
       }
       navigate("/dashboard");
