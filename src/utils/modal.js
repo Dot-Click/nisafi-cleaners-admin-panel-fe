@@ -4,6 +4,7 @@ const { confirm } = Modal;
 
 export const showConfirm = (title, desc = null, handleClick, loading) => {
   confirm({
+    centered: true,
     title: title,
     content: desc,
     onOk: handleClick,
