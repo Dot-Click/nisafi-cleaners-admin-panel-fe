@@ -100,12 +100,15 @@ const WorkerInfo = () => {
                   <Flex className="pdf-document cursor-pointer">
                     {/* // ? using the native iframe tag because there's no Iframe component in antd */}
                     <iframe
-                      src={documentURL}
+                      // src={documentURL}
+                      src={`https://docs.google.com/gview?url=${encodeURIComponent(documentURL)}&embedded=true`}
+  
                       title={`${documentName}?#view=fitH`}
                       type="application/pdf"
                       className="pdf-iframe overflow-x-hidden overflow-y-hidden"
                       height={300}
                       width={"100%"}
+                      
                     />
                   </Flex>
                   <Flex className="pdf-document-footer">
@@ -128,9 +131,16 @@ const WorkerInfo = () => {
                   </Text>
                   <Text className="file-size">{fileSize}</Text>
                 </Flex>
-                <Link download={documentURL} target="_blank">
+            
+                
+                <a
+                  href={documentURL}
+                  // download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Download />
-                </Link>
+                </a>
               </Flex>
             </Flex>
           </Col>
@@ -187,7 +197,7 @@ const WorkerInfo = () => {
                       fallback={`https://placehold.co/180x180/6BC3E6/white?text=${capitalizeFirstLetter(
                         userDetail?.name?.charAt(0)
                       )}`}
-                      className="display-avatar border-0 border-purple-600 !w-[180px] !h-[180px] rounded-full"
+                      className="display-avatar border-0 border-purple-600 !w-[180px] !h-[180px] rounded-full bg-slate-300 !aspect-square !object-contain !cursor-default"
                     />
                   )}
 

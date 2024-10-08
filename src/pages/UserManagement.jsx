@@ -136,7 +136,7 @@ const UserManagement = () => {
       key: "phone",
     },
     {
-      title: "JoinAt",
+      title: "Registration Date",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (_, { createdAt }) => <Text>{formatDateString(createdAt)}</Text>,

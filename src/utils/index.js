@@ -22,7 +22,7 @@ export const formatPrice = (price) => {
 };
 
 export const splittingSkills = (skills) => {
-  return skills?.split(",")?.slice(1);
+  return skills?.split(",")?.slice();
 };
 
 export const capitalizeFirstLetter = (str) => {
