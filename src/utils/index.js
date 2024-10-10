@@ -5,7 +5,7 @@ export const getTimeFromNow = (date) => {
 };
 
 export const formatDateString = (dateString) => {
-  return moment(dateString).format("MMMM Do YYYY");
+  return moment(dateString).format("DD-MMM-YYYY");
 };
 
 export const formatDate = (date) => {
@@ -15,7 +15,7 @@ export const formatDate = (date) => {
 export const formatPrice = (price) => {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency: "CFA",
   });
 
   return formatter.format(price);
@@ -100,7 +100,7 @@ export const checkRole = (message) => {
 export const notifcationUrlHandler = (type, link) => {
   switch (type) {
     case "job":
-      return `/dashboard/jobs/details/${link}`;
+      return `/dashboard/job/details/${link}`;
 
     case "idDocs":
       return `/dashboard/user/worker-info/${link}`;

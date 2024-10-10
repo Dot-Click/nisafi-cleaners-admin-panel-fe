@@ -56,8 +56,8 @@ const Navbar = ({ isOpened, setOpened }) => {
       label: "jobs management",
     },
     {
-      path: `/dashboard/jobs/details/${params.id}`,
-      label: "jobs details",
+      path: `/dashboard/job/details/${params.id}`,
+      label: "job details",
     },
   ];
 

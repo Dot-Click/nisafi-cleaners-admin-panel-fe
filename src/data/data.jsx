@@ -26,7 +26,7 @@ export const sidebar = [
   {
     id: 3,
     name: "Jobs Management",
-    route: ["/dashboard/jobs/management", "/dashboard/jobs/details"],
+    route: ["/dashboard/jobs/management", "/dashboard/job/details"],
     icon: FaBriefcase,
   },
 

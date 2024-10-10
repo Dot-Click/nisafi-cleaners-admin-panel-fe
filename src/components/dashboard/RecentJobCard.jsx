@@ -37,10 +37,10 @@ const RecentJobCard = ({ job }) => {
         </Flex>
         <Flex justify="space-between" align="center">
           <Text className="font-semibold text-lg text-gray-shade-1">
-            ${job?.budget}
+            CFA {job?.budget}
           </Text>
           <Link
-            to={`/dashboard/jobs/details/${job._id}`}
+            to={`/dashboard/job/details/${job._id}`}
             className="font-semibold see-all"
           >
             View Detail

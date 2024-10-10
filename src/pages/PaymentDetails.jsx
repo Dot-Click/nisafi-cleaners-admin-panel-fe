@@ -115,7 +115,7 @@ const PaymentDetails = () => {
       render: (_, { user }) => <Text>{user?.email}</Text>,
     },
     {
-      title: "No of Transations",
+      title: "No of Transactions",
       dataIndex: "transactions",
       key: "transactions",
       render: (_, { transactions }) => <Text>{transactions?.length}</Text>,

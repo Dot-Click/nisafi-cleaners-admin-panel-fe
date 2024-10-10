@@ -50,7 +50,7 @@ const Router = () => {
           element={<AdminRoute Component={JobManagement} />}
         />
         <Route
-          path="/dashboard/jobs/details/:id"
+          path="/dashboard/job/details/:id"
           element={<AdminRoute Component={JobDetail} />}
         />
       </Route>

@@ -79,7 +79,7 @@ const NestedTable = ({ columns, data, loading }) => {
       key: "creator",
       render: (_, { job }) => (
         <Link
-          to={`/dashboard/jobs/details/${job?._id}`}
+          to={`/dashboard/job/details/${job?._id}`}
           className="view-details-btn"
         >
           {job?.type}

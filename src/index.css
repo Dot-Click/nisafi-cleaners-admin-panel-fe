@@ -29,7 +29,12 @@ body::-webkit-scrollbar-thumb {
   background-color: #00b4df;
   width: 10px;
 }
-
+.carousel-slider{
+  padding-bottom: 20px;
+}
+.control-dots{
+  bottom: -13px !important;
+}
 .ant-tabs-tab-btn {
   color: "#6BC3E6" !important;
 }
