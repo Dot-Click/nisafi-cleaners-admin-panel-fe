@@ -28,7 +28,7 @@ const ReactCarousel = ({ images }) => {
         useKeyboardArrows
         transitionTime={500}
         showIndicators
-        width="600px"
+        // width="600px"
       >
         {images?.map((image, index) => (
           <img

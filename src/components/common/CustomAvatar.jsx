@@ -6,7 +6,8 @@ const CustomAvatar = ({ name, imgUrl, size, className }) => {
       preview={false}
       src={imgUrl}
       width={size}
-      className={`rounded-full !object-contain ${className}`}
+      height={size}
+      className={`rounded-full !object-contain bg-slate-100 ${className}`}
       fallback={`https://placehold.co/180x180/6BC3E6/white?text=${name
         ?.charAt(0)
         ?.toUpperCase()}`}
