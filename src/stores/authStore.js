@@ -194,5 +194,27 @@ export const useAuthStore = create((set) => {
         errorMessage(error?.response?.data?.message);
       }
     },
+    deleteMe: async () => {
+      try {
+        set({
+          loading: true,
+          isAuthenticated: false,
+        });
+        attachToken();
+        const res = await custAxios.delete(`auth/deleteMe`);
+        if (res?.data?.success) {
+          set({
+            loading: false,
+            isAuthenticated: true,
+            user: res?.data?.data,
+          });
+
+          return true;
+        }
+      } catch (error) {
+        set({ loading: false });
+        errorMessage(error?.response?.data?.message);
+      }
+    },
   };
 });
