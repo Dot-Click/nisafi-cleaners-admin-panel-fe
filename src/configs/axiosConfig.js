@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // export const baseURL = "https://nisafi-staging.up.railway.app";
-export const baseURL = "https://backed-fe-production.up.railway.app";
+export const baseURL = "https://be.nisaficlean.com/";
 // export const baseURL = "http://localhost:8001";
 
 // axios instance for json data

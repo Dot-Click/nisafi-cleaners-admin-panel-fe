@@ -47,12 +47,18 @@ const Login = () => {
   const onFinish = async (values) => {
     const res = await login(values);
     if (res) {
+      console.log(res);
+
       if (values.remember) {
         localStorage.setItem("email", values?.email);
         // localStorage.setItem("password", window.btoa(values.password));
         localStorage.setItem("remember", values?.remember);
       }
-      navigate("/dashboard");
+      if (res?.data?.user?.role === "admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/user-account");
+      }
     }
   };
 

@@ -11,18 +11,18 @@ import profile from "../../public/images/dashboard/profile.webp";
 const UserAccount = () => {
   const user = getUserData();
   const navigate = useNavigate();
-  const { logout } = useAuthStore(useShallow((state) => state));
+  const { logout, deleteMe } = useAuthStore(useShallow((state) => state));
 
   const logoutHandler = async () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    navigate("/");
+    const res = await logout();
+    if (res) {
+      navigate("/");
+    }
   };
 
   const handleDeleteAccount = async () => {
     successMessage("Account deleted");
-    const res = await logout();
+    const res = await deleteMe();
     if (res) {
       logoutHandler();
     }
