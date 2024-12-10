@@ -8,7 +8,7 @@ const UserRoute = ({ Component }) => {
   if (!isAuthenticated) {
     return <Navigate to="/" />;
   } else {
-    if (role === "user") {
+    if (role === "worker" || role === "client") {
       return <Component />;
     } else {
       return <Navigate to="/not-found" />;

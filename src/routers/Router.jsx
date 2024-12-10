@@ -21,13 +21,17 @@ import { useAuthStore } from "../stores/authStore";
 import { successMessage } from "../services/helpers";
 import { useDashboardStore } from "../stores/dashboardStore";
 import UserAccount from "../pages/UserAccount";
+import UserRoute from "./UserRoute";
 
 const Router = () => {
   return (
     <Routes>
       {/* Default Layout routes */}
 
-      <Route path="/user-account" element={<UserAccount />} />
+      <Route
+        path="/user-account"
+        element={<UserRoute Component={UserAccount} />}
+      />
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<AdminRoute Component={Dashboard} />} />
 

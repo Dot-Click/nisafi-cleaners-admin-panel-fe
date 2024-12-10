@@ -54,6 +54,8 @@ const Login = () => {
         // localStorage.setItem("password", window.btoa(values.password));
         localStorage.setItem("remember", values?.remember);
       }
+      console.log(res?.data?.user?.role);
+
       if (res?.data?.user?.role === "admin") {
         navigate("/dashboard");
       } else {
